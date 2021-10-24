@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var para_total_text = "";
+    var para_container = "";
+    var para_count = 0;
+    var para_ques_obj = {}
+    function para_add_field() {
+        var heading = document.getElementById("heading").value;
+        para_container = document.getElementById("para_a");
+        if (para_count == 0) {
+            if (heading != "") {
+                para_container.innerHTML = para_container.innerHTML +
+                    "<div id='input_text" + para_count + "'><div class='form-group'><label for='passage' style='font-weight: bold;'>Passage</label><div style='height:150px;overflow:auto;' class='form-control input_text' id='para_passage" + para_count + "'contenteditable='true' data-placeholder='Type your passage here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='title' style='font-weight: bold;'>Title</label><div class='row'><div class='col-sm-12'><div style='height:40px;overflow:auto;' class='form-control input_text' id='para_title" + para_count + "'contenteditable='true' data-placeholder='Type your title here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='notes' style='font-weight: bold;'>Notes</label><div class='row'><div class='col-sm-12'><div style='height:150px;overflow:auto;' class='form-control input_text' id='para_notes" + para_count + "'contenteditable='true' data-placeholder='Type your notes here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='summary' style='font-weight: bold;''>Summary</label>&nbsp;<label for='rough-draft' style='font-weight: bold;'>Rough draft</label>&nbsp;<div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto;' class='form-control input_text' id='para_roughdraft" + para_count + "'contenteditable='true' data-placeholder='Type your rough draft here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='rough-draft' style='font-weight: bold;'>Fair draft</label><div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto;' class='form-control input_text' id='para_fairdraft" + para_count + "'contenteditable='true' data-placeholder='Type your fair draft here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='title' style='font-weight: bold;'>Number of words</label><div class='row'><div class='col-sm-12'><div style='height:40px;overflow:auto;' class='form-control input_text' id='para_noOfWords" + para_count + "'contenteditable='true' data-placeholder='Type the number of words here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='para_add_field();' id='para_addButton" + para_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=para_remove_field('input_text" + para_count + "'); id='para_removeButton" + para_count + "'></div></div></div></div>";
+
+                para_count++;
+                if (para_count != 0) {
+                    document.getElementById("para_addButton").style.display = "none";
+                    document.getElementById("para_getvalue").style.display = "block";
+                    document.getElementById("para_back").style.display = "block";
+                }
+            }
+            else {
+                alert("Please enter the heading");
+            }
+        }
+        else if (para_count > 0) {
+            var passage = document.getElementById('para_passage' + (para_count - 1)).textContent;
+            var title = document.getElementById('para_title' + (para_count - 1)).textContent;
+            var notes = document.getElementById('para_notes' + (para_count - 1)).textContent;
+            var rough_draft = document.getElementById('para_roughdraft' + (para_count - 1)).textContent;
+            var fair_draft = document.getElementById('para_fairdraft' + (para_count - 1)).textContent;
+            var num_of_words = document.getElementById('para_noOfWords' + (para_count - 1)).textContent;
+            if (passage != "" && title != "" && notes != "" && rough_draft != "" && fair_draft != "" && num_of_words != "") {
+                document.getElementById('para_addButton' + (para_count - 1)).style.display = "none";
+                document.getElementById('para_removeButton' + (para_count - 1)).style.display = "none";
+                para_container.innerHTML = para_container.innerHTML +
+                    "<div id='input_text" + para_count + "'><div class='form-group'><label for='passage' style='font-weight: bold;'>Passage</label><div style='height:150px;overflow:auto;' class='form-control input_text' id='para_passage" + para_count + "'contenteditable='true' data-placeholder='Type your passage here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='title' style='font-weight: bold;'>Title</label><div class='row'><div class='col-sm-12'><div style='height:40px;overflow:auto;' class='form-control input_text' id='para_title" + para_count + "'contenteditable='true' data-placeholder='Type your title here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='notes' style='font-weight: bold;'>Notes</label><div class='row'><div class='col-sm-12'><div style='height:150px;overflow:auto;' class='form-control input_text' id='para_notes" + para_count + "'contenteditable='true' data-placeholder='Type your notes here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='summary' style='font-weight: bold;''>Summary</label>&nbsp;<label for='rough-draft' style='font-weight: bold;'>Rough draft</label>&nbsp;<div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto;' class='form-control input_text' id='para_roughdraft" + para_count + "'contenteditable='true' data-placeholder='Type your rough draft here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='rough-draft' style='font-weight: bold;'>Fair draft</label><div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto;' class='form-control input_text' id='para_fairdraft" + para_count + "'contenteditable='true' data-placeholder='Type your fair draft here...' cols='200' rows='100'></div>&nbsp;<div class='form-group'><label for='title' style='font-weight: bold;'>Number of words</label><div class='row'><div class='col-sm-12'><div style='height:40px;overflow:auto;' class='form-control input_text' id='para_noOfWords" + para_count + "'contenteditable='true' data-placeholder='Type the number of words here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='para_add_field();' id='para_addButton" + para_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=para_remove_field('input_text" + para_count + "'); id='para_removeButton" + para_count + "'></div></div></div></div>";
+
+                para_count++;
+                if (para_count != 0) {
+                    document.getElementById("para_addButton").style.display = "none";
+                    document.getElementById("para_getvalue").style.display = "block";
+                    document.getElementById("para_back").style.display = "block";
+                }
+            } else {
+                alert("Please enter all the above fields")
+            }
+        }
+    }
+    function para_remove_field(id) {
+        if (para_count > 1) {
+            var myobj = document.getElementById(id);
+            myobj.remove();
+            para_count--;
+            document.getElementById('para_addButton' + (para_count - 1)).style.display = "block";
+            document.getElementById('para_removeButton' + (para_count - 1)).style.display = "block";
+        }
+        if (para_count == 0) {
+            document.getElementById("para_addButton").style.display = "block";
+            document.getElementById("para_getvalue").style.display = "none";
+            document.getElementById("para_back").style.display = "none";
+        }
+    }
+
+    function paragraph_questions_back() {
+        window.location.replace("/teacher/teacher-notes/prose");
+    }
+
+    function para_getvalues() {
+        var para_passages = [];
+        var para_titles = [];
+        var para_notes = [];
+        var para_rough_drafts = [];
+        var para_fair_drafts = [];
+        var para_noOfWords = [];
+
+        for (i = 0; i < para_count; i++) {
+            para_passages[i] = document.getElementById("para_passage" + i).textContent;
+            para_titles[i] = document.getElementById("para_title" + i).textContent;
+            para_notes[i] = document.getElementById("para_notes" + i).textContent;
+            para_rough_drafts[i] = document.getElementById("para_roughdraft" + i).textContent;
+            para_fair_drafts[i] = document.getElementById("para_fairdraft" + i).textContent;
+            para_noOfWords[i] = document.getElementById("para_noOfWords" + i).textContent;
+        }
+        if (count(para_passages) == para_count && count(para_titles) == para_count && count(para_notes) == para_count && count(para_rough_drafts) == para_count && count(para_fair_drafts) == para_count && count(para_noOfWords) == para_count) {
+            var answer = {};
+            var titles = {};
+            var notes = {};
+            var rough_drafts = {};
+            var fair_drafts = {};
+            var noOfWords = {};
+            titles["titles"] = toObject(para_titles);
+            notes["notes"] = toObject(para_notes);
+            rough_drafts["rough-draft"] = toObject(para_rough_drafts);
+            fair_drafts["fair-draft"] = toObject(para_fair_drafts);
+            noOfWords["no of words"] = toObject(para_noOfWords);
+            var heading = document.getElementById("heading").value;
+            var para_ques_obj = {};
+            var para_ques_item = {};
+            para_ques_obj = {
+                "user": user_id,
+                "standard": std,
+                "section": sec,
+                "schoolname": schoolname,
+                "subject": subname,
+                "lesson-type": ch_type,
+                "chapter-no": ch_no,
+                "chapter-heading": ch_heading,
+                "heading": heading,
+                "passages": toObject(para_passages),
+                "answers": {
+                    ...titles,
+                    ...notes,
+                    ...rough_drafts,
+                    ...fair_drafts,
+                    ...noOfWords
+                }
+            }
+
+            para_ques_item = {
+                "heading": heading,
+                "type":"NOTE",
+                "passages": toObject(para_passages),
+                "answers": {
+                    ...titles,
+                    ...notes,
+                    ...rough_drafts,
+                    ...fair_drafts,
+                    ...noOfWords
+                }
+            }
+            alert("Note-making or summarising notes is saved successfully");
+            document.getElementById('para_getvalue').value = "Saved!";
+            create_note_making(JSON.stringify(para_ques_obj));
+            console.log(JSON.stringify(para_ques_obj, null, '\t'))
+            document.getElementById("para_getvalue").style.display = "none";
+            document.getElementById("final_submit").style.display = "block";
+            localStorage.setItem("note_final_object", JSON.stringify(para_ques_item));
+
+        }
+        else {
+            alert("Please enter all the fields")
+        }
+    }
+</script>
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='para_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Note-making or summarising notes</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="heading" class="form-control" placeholder="Type your heading...">
+                            </div>
+
+                            <div id="para_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="para_add_field();" id='para_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="para_a"></div>
+                            <div id="short_sub" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="paragraph_questions_back()"
+                                        id='para_back'></div>
+                                <div class='col-sm-1'>
+                                    <input style="display:none;height:40px;" type='button' value='Save'
+                                        class="btn btn-primary mr-3" onclick="para_getvalues();" id='para_getvalue'>
+                                </div>
+                            </div>
+
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+                <div>
+                    <!-- End of component container -->
+
+                </div>
+                <!-- End of part container-->
+            </div>
+            <!-- End of section container-->
+        </div>
+        <!-- End of main container-->
+    </div>
+    </div>
+</body>
+
+</html>

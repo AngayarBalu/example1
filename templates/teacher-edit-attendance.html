@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title" id="myModalLabel">Update Attendance</h4>
+            </div>
+            <div class="modal-body">
+              <label class="radio-inline">
+                <input type="radio" name="inlineRadioOptions" id="forenoon-present" value="present"> Present
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="inlineRadioOptions" id="forenoon-absent" value="absent"> Absent
+              </label>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="myFunc1()">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- <button type="button" class="btn btn-primary" onclick="myFunc()">Click here</button> -->
+</body>
+<script>
+
+    details = JSON.parse(localStorage.getItem("details"))
+    console.log(JSON.stringify(details,null,'\t'))
+    var date = localStorage.getItem('date')
+    var timing = localStorage.getItem('timing')
+    console.log(date)
+    console.log(timing)
+    var attend = ""
+    $(document).ready(function(){
+
+        $('#myModal').modal('show');
+        // modal.find('.modal-title').text(title)
+        $('input[type=radio]').click(function() {
+        attend = $(this).val();
+        });
+    });
+
+    function myFunc1(){
+      var date = localStorage.getItem('date')
+      var timing = localStorage.getItem('timing')
+      // console.log(timing)
+      // var date = localStorage.getItem('date')
+      var fd = new FormData();
+
+      fd.append("regno",details["regno"])
+      fd.append("std",details["std"])
+      fd.append("section",details["section"])
+      fd.append("schoolname",details["schoolname"])
+      fd.append("date",date)
+      fd.append("day",details["day"])
+      fd.append("timing",timing)
+      fd.append("attendance",attend)
+
+      fetch('/student/update-attendance', {
+            method: 'POST',
+            body: fd
+        }).then(function (response) {
+
+            //console.log(response);
+
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data)
+            if(data.status=="success"){
+              // alert("Changes saved successfully!")
+              window.location.replace("/teacher/student-attendance")
+            }
+            else{
+              alert("Something went wrong, please try again")
+            }
+        });
+    }
+
+    function myFunc2(){
+      window.location.replace("/teacher/student-attendance")
+    }
+ </script>
+</html>

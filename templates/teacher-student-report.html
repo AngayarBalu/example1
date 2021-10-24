@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var enrollCourses = {};
+    var myArray1 = [];
+    var dataObject;
+    var cnt = 1;
+    var repArr = [];
+
+    async function getAll() {
+        let response = await fetch("/student/getAll",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xxx-form"
+                },
+            }
+        );
+        let data = await response.json();
+        return data;
+    }
+
+    const data = getAll()
+        .then((data) => {
+            var dataObject = ObjectToArray(data);
+            repArr = [...dataObject]
+            myArray1 = [...dataObject]
+            main(dataObject);
+        })
+        .then(() => {
+
+        })
+        .catch((err) => {
+            alert("error")
+        });
+
+    function main(dataArray) {
+        let table = document.getElementById('data-table');
+        let table1 = document.getElementById('data-table1');
+        let table2 = document.getElementById('data-table2');
+        console.log(dataArray);
+
+        var std;
+        var sec;
+        var count = 1;
+
+        let tabledata1 = "";
+        let tabledata2 = "";
+        let tabledata3 = "";
+
+        var regId = localStorage.getItem("teacher-id");
+
+        var fd = new FormData();
+        fd.append('regId', regId);
+
+        fetch('/teacher/getCourses', {
+            method: 'POST',
+            body: fd
+        }).then(function (response) {
+
+            //console.log(response);
+
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+            enrollCourses = data["enrolledCourses"]
+            tabledata1 += "<thead style='font-weight:bold;'><tr><td><div id='searchOption'><div class='input-icons'><i class='fa fa-search icon'></i><input type='search' id='input' class='form-control input-field' onkeyup='hello(this)' placeholder='Search' aria-label='Search'/></div></div><td/><td/><td/><td><input type='button' class='form-control btn btn-dark' value='Download' id='downloadBtn' onclick='printtopdf()'/></td></tr></tbody><br>"; 
+            table1.innerHTML = tabledata1;
+            var regno = localStorage.getItem("regno");
+            var section = localStorage.getItem("section");
+            var std = localStorage.getItem("std");
+            var schoolname = localStorage.getItem("schoolname");
+            // alert(regno)
+            // alert(section)
+            // alert(std)
+            // alert(schoolname)
+            repArr.forEach((elem) =>{
+                if(elem["regno"] == regno && elem["class"]==std && elem["section"]==section && elem["schoolname"]==schoolname){
+                    tabledata3 += '<thead>'+
+                        '<tr>'+
+                        '<td><label style="font-weight:bold;">Register Number : </label>'+ elem["regno"]+'</td>'+
+                        '<td><label style="font-weight:bold;">Class : </label>'+ elem["class"]+'</td>'+
+                        '<td><label style="font-weight:bold;">Section : </label>'+ elem["section"]+'</td>'+
+                        '<td><label style="font-weight:bold;">School name : </label>'+ elem["schoolname"]+'</td>'+
+                        '</tr></thead>';
+                    }
+            })
+
+            table2.innerHTML = tabledata3;
+
+            
+
+
+            dataArray.forEach(element => {
+            var reportArr = [];
+            var rep = {};
+            var repoArr = [];
+            var val1 = 1;
+            std = element["class"];
+            sec = element["section"]
+            console.log(enrollCourses);
+
+            var regno = localStorage.getItem("regno");
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["regno"] == regno && element["class"] == std && element["section"] == section && element["schoolname"] == schoolname) {
+                document.getElementById('student_report_close_btn').style.display="block";
+                tabledata2 += '<thead class="thead-light">'+
+                                '<tr>'+
+                                '<th>Exam Name</th>'+
+                                // '<th>Maximum Mark</th>'+
+                                '<th>Total Mark</th>'+
+                                '<th>Grade</th>'+
+                                '<th>Percentage</th>'+
+                                '<th>Rank</th>';
+
+                                for(var key in enrollCourses[std][sec]){
+                                    reportArr.push(capitalizeFirstLetter(enrollCourses[std][sec][key]));
+                                }
+
+                                for(var key in element["examScore"]){
+                                    for(var key1 in element["examScore"][key]["subjects"]){
+                                        if(reportArr.includes(capitalizeFirstLetter(element["examScore"][key]["subjects"][key1]["name"]))){
+                                            rep[count] = element["examScore"][key]["subjects"][key1];
+                                            count++;
+                                        }
+                                    } 
+                                }
+
+                                for (var i = 0;i < reportArr.length;i++) {
+                                    repoArr.push(reportArr[i]);
+                                }
+
+                                console.log(rep)
+                                for(var key1 in rep){
+                                    if(repoArr.includes(rep[key1]["name"])){
+                                        tabledata2 += '<th>'+capitalizeFirstLetter(rep[key1]["name"])+'</th>';
+                                        repoArr.shift();
+                                    }
+                                    }
+
+                                console.log(reportArr)
+                                tabledata2 += '<th/>';
+                                tabledata2 += '</tr></thead>';
+                                tabledata2 += '<tbody>';
+
+                for (var key in element["examScore"]){
+                    tabledata2 += '<tr>';
+                    tabledata2 += '<th scope="row">' + (element["examScore"][key]["exam-name"]) + '</td>';
+                    // tabledata2 += '<td>' + (element["examScore"][key]["maximum-mark"]) + '</td>';
+                    tabledata2 += '<td>' + (element["examScore"][key]["total-mark"])+ "/"+ (element["examScore"][key]["maximum-mark"]) +'</td>';
+
+                    tabledata2 += '<td>' + (element["examScore"][key]["grade"]) + '</td>';
+                    tabledata2 += '<td>' + (element["examScore"][key]["percentage"]) + '%</td>';
+                    tabledata2 += '<td>' + (element["examScore"][key]["rank"]) + '</td>';
+                    
+                    if(reportArr.length!=0){
+                        for(var i=0;i<reportArr.length;i++){
+                            // alert(reportArr.length)
+                            if(reportArr.includes(rep[val1]["name"])){
+                                if(rep[val1]["mark"]!=""){
+                                    tabledata2 += '<td>'+rep[val1]["mark"]+"/"+rep[val1]["maximum-mark"]+'</td>';
+                                }
+                                else{
+                                    tabledata2 += '<td>'+' - '+'</td>';
+                                }   
+                            }
+                            val1++;
+                        }
+                    } 
+                    tabledata2 += '<td><button class="form-control btn btn-dark" id="editBtn'+cnt+'" onclick="editProgress(\''+element["examScore"][key]["exam-name"]+'\')"><i class="fa fa-edit"></i></button></td>';
+                    cnt = cnt + 1
+                }
+
+                tabledata2 += '</tr>';
+                tabledata2 += '</tbody>'
+                table.innerHTML = tabledata2;
+            }
+        });
+        });
+
+        return;
+    }
+
+    function student_report_close(){
+        var std1 = localStorage.getItem("std");
+        window.location.replace("/teacher/"+std1+"th-standard"); 
+    }
+
+    function editProgress(exam_name){
+        var regId = localStorage.getItem("teacher-id");
+        var regno = localStorage.getItem("regno");
+        var section = localStorage.getItem("section");
+        var std = localStorage.getItem("std");
+        var schoolname = localStorage.getItem("schoolname");
+        localStorage.setItem('exam-name',exam_name)
+        localStorage.setItem('regno',regno)
+        localStorage.setItem('section',section)
+        localStorage.setItem('std',std)
+        localStorage.setItem('schoolname',schoolname)
+        localStorage.setItem('teacher-id',regId)
+
+        // alert(exam_name)
+        // alert(regno)
+        // alert(std)
+        // alert(section)
+        // alert(schoolname)
+        // alert(regId)
+        window.location.replace('/teacher/student-update-mark')
+    }
+    
+    function printtopdf() {
+        alert(cnt)
+        for( var i=1;i<cnt;i++){
+            document.getElementById('editBtn'+i).style.display = "none"
+        }
+        
+        document.getElementById('downloadBtn').style.display = "none"
+        var printContents = document.getElementById("info-panel").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        for( var i=1;i<cnt;i++){
+            document.getElementById('editBtn'+i).style.display = "block"
+        }
+        document.getElementById('downloadBtn').style.display = "block"
+    }
+
+    function hello(elem){
+        var myArray = []
+        myArray = [...myArray1];
+        var myObject = {}
+        var input1 = "";
+        var cnt = 1
+        input1 = document.getElementById('input').value
+        var regno = localStorage.getItem("regno");
+        if(input1 !== ""){
+        var myArr = []
+        if (elem.value !== "") {
+            for (var i = 0; i < myArray.length; i++) {
+            if(myArray[i]["regno"]==regno){
+                for(key in myArray[i]["examScore"])
+                if (myArray[i]["examScore"][key]["exam-name"].indexOf(elem.value) > -1) {
+                    myObject[cnt] =   myArray[i]["examScore"][key]
+                    cnt = cnt + 1  
+                }
+            }
+        }
+
+        var regId = localStorage.getItem("teacher-id");
+
+        var fd = new FormData();
+        fd.append('regId', regId);
+
+        fetch('/teacher/getCourses', {
+            method: 'POST',
+            body: fd
+        }).then(function (response) {
+
+            //console.log(response);
+
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+            enrollCourses = data["enrolledCourses"]
+            var reportArr = [];
+            var rep = {};
+            var repoArr = [];
+            var val1 = 1;
+            // std = element["class"];
+            // sec = element["section"]
+            console.log(enrollCourses);
+
+            var table = document.getElementById('data-table')
+            var tabledata2 = ""
+            var regno = localStorage.getItem("regno");
+            var schoolname = localStorage.getItem("schoolname");
+            tabledata2 += '<thead class="thead-light">'+
+                            '<tr>'+
+                            '<th>Exam Name</th>'+
+                            // '<th>Maximum Mark</th>'+
+                            '<th>Total Mark</th>'+
+                            '<th>Grade</th>'+
+                            '<th>Percentage</th>'+
+                            '<th>Rank</th>';
+
+                            for(var key in myObject){
+                                for (var key1 in myObject[key]["subjects"])
+                                if(reportArr.includes(capitalizeFirstLetter(myObject[key]["subjects"][key1]["name"]))){
+                                    rep[count] = myObject[key]["subjects"][key1];
+                                    count++;
+                                }
+                            }
+
+                            for (var i = 0;i < reportArr.length;i++) {
+                                repoArr.push(reportArr[i]);
+                            }
+
+                            console.log(rep)
+                            for(var key1 in rep){
+                                if(repoArr.includes(rep[key1]["name"])){
+                                    tabledata2 += '<th>'+capitalizeFirstLetter(rep[key1]["name"])+'</th>';
+                                    repoArr.shift();
+                                }
+                            }
+
+                            console.log(reportArr)
+                            tabledata2 += '</tr></thead>';
+                            tabledata2 += '<tbody>';
+
+            for (var key in myObject){
+                tabledata2 += '<tr>';
+                tabledata2 += '<th scope="row">' + (myObject[key]["exam-name"]) + '</td>';
+                // tabledata2 += '<td>' + (myObject[key]["maximum-mark"]) + '</td>';
+                tabledata2 += '<td>' + (element["examScore"][key]["total-mark"])+ "/"+ (element["examScore"][key]["maximum-mark"]) +'</td>';
+                tabledata2 += '<td>' + (myObject[key]["grade"]) + '</td>';
+                tabledata2 += '<td>' + (element["examScore"][key]["percentage"]) + '%</td>';
+                tabledata2 += '<td>' + (element["examScore"][key]["rank"]) + '</td>';
+                
+                if(reportArr.length!=0){
+                    for(var i=0;i<reportArr.length;i++){
+                        // alert(reportArr.length)
+                        if(reportArr.includes(rep[val1]["name"])){
+                            if(rep[val1]["mark"]!=""){
+                                tabledata2 += '<td>'+rep[val1]["mark"]+'</td>';
+                            }
+                            else{
+                                tabledata2 += '<td>'+' - '+'</td>';
+                            }   
+                        }
+                        val1++;
+                    }
+                } 
+            }
+            tabledata2 += '</tr>';
+            tabledata2 += '</tbody>'
+            table.innerHTML = tabledata2;
+    });
+    }
+    }
+    else if(input1 == ""){
+        let table = document.getElementById('data-table');
+        let table1 = document.getElementById('data-table1');
+        let table2 = document.getElementById('data-table2');
+
+        var std;
+        var sec;
+        var count = 1;
+
+        let tabledata1 = "";
+        let tabledata2 = "";
+        let tabledata3 = "";
+
+        var regId = localStorage.getItem("teacher-id");
+
+        var fd = new FormData();
+        fd.append('regId', regId);
+
+        fetch('/teacher/getCourses', {
+            method: 'POST',
+            body: fd
+        }).then(function (response) {
+
+            //console.log(response);
+
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+            enrollCourses = data["enrolledCourses"]
+            tabledata1 += "<thead style='font-weight:bold;'><tr><td><div id='searchOption'><div class='input-icons'><i class='fa fa-search icon'></i><input type='search' id='input' class='form-control input-field' onkeyup='hello(this)' placeholder='Search' aria-label='Search'/></div></div><td/><td/><td><input type='button' class='form-control btn btn-dark' value='Edit' id='editBtn' onclick='editAttendance("+regno+")'/></td><td><input type='button' class='form-control btn btn-dark' value='Download' id='downloadBtn' onclick='printtopdf()'/></td></tr></tbody><br>"; 
+            table1.innerHTML = tabledata1;
+            var regno = localStorage.getItem("regno");
+            repArr.forEach((elem) =>{
+                if(elem["regno"] == regno){
+                    tabledata3 += '<thead>'+
+                        '<tr>'+
+                        '<td><label style="font-weight:bold;">Register Number : </label>'+ elem["regno"]+'</td>'+
+                        '<td><label style="font-weight:bold;">Class : </label>'+ elem["class"]+'</td>'+
+                        '<td><label style="font-weight:bold;">Section : </label>'+ elem["section"]+'</td>'+
+                        '<td><label style="font-weight:bold;">School name : </label>'+ elem["schoolname"]+'</td>'+
+                        '</tr></thead>';
+                    }
+            })
+
+            table2.innerHTML = tabledata3;
+
+            
+
+
+            myArray1.forEach(element => {
+            var reportArr = [];
+            var rep = {};
+            var repoArr = [];
+            var val1 = 1;
+            std = element["class"];
+            sec = element["section"]
+            console.log(enrollCourses);
+
+            var regno = localStorage.getItem("regno");
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["regno"] == regno && element["schoolname"] == schoolname) {
+                document.getElementById('student_report_close_btn').style.display="block";
+                tabledata2 += '<thead class="thead-light">'+
+                                '<tr>'+
+                                '<th>Exam Name</th>'+
+                                // '<th>Maximum Mark</th>'+
+                                '<th>Total Mark</th>'+
+                                '<th>Grade</th>'+
+                                '<th>Percentage</th>'+
+                                '<th>Rank</th>';
+
+                                for(var key in enrollCourses[std][sec]){
+                                    reportArr.push(capitalizeFirstLetter(enrollCourses[std][sec][key]));
+                                }
+
+                                for(var key in element["examScore"]){
+                                    for(var key1 in element["examScore"][key]["subjects"]){
+                                        if(reportArr.includes(capitalizeFirstLetter(element["examScore"][key]["subjects"][key1]["name"]))){
+                                            rep[count] = element["examScore"][key]["subjects"][key1];
+                                            count++;
+                                        }
+                                    } 
+                                }
+
+                                for (var i = 0;i < reportArr.length;i++) {
+                                    repoArr.push(reportArr[i]);
+                                }
+
+                                console.log(rep)
+                                for(var key1 in rep){
+                                    if(repoArr.includes(rep[key1]["name"])){
+                                        tabledata2 += '<th>'+capitalizeFirstLetter(rep[key1]["name"])+'</th>';
+                                        repoArr.shift();
+                                    }
+                                    }
+
+                                console.log(reportArr)
+                                tabledata2 += '</tr></thead>';
+                                tabledata2 += '<tbody>';
+
+                for (var key in element["examScore"]){
+                    tabledata2 += '<tr>';
+                    tabledata2 += '<th scope="row">' + (element["examScore"][key]["exam-name"]) + '</td>';
+                    // tabledata2 += '<td>' + (element["examScore"][key]["maximum-mark"]) + '</td>';
+                    tabledata2 += '<td>' + (element["examScore"][key]["total-mark"])+ "/"+ (element["examScore"][key]["maximum-mark"]) +'</td>';
+
+                    tabledata2 += '<td>' + (element["examScore"][key]["grade"]) + '</td>';
+                    tabledata2 += '<td>' + (element["examScore"][key]["percentage"]) + '%</td>';
+                    tabledata2 += '<td>' + (element["examScore"][key]["rank"]) + '</td>';
+                    
+                    if(reportArr.length!=0){
+                        for(var i=0;i<reportArr.length;i++){
+                            // alert(reportArr.length)
+                            if(reportArr.includes(rep[val1]["name"])){
+                                if(rep[val1]["mark"]!=""){
+                                    tabledata2 += '<td>'+rep[val1]["mark"]+'</td>';
+                                }
+                                else{
+                                    tabledata2 += '<td>'+' - '+'</td>';
+                                }   
+                            }
+                            val1++;
+                        }
+                    } 
+                }
+                tabledata2 += '</tr>';
+                tabledata2 += '</tbody>'
+                table.innerHTML = tabledata2;
+            }
+        });
+        });
+      
+        }
+}
+    
+
+</script>
+
+<body>
+    <div id="teacher-div"></div>
+    <div class="container-fluid">
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    
+                    <!-- Container-->
+                    <div id='report_TextBoxesGroup' class='container bg-light p-3'>
+                        <h5 style="font-size:25px;font-weight:bold;" class="text-center pb-3 display-5">Progress Report</h5>
+                        <div>
+                            <table class="table" id="data-table1"></table>
+                            <div id="info-panel">
+                                <table class="table" id="data-table2"></table>
+                                <table class="table" id="data-table"></table>
+                            </div>
+                            <div class="row">
+                                <div class=col-sm-10></div>
+                                <div class=col-sm-1><input style="height:40px;display: none;" type='button'
+                                    value='Close' class="btn btn-danger mr-3" id='student_report_close_btn'
+                                    onclick='student_report_close();'>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

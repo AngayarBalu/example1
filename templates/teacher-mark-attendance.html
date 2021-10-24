@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\teacher.js"></script>
+    <script defer src="\static\index.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+  </head>
+
+  <script>
+    var dataObject;
+    var present = true;
+    var absent = false;
+    var array = []
+    var myArray1 = []
+    var std;
+    var sec;
+    var schoolname= ""
+    var count1 = 0 
+    
+    var enrolled_courses = {};
+    var regno = localStorage.getItem("regId");
+    var fd = new FormData();
+    fd.append("regId", regno);
+    fetch("/admin-portal/teacher-profile", {
+      method: "POST",
+      body: fd,
+    })
+      .then(function (response) {
+        //console.log(response);
+
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        enrolled_courses = data["enrolledCourses"];
+        console.log(JSON.stringify(enrolled_courses, null, "\t"));
+      });
+
+    async function getAll() {
+      let response = await fetch("/student/getAll", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/xxx-form",
+        },
+      });
+
+      let data = await response.json();
+
+      return data;
+    }
+
+    const data = getAll()
+      .then((data) => {
+        var dataObject = ObjectToArray(data);
+        myArray1 = [...dataObject];
+        main(dataObject);
+      })
+      .then(() => {})
+      .catch((err) => {
+        alert("error");
+      });
+    
+
+    function main(dataArray) {
+      dataArray.forEach((element) => {
+        std = element["class"];
+        sec = element["section"];
+        var mystd = localStorage.getItem('std');
+        var schoolname = localStorage.getItem("schoolname");
+        if (mystd in enrolled_courses) {
+          
+          for (value in enrolled_courses[mystd]) {
+            if(element["class"] == mystd && element["section"] == value && element["schoolname"]==schoolname){
+              count1++
+            }
+          }
+        }
+      });
+
+      if(count1==0){
+          document.getElementById('searchOption').style.display="none"
+          document.getElementById('heading').style.display="none"
+          document.getElementById('data-table').innerHTML = ""
+          var table = document.getElementById("data-table");
+          var mystd = localStorage.getItem('std');
+          var tabledata2 = "";
+          tabledata2 += `<thead><tr><td>No records found.</td></tr></thead>`;
+          table.innerHTML = tabledata2;
+      }
+      else{
+      var table = document.getElementById("data-table");
+      var mystd = localStorage.getItem('std');
+      var tabledata2 = "";
+      tabledata2 += `<thead class="thead-light">
+                                            <tr>
+                                            <th>Name</th>
+                                            <th>Register Number</th>
+                                            <th>Class</th>
+                                            <th>Forenoon</th>
+                                            <th>Afternoon</th>
+                                            </tr>
+                                        </thead>`;
+
+      dataArray.forEach((element) => {
+        std = element["class"];
+        sec = element["section"];
+        schoolname = localStorage.getItem("schoolname");
+        if (mystd in enrolled_courses) {
+          for (value in enrolled_courses[mystd]) {
+            if (element["class"] == mystd && element["section"] == value && element["schoolname"] == schoolname && element["isEnrolled"] == true) {
+              alert(value)
+              localStorage.setItem('section',value);
+              tabledata2 += "<tbody>";
+              tabledata2 += "<tr>";
+              tabledata2 += '<td>' + element["name"] + "</td>";
+              tabledata2 += "<td>" + element["regno"] + "</td>";
+              tabledata2 += "<td>" + element["class"] + " - " + element["section"] + "</td>";
+              tabledata2 += '<td><input type="radio" name="forenoon'+element["regno"]+'" id="forenoon-present'+element["regno"]+'" value="present" onclick="provideAttendance1('+element["regno"]+')" />  Present <input type="radio" name="forenoon'+element["regno"]+'" id="forenoon-absent'+element["regno"]+'" value="absent" onclick="provideAttendance1('+element["regno"]+')"/>  Absent</td>';
+              tabledata2 += '<td><input type="radio" name="afternoon'+element["regno"]+'" id="afternoon-present'+element["regno"]+'" value="present" onclick="provideAttendance2('+element["regno"]+')" />  Present <input type="radio" name="afternoon'+element["regno"]+'" id="afternoon-absent'+element["regno"]+'" value="absent" onclick="provideAttendance2('+element["regno"]+')"/>  Absent</td>';              
+              tabledata2 += "</tr>";
+              tabledata2 += "</tbody>";
+              table.innerHTML = tabledata2;
+            }
+          }
+        }
+      });
+      }
+      return;
+    }
+
+
+    
+    function provideAttendance1(rno){
+      var attendance = document.querySelector('input[name="forenoon'+rno+'"]:checked').value;
+      mark_attendance(rno,attendance,"forenoon")
+    }
+
+
+    function provideAttendance2(rno){
+      var attendance = document.querySelector('input[name="afternoon'+rno+'"]:checked').value;
+      mark_attendance(rno,attendance,"afternoon")
+    }
+
+    function mark_attendance(rno,attendance,time){
+      var std = localStorage.getItem('std');
+      var sec = localStorage.getItem('section')
+
+      alert(std)
+      alert(sec)
+      alert(schoolname)
+      alert(rno)
+      alert(attendance)
+      alert(time)
+      
+      
+      var fd = new FormData();
+      var todayDate = getCurrentDate();
+      
+      fd.append('section',sec)
+      fd.append('class',std)
+      fd.append('schoolname',schoolname)
+      fd.append('regno',rno)
+      fd.append('attendance',attendance)
+      fd.append('time',time)
+      fd.append('date',"23-10-2021")
+
+      fetch("/student/attendance", {
+      method: "POST",
+      body: fd,
+    }).then(function (response) {
+
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        if(data.status=="success"){
+          alert("success")
+        }
+        else{
+          alert("failed")
+        }
+      });
+
+    }
+
+
+    function getCurrentDate(){
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      today = dd + '-' + mm + '-' + yyyy;
+      return today;
+    }
+
+    function hello(elem){
+        var mystd = localStorage.getItem('std');
+        var myArray = []
+        myArray = [...myArray1];
+
+        var input1 = "";
+        input1 = document.getElementById('input').value
+        if(input1 !== ""){
+        var myArr = []
+        if (elem.value !== "") {
+            for (var i = 0; i < myArray.length; i++) {
+            if (myArray[i]["regno"].indexOf(elem.value) > -1) {
+                myArr.push(myArray[i])     
+            }
+        }
+
+        if(myArr.length==0){
+          for (var i = 0; i < myArray.length; i++) {
+            if ((myArray[i]["name"]).toLowerCase().indexOf((elem.value).toLowerCase()) > -1) { 
+                myArr.push(myArray[i])      
+            } 
+        }
+        }
+
+
+      if(myArr.length!=0){
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+
+
+        localStorage.setItem('std',"9");
+        var tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                      <tr>
+                                      <th>Name</th>
+                                      <th>Register Number</th>
+                                      <th>Class</th>
+                                      <th>Present</th>
+                                      <th>Absent</th>
+                                      </tr>
+                                  </thead>`;
+
+              myArr.forEach((element) => {
+                std = element["class"];
+                sec = element["section"];
+                schoolname = localStorage.getItem("schoolname");
+                if (mystd in enrolled_courses) {
+                  for (value in enrolled_courses[mystd]) {
+                    if (element["class"] == mystd && element["section"] == value && element["schoolname"] == schoolname && element["isEnrolled"] == true) {
+                      tabledata2 += "<tbody>";
+                      tabledata2 += "<tr>";
+                      tabledata2 += '<td>' + element["name"] + "</td>";
+                      tabledata2 += "<td>" + element["regno"] + "</td>";
+                      tabledata2 += "<td>" + element["class"] + " - " + element["section"] + "</td>";
+                      tabledata2 += '<td><input type="radio" name="present'+element["regno"]+'" id="present'+element["regno"]+'" value="present" onclick="provideAttendance('+element["regno"]+')" />  Present</td>';
+                      tabledata2 += '<td><input type="radio" name="absent'+element["regno"]+'" id="absent'+element["regno"]+'" value="absent" onclick="provideAttendance('+element["regno"]+')"/>  Absent</td>';
+                      tabledata2 += "</tr>";
+                      tabledata2 += "</tbody>";
+                      table.innerHTML = tabledata2;
+                    }
+                  }
+                }
+              });
+        }
+
+        else{
+          document.getElementById('data-table').innerHTML = ""
+          var table = document.getElementById("data-table");
+          var tabledata2 = "";
+          tabledata2 += `<thead><tr><td>No records found.</td></tr></thead>`;
+          table.innerHTML = tabledata2;
+        }
+        }
+        }
+        else if(input1 == ""){
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+        var tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                  <tr>
+                                  <th>Name</th>
+                                  <th>Register Number</th>
+                                  <th>Class</th>
+                                  <th>Present</th>
+                                  <th>Absent</th>
+                                  </tr>
+                              </thead>`;
+
+              myArray1.forEach((element) => {
+                std = element["class"];
+                sec = element["section"];
+                schoolname = localStorage.getItem("schoolname");
+                if (mystd in enrolled_courses) {
+                  for (value in enrolled_courses[mystd]) {
+                    if (element["class"] == mystd && element["section"] == value && element["schoolname"] == schoolname && element["isEnrolled"] == true) {
+                      tabledata2 += "<tbody>";
+                      tabledata2 += "<tr>";
+                      tabledata2 += '<td>' + element["name"] + "</td>";
+                      tabledata2 += "<td>" + element["regno"] + "</td>";
+                      tabledata2 += "<td>" + element["class"] + " - " + element["section"] + "</td>";
+                      tabledata2 += '<td><input type="radio" name="present'+element["regno"]+'" id="present'+element["regno"]+'" value="present" onclick="provideAttendance('+element["regno"]+')" />  Present <input type="radio" name="absent'+element["regno"]+'" id="absent'+element["regno"]+'" value="absent" onclick="provideAttendance('+element["regno"]+')"/>  Absent</td>';
+                      tabledata2 += '<td><input type="radio" name="present'+element["regno"]+'" id="present'+element["regno"]+'" value="present" onclick="provideAttendance('+element["regno"]+')" />  Present <input type="radio" name="absent'+element["regno"]+'" id="absent'+element["regno"]+'" value="absent" onclick="provideAttendance('+element["regno"]+')"/>  Absent</td>';
+                      tabledata2 += "</tr>";
+                      tabledata2 += "</tbody>";
+                      table.innerHTML = tabledata2;
+                    }
+                  }
+                }
+              });
+              }
+            }
+
+
+      function goback(){
+       var std = localStorage.getItem('std');
+       window.location.replace("/teacher/"+std+"th-standard")
+      }
+
+
+</script>
+
+  <body>
+    <div id="teacher-div"></div>
+    <div class="container-fluid">
+      <div class="p-3 m-3">
+        <div class="p-3 m-3">
+          <div class="container">
+            <!-- Container-->
+            <div id="report_TextBoxesGroup" class="container bg-light p-3">
+              <h5 style="font-size: 25px; font-weight: bold" class="text-center pb-3 display-5"id="heading"> Student Attendance </h5>
+
+                <div>
+                  <div class="row" id="searchOption">
+                    <div class="col-sm-8"></div>
+                      <div class="col-sm-4">
+                          <div class="input-icons">
+                              <i class="fa fa-search icon"></i>
+                              <input type="search" id="input" class="form-control input-field" onkeyup="hello(this)" placeholder="Search"
+                              aria-label="Search"/>
+                          </div>
+                      </div>
+                </div>
+              <br>
+                <div class="container">
+                  <table class="table" id="data-table"></table>
+                </div>
+                <div class="row">
+                  <div class="col-sm-10"></div>
+                  <div class="col-sm-2"><input type="button" class="btn btn-primary" onclick="goback()" value="Save"/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

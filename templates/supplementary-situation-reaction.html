@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var short_container = "";
+    var short_count = 0;
+    var short_heading = "";
+    function short_add_field() {
+        short_heading = document.getElementById("short_heading").value;
+        short_container = document.getElementById("short_a");
+        if (short_heading != "") {
+            if (short_count == 0) {
+                short_container.innerHTML = short_container.innerHTML +
+                    "<div id='short_" + short_count + "'><div class='form-group'><label for='question' style='font-weight: bold;'>Situation</label><div style='height:50px;overflow:auto;' class='form-control input_text' id='short_question" + short_count + "'contenteditable='true' data-placeholder='Type your question here...' cols='200' rows='100'></div><div class='form-group'><label for='answer' style='font-weight: bold;''>Answer</label><div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto' class='form-control input_text' id='short_answer" + short_count + "'contenteditable='true' data-placeholder='Type your answer here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='short_add_field();' id='short_addButton" + short_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=short_remove_field('short_" + short_count + "'); id='short_removeButton" + short_count + "'></div></div></div></div>";
+                short_count++;
+                if (short_count != 0) {
+                    document.getElementById("short_addButton").style.display = "none";
+                    document.getElementById("short_getvalue").style.display = "block";
+                    document.getElementById("short_back").style.display = "block";
+                }
+            }
+
+            else if (short_count > 0) {
+                var ques = document.getElementById('short_question' + (short_count - 1)).textContent;
+                var ans = document.getElementById('short_answer' + (short_count - 1)).textContent;
+                if (ques != "" && ans != "") {
+                    document.getElementById("short_removeButton" + (short_count - 1)).style.display = "none"
+                    document.getElementById("short_addButton" + (short_count - 1)).style.display = "none";
+                    short_container.innerHTML = short_container.innerHTML +
+                        "<div id='short_" + short_count + "'><div class='form-group'><label for='question' style='font-weight: bold;'>Situation</label><div style='height:50px;overflow:auto;' class='form-control input_text' id='short_question" + short_count + "'contenteditable='true' data-placeholder='Type your question here...' cols='200' rows='100'></div><div class='form-group'><label for='answer' style='font-weight: bold;''>Answer</label><div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto' class='form-control input_text' id='short_answer" + short_count + "'contenteditable='true' data-placeholder='Type your answer here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='short_add_field();' id='short_addButton" + short_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=short_remove_field('short_" + short_count + "'); id='short_removeButton" + short_count + "'></div></div></div></div>";
+                    short_count++;
+                    if (short_count != 0) {
+                        document.getElementById("short_addButton").style.display = "none";
+                        document.getElementById("short_getvalue").style.display = "block";
+                        document.getElementById("short_back").style.display = "block";
+                    }
+                } else {
+                    alert("Please enter above question and answer")
+                }
+            }
+
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function short_remove_field(short_id) {
+        if (short_count > 1) {
+            var short_myobj = document.getElementById(short_id);
+            short_myobj.remove();
+            short_count--;
+            document.getElementById("short_removeButton" + (short_count - 1)).style.display = "block";
+            document.getElementById("short_addButton" + (short_count - 1)).style.display = "block";
+        }
+
+        if (short_count == 0) {
+            document.getElementById("short_addButton").style.display = "block";
+            document.getElementById("short_getvalue").style.display = "none";
+            document.getElementById("short_back").style.display = "none";
+        }
+    }
+
+    function short_questions_back() {
+        window.location.replace("/teacher/teacher-notes/supplementary")
+    }
+
+    function short_getvalues() {
+        var short_ques = [];
+        var short_ans = [];
+        for (i = 0; i < short_count; i++) {
+            short_ques[i] = document.getElementById("short_question" + i).textContent;
+            short_ans[i] = document.getElementById("short_answer" + i).textContent;
+        }
+        if (short_ques.length == short_count) {
+            var arraySet = new Set(short_ques)
+            if (arraySet.has("")) {
+                alert("Please enter the above question")
+            }
+            else {
+                if (short_ans.length == short_count) {
+                    var arraySet2 = new Set(short_ans)
+                    if (arraySet2.has("")) {
+                        alert("Please enter the above answer")
+                    }
+                    else {
+                        var short_ques_obj = {};
+                        var short_ques_item = {};
+                        short_ques_obj = {
+                            "user": user_id,
+                            "standard": std,
+                            "section": sec,
+                            "schoolname": schoolname,
+                            "subject": subname,
+                            "lesson-type": ch_type,
+                            "chapter-no": ch_no,
+                            "chapter-heading": ch_heading,
+                            "heading": short_heading,
+                            "questions": toObject(short_ques),
+                            "answers": toObject(short_ans)
+                        }
+
+                        short_ques_item = {
+                            "heading": short_heading,
+                            "type":"NORMAL",
+                            "questions": toObject(short_ques),
+                            "answers": toObject(short_ans)
+                        }
+
+                        alert("Read the story again and write how these characters reacted in these situations is saved successfully");
+                        document.getElementById('short_getvalue').value = "Saved!";
+                        create_supplementary_situation_reaction(JSON.stringify(short_ques_obj));
+                        console.log(JSON.stringify(short_ques_obj, null, '\t'))
+                        document.getElementById("final_submit").style.display = "block";
+                        localStorage.setItem("supple_situation_final_object", JSON.stringify(short_ques_item));
+                    }
+
+                }
+
+            }
+        }
+    }
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='short_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Read the story again and write how these characters
+                                reacted in these situations:</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="short_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+
+                            <div id="short_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="short_add_field();" id='short_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="short_a"></div>
+                            <div id="short_sub" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="short_questions_back()"
+                                        id='short_back'></div>
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Save' class="btn btn-primary mr-3" onclick="short_getvalues();"
+                                        id='short_getvalue'></div>
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

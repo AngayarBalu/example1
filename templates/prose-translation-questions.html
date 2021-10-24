@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var translation_container = "";
+    var translation_count = 0;
+    var translation_heading = "";
+    function translation_add_field() {
+        translation_heading = document.getElementById("translation_heading").value;
+        translation_container = document.getElementById("translation_a");
+        if (translation_heading != "") {
+            if (translation_count == 0) {
+                translation_container.innerHTML = translation_container.innerHTML +
+                    "<div id='translation_" + translation_count + "'><div class='form-group'><label for='question' style='font-weight: bold;'>Question</label><div style='height:50px;overflow:auto;' class='form-control input_text' id='translation_question" + translation_count + "'contenteditable='true' data-placeholder='Type your question here...' cols='200' rows='100'></div><div class='form-group'><label for='answer' style='font-weight: bold;''>Answer</label><div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto' class='form-control input_text' id='translation_answer" + translation_count + "'contenteditable='true' data-placeholder='Type your answer here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='translation_add_field();' id='translation_addButton" + translation_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=translation_remove_field('translation_" + translation_count + "'); id='translation_removeButton" + translation_count + "'></div></div></div></div>";
+                translation_count++;
+                if (translation_count != 0) {
+                    document.getElementById("translation_addButton").style.display = "none";
+                    document.getElementById("translation_getvalue").style.display = "block";
+                    document.getElementById("translation_back").style.display = "block";
+                }
+            }
+
+            else if (translation_count > 0) {
+                var ques = document.getElementById('translation_question' + (translation_count - 1)).textContent;
+                var ans = document.getElementById('translation_answer' + (translation_count - 1)).textContent;
+                if (ques != "" && ans != "") {
+                    document.getElementById("translation_removeButton" + (translation_count - 1)).style.display = "none"
+                    document.getElementById("translation_addButton" + (translation_count - 1)).style.display = "none";
+                    translation_container.innerHTML = translation_container.innerHTML +
+                        "<div id='translation_" + translation_count + "'><div class='form-group'><label for='question' style='font-weight: bold;'>Question</label><div style='height:50px;overflow:auto;' class='form-control input_text' id='translation_question" + translation_count + "'contenteditable='true' data-placeholder='Type your question here...' cols='200' rows='100'></div><div class='form-group'><label for='answer' style='font-weight: bold;''>Answer</label><div class='row'><div class='col-sm-12'><div style='height:100px;overflow:auto' class='form-control input_text' id='translation_answer" + translation_count + "'contenteditable='true' data-placeholder='Type your answer here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='translation_add_field();' id='translation_addButton" + translation_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=translation_remove_field('translation_" + translation_count + "'); id='translation_removeButton" + translation_count + "'></div></div></div></div>";
+                    translation_count++;
+                    if (translation_count != 0) {
+                        document.getElementById("translation_addButton").style.display = "none";
+                        document.getElementById("translation_getvalue").style.display = "block";
+                        document.getElementById("translation_back").style.display = "block";
+                    }
+                } else {
+                    alert("Please enter above question and answer")
+                }
+            }
+
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function translation_remove_field(translation_id) {
+        if (translation_count > 1) {
+            var translation_myobj = document.getElementById(translation_id);
+            translation_myobj.remove();
+            translation_count--;
+            document.getElementById("translation_removeButton" + (translation_count - 1)).style.display = "block";
+            document.getElementById("translation_addButton" + (translation_count - 1)).style.display = "block";
+        }
+
+        if (translation_count == 0) {
+            document.getElementById("translation_addButton").style.display = "block";
+            document.getElementById("translation_getvalue").style.display = "none";
+            document.getElementById("translation_back").style.display = "none";
+        }
+    }
+
+    function translation_questions_back() {
+        window.location.replace("/teacher/teacher-notes/prose");
+    }
+
+    function translation_getvalues() {
+        var translation_ques = [];
+        var translation_ans = [];
+        for (i = 0; i < translation_count; i++) {
+            translation_ques[i] = document.getElementById("translation_question" + i).textContent;
+            translation_ans[i] = document.getElementById("translation_answer" + i).textContent;
+        }
+        if (translation_ques.length == translation_count) {
+            var arraySet = new Set(translation_ques)
+            if (arraySet.has("")) {
+                alert("Please enter the above question")
+            }
+            else {
+                if (translation_ans.length == translation_count) {
+                    var arraySet2 = new Set(translation_ans)
+                    if (arraySet2.has("")) {
+                        alert("Please enter the above answer")
+                    }
+                    else {
+                        var translation_ques_obj = {};
+                        var translation_ques_item = {}
+                        translation_ques_obj = {
+                            "user": user_id,
+                            "standard": std,
+                            "section": sec,
+                            "schoolname": schoolname,
+                            "subject": subname,
+                            "lesson-type": ch_type,
+                            "chapter-no": ch_no,
+                            "chapter-heading": ch_heading,
+                            "heading": translation_heading,
+                            "questions": toObject(translation_ques),
+                            "answers": toObject(translation_ans)
+                        }
+
+                        translation_ques_item = {
+                            "heading": translation_heading,
+                            "type":"NORMAL",
+                            "questions": toObject(translation_ques),
+                            "answers": toObject(translation_ans)
+                        }
+
+                        alert("Translation questions is saved successfully");
+                        document.getElementById('translation_getvalue').value = "Saved!";
+                        create_translation_questions(JSON.stringify(translation_ques_obj));
+                        console.log(JSON.stringify(translation_ques_obj, null, '\t'))
+                        document.getElementById("final_submit").style.display = "block";
+                        localStorage.setItem("translation_final_object", JSON.stringify(translation_ques_item));
+                    }
+
+                }
+
+            }
+        }
+    }
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='translation_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Translation Questions</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="translation_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+
+                            <div id="translation_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="translation_add_field();"
+                                        id='translation_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="translation_a"></div>
+                            <div id="translation_sub" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="translation_questions_back()"
+                                        id='translation_back'></div>
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Save' class="btn btn-primary mr-3" onclick="translation_getvalues();"
+                                        id='translation_getvalue'></div>
+                            </div>
+
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

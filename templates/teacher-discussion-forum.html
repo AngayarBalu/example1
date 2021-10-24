@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\teacher.js"></script>
+    <script defer src="\static\index.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+  </head>
+  
+  <script>
+    var dataObject;
+    var array = []
+    var myArray1 = []
+    var subs = []
+    var count1 = 0 
+    var doubt_request = 0
+    var doubt_request1 = 0
+    var doubt_request2 = 0
+    var d_req = 0
+    var enrolled_courses = {};
+    var regno = localStorage.getItem("regId");
+    var fd = new FormData();
+    fd.append("regId", regno);
+    fetch("/admin-portal/teacher-profile", {
+      method: "POST",
+      body: fd,
+    })
+      .then(function (response) {
+
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        enrolled_courses = data["enrolledCourses"];
+        console.log(JSON.stringify(enrolled_courses, null, "\t"));
+      });
+
+    async function getAll() {
+      let response = await fetch("/clarifications/getAll", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/xxx-form",
+        },
+      });
+
+      let data = await response.json();
+      return data;
+    }
+
+    const data = getAll()
+      .then((data) => {
+        var dataObject = ObjectToArray(data);
+        console.log(data)
+        myArray1 = [...dataObject];
+        main(dataObject);
+      })
+      .then(() => {})
+      .catch((err) => {
+        alert("error");
+      });
+
+    function main(dataArray) {
+      dataArray.forEach((element) => {
+        std = element["class"];
+        sec = element["section"];
+        var schoolname = localStorage.getItem("schoolname");
+        for (val in enrolled_courses){
+          for (value in enrolled_courses[val]) {
+            var doubt_request2 = 0
+            for (key in element["clarifications"]){
+                if(element["clarifications"][key]["answer"]==""){
+                    doubt_request2++;
+                }
+            }
+            if (doubt_request2 != 0 && element["class"] == val && element["section"] == value && element["schoolname"] == schoolname) {
+                count1++
+            }
+          }
+        }
+      });
+
+
+      if(count1==0){
+          document.getElementById('searchOption').style.display="none"
+          document.getElementById('heading').style.display="none"
+          document.getElementById('data-table').innerHTML = ""
+          var table = document.getElementById("data-table");
+          var tabledata2 = "";
+          tabledata2 += `<thead><tr><td>No doubts asked.</td></tr></thead>`;
+          table.innerHTML = tabledata2;
+      }
+
+      else{
+        var table = document.getElementById("data-table")
+        var tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                              <tr>
+                                              <th>Register Number</th>
+                                              <th>Class</th>
+                                              <th>Section</th>
+                                              <th>Requests</th>
+                                              <th>Reply</th>
+                                              </tr>
+                                          </thead>`;
+
+        dataArray.forEach((element) => {
+          
+          var schoolname = localStorage.getItem("schoolname");   
+          
+          
+            for (val in enrolled_courses){
+              for (value in enrolled_courses[val]) {
+                  var doubt_request = 0;
+                  for (key in element["clarifications"]){
+                      if(element["clarifications"][key]["answer"]==""){
+                        doubt_request++;
+                      }
+                  }
+                  var doubt_req = 0
+                  if (doubt_request != 0 && element["class"] == val && element["section"] == value && element["schoolname"] == schoolname) {
+                    
+                    // for (val11 in enrolled_courses){
+                    //   alert(val11)
+                    //   for (val12 in enrolled_courses[val11]) {
+                    //     alert(val12)
+                    //     for(val13 in enrolled_courses[val11][val12]){
+                    //       alert(val13)
+                    //       if(enrolled_courses[val11]==element["class"]){
+                    //         alert("1")
+                    //         if(enrolled_courses[val11][val12]==element["section"]){
+                    //           subs.push(enrolled_courses[val11][val12][val13])
+                    //           console.log(enrolled_courses[val11][val12][val13])
+                    //           subs = []
+                    //         }
+                    //       }
+                    //     }
+                    //   }
+                    // }  
+                    
+                    tabledata2 += "<tbody>";
+                    tabledata2 += "<tr>";
+                    tabledata2 += "<td>" + element["regno"] + "</td>";
+                    tabledata2 += "<td>" + element["class"] + "</td>";
+                    tabledata2 += "<td>" + element["section"] + "</td>";
+                    
+                    for (key in element["clarifications"]){
+                      if(element["clarifications"][key]["answer"]==""){
+                          doubt_req++;
+                      }
+                    }
+                    
+                    d_req = doubt_req
+                    tabledata2 += "<td>" + doubt_req + "</td>";
+                    stringifiedObj = element
+                    tabledata2 += '<td><input type="button" class="form-control btn btn-info" style="width:120px;" value="Reply" onclick="reply(stringifiedObj)"/></td>';
+                    tabledata2 += "</tr>";
+                    tabledata2 += "</tbody>";
+                    table.innerHTML = tabledata2;
+                }
+              }
+            }
+          });  
+        }
+      return;
+    }
+
+    function reply(doubts){
+        console.log(JSON.stringify(doubts))
+        localStorage.setItem('no_of_requests',d_req)
+        localStorage.setItem('doubts',JSON.stringify(doubts))
+        window.location.replace('/teacher/discussion-forum-reply')
+    }
+
+
+    function hello(elem){
+
+        var myArray = []
+        myArray = [...myArray1];
+
+        var input1 = "";
+        input1 = document.getElementById('input').value
+        if(input1 !== ""){
+        var myArr = []
+        if (elem.value !== "") {
+            for (var i = 0; i < myArray.length; i++) {
+            if (myArray[i]["regno"].indexOf(elem.value) > -1) {
+                myArr.push(myArray[i])     
+            }
+        }
+
+        if(myArr.length!=0){
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+        var tabledata2 = "";
+
+        tabledata2 += `<thead class="thead-light">
+                                              <tr>
+                                              <th>Register Number</th>
+                                              <th>Class</th>
+                                              <th>Section</th>
+                                              <th>Requests</th>
+                                              <th>Reply</th>
+                                              </tr>
+                                          </thead>`;
+
+        myArr.forEach((element) => {
+          var schoolname = localStorage.getItem("schoolname");          
+            for (val in enrolled_courses){
+              for (value in enrolled_courses[val]) {
+                var doubt_request = 0
+                  for (key in element["clarifications"]){
+                      if(element["clarifications"][key]["answer"]==""){
+                          doubt_request++;
+                      }
+                  }
+                  if (doubt_request != 0 && element["class"] == val && element["section"] == value && element["schoolname"] == schoolname) {
+                      tabledata2 += "<tbody>";
+                      tabledata2 += "<tr>";
+                      tabledata2 += "<td>" + element["regno"] + "</td>";
+                      tabledata2 += "<td>" + element["class"] + "</td>";
+                      tabledata2 += "<td>" + element["section"] + "</td>";
+                      
+                      var doubt_request1 = 0
+                      for (key in element["clarifications"]){
+                        if(element["clarifications"][key]["answer"]==""){
+                            doubt_request1++;
+                        }
+                      }
+                      tabledata2 += "<td>" + doubt_request1 + "</td>";
+                      stringifiedObj = element
+                      tabledata2 += '<td><input type="button" class="form-control btn btn-info" style="width:120px;" value="Reply" onclick="reply(stringifiedObj)"/></td>';
+                      tabledata2 += "</tr>";
+                      tabledata2 += "</tbody>";
+                      table.innerHTML = tabledata2;
+                  }
+            }
+          }
+        });  
+      }
+
+        else{
+          document.getElementById('data-table').innerHTML = ""
+          var table = document.getElementById("data-table");
+          var tabledata2 = "";
+          tabledata2 += `<thead><tr><td>No doubts asked.</td></tr></thead>`;
+          table.innerHTML = tabledata2;
+        }
+        }
+        }
+        else if(input1 == ""){
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+        var tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                              <tr>
+                                              <th>Register Number</th>
+                                              <th>Class</th>
+                                              <th>Section</th>
+                                              <th>Requests</th>
+                                              <th>Reply</th>
+                                              </tr>
+                                          </thead>`;
+
+        myArray1.forEach((element) => {
+          var schoolname = localStorage.getItem("schoolname");          
+            for (val in enrolled_courses){
+              for (value in enrolled_courses[val]) {
+                var doubt_request = 0
+                  for (key in element["clarifications"]){
+                      if(element["clarifications"][key]["answer"]==""){
+                          doubt_request++;
+                      }
+                  }
+                  if (doubt_request != 0 && element["class"] == val && element["section"] == value && element["schoolname"] == schoolname) {
+                      tabledata2 += "<tbody>";
+                      tabledata2 += "<tr>";
+                      tabledata2 += "<td>" + element["regno"] + "</td>";
+                      tabledata2 += "<td>" + element["class"] + "</td>";
+                      tabledata2 += "<td>" + element["section"] + "</td>";
+                      
+                      var doubt_request1 = 0
+                      for (key in element["clarifications"]){
+                        if(element["clarifications"][key]["answer"]==""){
+                            doubt_request1++;
+                        }
+                      }
+                      tabledata2 += "<td>" + doubt_request1 + "</td>";
+                      stringifiedObj = element
+                      tabledata2 += '<td><input type="button" class="form-control btn btn-info" style="width:120px;" value="Reply" onclick="reply(stringifiedObj)"/></td>';
+                      tabledata2 += "</tr>";
+                      tabledata2 += "</tbody>";
+                      table.innerHTML = tabledata2;
+                  }
+            }
+          }
+        });  
+        }
+        }
+</script>
+
+  <body>
+    <div class="bs-example">
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+          <a href="#" class="navbar-brand"><b>Eduscribe</b></a>
+          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+              <div class="navbar-nav">
+                  <a href="\teacher\home-page" class="nav-item nav-link">Home</a>
+                  
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                          data-toggle="dropdown">Upload contents</a>
+                      <div class="dropdown-menu">
+                          <a href="\teacher\book-contents" class="dropdown-item">Book contents</a>
+                          <a href="\teacher\teacher-notes" class="dropdown-item">Your Notes</a>
+                          <a href="\teacher\file-details" class="dropdown-item">File Details</a>
+                          <a href="\teacher\upload-assignment" class="dropdown-item">Assignments</a>
+                      </div>
+                  </div>
+
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                          data-toggle="dropdown">Students</a>
+                      <div class="dropdown-menu">
+                          <a href="\teacher\9th-standard" class="dropdown-item">9th Standard</a>
+                          <a href="\teacher\10th-standard" class="dropdown-item">10th Standard</a>
+                          <a href="\teacher\11th-standard" class="dropdown-item">11th Standard</a>
+                          <a href="\teacher\12th-standard" class="dropdown-item">12th Standard</a>
+
+                      </div>
+                  </div>
+
+                  <a href="\teacher\notifications" class="nav-item nav-link">&nbsp;&nbsp;Notifications 🔔</a>
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                          data-toggle="dropdown">Enrollments</a>
+                      <div class="dropdown-menu">
+                          <a href="\teacher\sslc-enrollment" class="dropdown-item">SSLC</a>
+                          <a href="\teacher\hsc-enrollment" class="dropdown-item">HSC</a>
+                      </div>
+                  </div>
+
+
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                          data-toggle="dropdown">Time tables</a>
+                      <div class="dropdown-menu">
+                          <a href="\teacher\view-class-time-table" class="dropdown-item">Class - Time table</a>
+                          <a href="\teacher\exam-time-table" class="dropdown-item">Exam - Time table</a>
+                      </div>
+                  </div>
+                  
+                  
+              </div>
+
+              <a href="\teacher\discussion-forum" class="nav-item nav-link">Discussion Forum</a>
+              
+              <div class="navbar-nav">
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                          data-toggle="dropdown">Settings</a>
+                      <div class="dropdown-menu">
+                          <a href="\teacher\profile" class="dropdown-item">My Profile</a>
+                          <!-- <a href="" class="dropdown-item">Time Table</a> -->
+                          <a class="dropdown-item" onclick="logout()">Log Out</a>
+                      </div>
+                  </div>
+
+              </div>
+
+          </div>
+      </nav>
+  </div>
+    <div class="container-fluid">
+      <div class="p-3 m-3">
+        <div class="p-3 m-3">
+          <div class="container">
+            <!-- Container-->
+            <div id="report_TextBoxesGroup" class="container bg-light p-3">
+              <h5 style="font-size: 25px; font-weight: bold" class="text-center pb-3 display-5" id="heading"> Discussion Forum </h5>
+
+                <div>
+                  <div class="row" id="searchOption">
+                    <div class="col-sm-8"></div>
+                      <div class="col-sm-4">
+                          <div class="input-icons">
+                              <i class="fa fa-search icon"></i>
+                              <input type="search" id="input" class="form-control input-field" onkeyup="hello(this)" placeholder="Search"
+                              aria-label="Search"/>
+                          </div>
+                      </div>
+                </div>
+              <br>
+                <div class="container">
+                  <div id="info-panel"></div>
+
+                  <table class="table" id="data-table"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

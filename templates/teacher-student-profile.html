@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script defer src="\static\teacher.js"></script>
+	<script defer src="\static\index.js"></script>
+	<link rel="stylesheet" href="\static\login-page.css">
+	<link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+    <style>
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bs-example">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a href="#" class="navbar-brand"><b>Eduscribe</b></a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="\teacher\home-page" class="nav-item nav-link">Home</a>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Upload contents</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\book-contents" class="dropdown-item">Book contents</a>
+                            <a href="\teacher\teacher-notes" class="dropdown-item">Your Notes</a>
+                            <a href="\teacher\file-details" class="dropdown-item">File Details</a>
+                            <a href="\teacher\upload-assignment" class="dropdown-item">Assignments</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Students</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\9th-standard" class="dropdown-item">9th Standard</a>
+                            <a href="\teacher\10th-standard" class="dropdown-item">10th Standard</a>
+                            <a href="\teacher\11th-standard" class="dropdown-item">11th Standard</a>
+                            <a href="\teacher\12th-standard" class="dropdown-item">12th Standard</a>
+
+                        </div>
+                    </div>
+
+                    <a href="\teacher\notifications" class="nav-item nav-link">&nbsp;&nbsp;Notifications 🔔</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Enrollments</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\sslc-enrollment" class="dropdown-item">SSLC</a>
+                            <a href="\teacher\hsc-enrollment" class="dropdown-item">HSC</a>
+                        </div>
+                    </div>
+
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Time tables</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\view-class-time-table" class="dropdown-item">Class - Time table</a>
+                            <a href="\teacher\exam-time-table" class="dropdown-item">Exam - Time table</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                <a href="\teacher\discussion-forum" class="nav-item nav-link">Discussion Forum</a>
+                
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Settings</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\profile" class="dropdown-item">My Profile</a>
+                            <!-- <a href="" class="dropdown-item">Time Table</a> -->
+                            <a class="dropdown-item" onclick="logout()">Log Out</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <br><br>
+        <div class="row"><div class="col-sm-4"><h3 style="font-weight: bold;">My Profile</h3></div><div class="col-sm-6"></div><div class="col-sm-2"><input style="height:40px;" type='button'
+            value='Edit profile' class="btn btn-primary mr-3" id="edit-details" onclick='editDetails();'></div></div><br>
+        <table class="table" id='live-table'>
+            <tr>
+                <th>Name</th>
+                <th id="name"></th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th id="regno"></th>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <th id="role"><label>Student</label></th>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <th id="dob"></th>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <th id="gender"></th>
+            </tr>
+            <tr>
+                <th>Enrolled courses</th>
+                <th id="enrolledCourses"></th>
+            </tr>
+            <tr>
+                <th>Class</th>
+                <th id="class"></th>
+            </tr>
+            <tr>
+                <th>Section</th>
+                <th id="section"></th>
+            </tr>
+            <tr>
+                <th>School name</th>
+                <th id="schoolname"></th>
+            </tr>
+            <tr>
+                <th>Mobile Number</th>
+                <th id="mobile"></th>
+            </tr>
+            <tr>
+                <th>Aadhar Number</th>
+                <th id="aadhar"></th>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <th id="address"></th>
+            </tr>
+            <tr>
+                <th>Pincode</th>
+                <th id="pincode"></th>
+            </tr>
+        </table>
+        <div class="row"><div class="col-sm-11"></div><div class="col-sm-1"><input style="height:40px;" type='button'
+            value='close' class="btn btn-danger mr-3" id="close-profile" onclick='close_profile();'></div></div><br>
+
+    </div>
+
+</body>
+<script>
+    var standard = "";
+    var regno = localStorage.getItem('regno')
+    var fd = new FormData();
+    fd.append('regno', regno);
+    fetch('/admin-portal/student-profile', {
+        method: 'POST',
+        body: fd
+    }).then(function (response) {
+
+        //console.log(response);
+
+        return response.json();
+
+    }).then(function (data) {
+        console.log(data)
+        document.getElementById('name').innerHTML = data["name"];
+        document.getElementById('regno').innerHTML = data["regno"];
+        document.getElementById('dob').innerHTML = data["dob"];
+        document.getElementById('gender').innerHTML = data["sex"];
+        document.getElementById('class').innerHTML = data["class"];
+        standard = data["class"];
+        document.getElementById('section').innerHTML = data["section"];
+        var courses = ""
+        for (key in data["enrolledCourses"]) {
+                    
+                    for (val in data["enrolledCourses"][key]) {
+
+                        courses += data["enrolledCourses"][key][val];
+
+                    }
+                    courses += ','
+                }
+        document.getElementById('mobile').innerHTML = data["mobile"];
+        document.getElementById('enrolledCourses').innerHTML = courses;
+        document.getElementById('aadhar').innerHTML = data["aadhar"];
+        document.getElementById('schoolname').innerHTML = data["schoolname"];
+        document.getElementById('address').innerHTML = data["address"];
+        document.getElementById('pincode').innerHTML = data["pincode"];
+    });
+
+function close_profile(){
+    console.log(standard)
+    window.location.replace("/teacher/"+standard+"th-standard");
+}
+</script>
+
+</html>

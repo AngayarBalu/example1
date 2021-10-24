@@ -1,0 +1,493 @@
+<html>
+
+<head>
+    <title>Question Paper Setting</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <!-- <script type="text/javascript" src="js/mark.js"></script> -->
+    <script src="\static\mark.js" ></script>
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+
+    <style type="text/css">
+        label {
+            font-weight: bold;
+            font-size: medium;
+        }
+
+        [contenteditable=true]:empty:not(:focus):before {
+            content: attr(data-placeholder)
+        }
+    </style>
+
+</head>
+
+<body>
+    <script type="text/javascript">
+        var teacherId = localStorage.getItem("regId");
+        var pass_word = localStorage.getItem("password");
+
+        // var teacherId = "5001";
+
+        $(document).ready(function () {
+            var newTextBoxDiv;
+            var counter = 1;
+            var c = 65;
+            var c1 = 65;
+            var count1 = 0;
+            var count2 = 0;
+            var select = 1;
+            var cnt = 1;
+            var instruction = "";
+            var exam_date = 0;
+            var school_name = "";
+            var test_type = "";
+            var standard = "";
+            var max_hrs = 0;
+            var max_mins = 0;
+            var sub_name = "";
+            var cnt_part = 1;
+            var types = {};
+            var sec_mark = [];
+            var part_marks = [];
+            var part_marks1 = {};
+            var sec_title = [];
+            var sec_sum = 0;
+            var part_sum = 0;
+            var arr1 = [];
+            var number = 1;
+            var number2 = 1;
+
+
+            $("#addButton").click(function () {
+                if (number > 1) {
+                    $('#ques_form').empty();
+                }
+                number++;
+                school_name = document.getElementById('schoolname').value;
+                standard = document.getElementById('standard').value;
+                test_type = document.getElementById('test-type').value;
+                count1 = $("#textbox0").val();
+                count2 = $("#marks").val();
+                sub_name = $("#subname").val();
+                max_hrs = $("#hrs").val();
+                max_mins = $("#mins").val();
+                instruction = $("#ins").val();
+                exam_date = $('#exam_date').val();
+                exam_date = exam_date.split("-").reverse().join("-");
+                counter = 1;
+                c = 65;
+
+                //alert("Sections count : " + count1);
+
+
+                if (count1 != "" && standard != "" && test_type != "" && count2 != "" && sub_name != "" && max_hrs != "" && max_mins != "" && instruction != "" && exam_date != 0) {
+                    
+                    if ((max_hrs != "00" || max_mins != "00")) {
+                        $("#ques_form").append("<br>" + "<center><h4>Select titles and enter no. of parts and section marks</h4><br></center>");
+                        for (i = 0; i < count1; i++) {
+
+                            var res = String.fromCharCode(c);
+                            var newTextBoxDiv = $(document.createElement('div'))
+                                .attr("id", 'TextBoxDiv' + counter);
+                            newTextBoxDiv.after().html('<label>Section - ' + res + ' : </label>' + '&nbsp;' +
+                                '<div class="row"><div class="col-sm-4"><select class="form-control" id="sec_title' + counter + '" name="sec_title' + counter + '" ><option>Titles</option><option>VOCABULARY</option><option>GRAMMAR</option><option>PROSE</option><option>POETRY</option><option>LANGUAGE FUNCTIONS</option><option>NON-DETAILED</option><option>LANGUAGE FUNCTIONS</option><option>COMMUNICATIVE SKILLS</option><option>EXPANSION OF IDEAS</option></select></div>' +
+                                '<div class="col-sm-4"><input type="text" name="textbox' + counter +
+                                '" id="textbox' + counter + '" value=""  class="form-control input-lg mt-2 mt-md-0" placeholder="Number of parts"></div>' +
+                                '<div class="col-sm-4"><input type="text" name="mark' + counter +
+                                '" id="section_mark' + counter + '" value=""   class="form-control input-lg mt-2 mt-md-0" placeholder="Section Marks"></div><br><br>');
+
+                            newTextBoxDiv.appendTo("#ques_form");
+                            counter++;
+                            c++;
+                        }
+                        var newTextBoxDiv1 = $(document.createElement('div'))
+                            .attr("id", 'TextBoxDiv' + counter);
+                        newTextBoxDiv1.html('<br><input type="button" id="getButtonValue"  class="test btn btn-primary" value="Create Parts" >');
+
+                        newTextBoxDiv1.appendTo("#ques_form");
+                    }
+
+                    else{
+                        alert("your selected hours or minutes value in 00. change hours or minutes value");
+                    }
+
+                }
+                else {
+                    alert("Please enter all the fields");
+                }
+
+            });
+
+            $(document).on('click', "#getButtonValue", function () {
+                select = 1;
+                types = {};
+                sec_mark = [];
+                part_marks = [];
+                part_marks1 = {};
+                sec_title = [];
+                var c2 = 65;
+                for (i = 1; i <= count1; i++) {
+                    var res2 = String.fromCharCode(c2);
+                    sec_title[i] = $('#sec_title' + i).val();
+                    //alert("Selected Title :" + sec_title[i]);
+                    c2++;
+                }
+
+
+                var arr = [];
+
+                for (i = 1; i <= count1; i++) {
+                    arr[i] = parseInt($('#textbox' + i).val());
+                    //alert("Section " + i + " - No.of.Parts : " + arr[i]);
+                    arr1[i] = arr[i];
+                }
+
+                for (i = 1; i <= count1; i++) {
+                    sec_mark[i] = parseInt($('#section_mark' + i).val());
+                    //alert("No.of.Marks : " + sec_mark[i]);
+                }
+                sec_sum = 0;
+                for (i = 1; i <= count1; i++) {
+
+                    sec_sum += sec_mark[i];
+
+                }
+
+
+
+                if (count2 != 0 && sec_mark.length != 0) {
+                    if (count2 != sec_sum) {
+                        alert("Check total marks and section marks");
+                        alert("total mark - " + count2 + " / Section marks - " + sec_sum);
+
+                    }
+                    else {
+
+                        if (number > 1) {
+                            $("#sec_container").empty();
+
+                        }
+                        number2++;
+                        $("#sec_container").append("<br>" + "<center><h4>Select Headings and give No. of questions</h4><br></center>");
+                        counter = 1;
+                        var c3 = 65;
+                        for (i = 0; i < count1; i++) {
+                            var res3 = String.fromCharCode(c3);
+                            $("#sec_container").append('<br><center>' + '<label style="font: bold;">Section - ' + res3 + '  (  ' + '</label>' +
+                                '<label>' + sec_title[i + 1] + ' )' + '</label>' + '</center>');
+                            var k = 1;
+                            var roman = 0;
+                            c3++;
+                            for (j = 1; j <= arr[i + 1]; j++) {
+
+                                roman = integer_to_roman1(k);
+                                var p = "Part - " + roman;
+
+                                $("#sec_container").append('<div class="form-group"><div class="form-inline mb-3"><div class="form-group mb-2 px-2 px-md-2"><label style="font-weight: bold;" class="pe-3">' + p + '</label><select style="padding:10px;" id="myFilter' + select + '" multiple="multiple" class="multiple-select"><option>Synonyms with paragraph</option><option>Synonyms</option><option>Antonyms with paragraph</option><option>Antonyms</option><option>Answer the following - I (Vocabulary)</option><option>Answer the following - I (Grammar)</option><option>Answer the following - II (Grammar)</option><option>Punctuation</option><option>Short questions</option><option>Paragraph questions (Prose)</option><option>Memory poem</option><option>Poetic lines with questions</option><option>Figure of speech</option><option>Paragraph questions (Poem)</option><option>Comprehension(prose)</option><option>Error Spotting</option><option>Image Comprehension</option><option>Fill the paragraph with appropriate phrases</option><option>Identify character or speaker</option><option>Match the following appropriately</option><option>Choose the correct answer</option><option>Comprehension questions(supply)</option><option>Study the mind map and fill in the blanks</option><option>Paragraph questions ( Supplementary )</option><option>Note-making or Summarise notes</option><option>Dialogue writing (Fill in the blanks)</option><option>Dialogue writing</option><option>Letter writing questions</option><option>Letter writing ( Formal )</option><option>Letter writing ( Informal )</option><option>Advertisement questions</option><option>Expand the headlines</option><option>Study the pie-chart and answer the questions</option><option>Write a paragraph using outlines</option><option>Match the following products and slogans appropriately</option><option>Observe the map and write the instructions</option><option>Read the poem and complete the paraphrase</option><option>Translation</option><option>Picture comprehension</option><option>Translation and Picture comprehension</option></div>' + '<div class="form-group mb-2 ml-2 ml-md-2 px-2 px-md-2"><input type="text" id="part_mark' + select + '" value="" class="form-control" placeholder="Part Marks"></div></div></div><br>');
+                                $('#myFilter' + select).multipleSelect({
+
+                                    placeholder: 'Select Question Types'
+
+                                });
+                                k++;
+                                select++;
+                            }
+                            counter++;
+                        }
+
+
+                        $("#sec_container").append('<div class="row"><div class="col-sm-1"><input type="button" id="store"  class="test btn btn-primary" value="Submit"></div><div class="col-sm-8"><label></label></div><div class="col-sm-2"><input type="button" id="next"  class="test btn btn-primary"  value="Proceed >" ></div></div>');
+
+                        $('#next').click(function () {
+                            location.href = "/template/select";
+                            // location.href = "Template_selection(comb).html";
+                        });
+
+                        $('#store').click(function () {
+
+                            part_sum = 0;
+                            cnt_part = 1;
+                            cnt = 1;
+                            for (n = 1; n <= count1; n++) {
+
+                                part_sum = 0;
+                                for (m = 1; m <= arr1[n]; m++) {
+                                    part_marks = [];
+
+                                    part_marks[m] = parseInt($('#part_mark' + cnt_part).val());
+                                    //alert("Part Marks : " + part_marks[m]);
+                                    part_marks1[cnt_part] = part_marks[m];
+                                    part_sum += part_marks[m];
+
+                                    cnt_part++;
+                                }
+
+                                if (part_sum != sec_mark[n]) {
+                                    alert("Check your part" + n + " and section marks" + sec_mark[n]);
+                                }
+                                else {
+                                    console.log("Section - " + n);
+                                    let obj = 0;
+                                    let d = {};
+                                    for (m = 1; m <= arr1[n]; m++) {
+
+                                        var a = $('#myFilter' + cnt).val();
+                                        //alert("Template Types : " + a);
+                                        if (a == 0) {
+                                            alert("select the question type for each part");
+                                        }
+                                        else {
+                                            console.log("Part - " + m);
+                                            console.log(" [ " + a + " ] ");
+                                            types[cnt] = a;
+                                            cnt++;
+                                        }
+                                        d[obj] = types;
+
+                                    }
+
+                                    console.log(JSON.stringify(types));
+                                    console.log(d);
+                                }
+
+                            }
+
+                            if (part_marks.length != 0 && types.length != 0) {
+                                localStorage.setItem("regId", teacherId);
+                                localStorage.setItem("School_name", school_name);
+                                localStorage.setItem("Standard", standard);
+                                localStorage.setItem("Subject_name", sub_name);
+                                localStorage.setItem("Type_of_test", test_type);
+                                localStorage.setItem("Total_Marks", parseInt(count2));
+                                localStorage.setItem("Section_Count", parseInt(count1));
+                                localStorage.setItem("Selection_of_titles", JSON.stringify(sec_title))
+                                localStorage.setItem("No_of_parts", JSON.stringify(arr1));
+                                localStorage.setItem("Each_section_marks", JSON.stringify(sec_mark));
+                                localStorage.setItem("Selection_question_types", JSON.stringify(types));
+                                localStorage.setItem("Each_part_marks", JSON.stringify(part_marks1));
+                                localStorage.setItem("Maximum hours", parseInt(max_hrs));
+                                localStorage.setItem("Maximum minutes", parseInt(max_mins));
+                                localStorage.setItem("Instructions", instruction);
+                                localStorage.setItem("Name of the subject", sub_name);
+                                localStorage.setItem("Exam_date", exam_date);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+    </head>
+
+    <body>
+        <div class="jumbotron" style="padding-bottom:20px;padding-top:20px;">
+            <center>
+                <div class='row'>
+                    <div class='col-sm-1'></div>
+                    <div class='col-sm-1'><img src="\static\filename.jpg" alt="Eduscribe"
+                            style="width:100px;height:100px;"></div><br>
+                    <div class='col-sm-8'>
+                        <h2 style='padding-top: 20px;'>Form for English Question Paper</h2>
+                    </div>
+                </div>
+            </center>
+        </div>
+        <div class="container p-5">
+            <div id='TextBoxesGroup'>
+                <div id="TextBoxDiv1">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class='row'>
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3">School Name</label>
+                                </div>
+                                <div class='col-sm-10'><input type="text" class="form-control" id="schoolname"
+                                        placeholder="Enter School Name"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class='row'>
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3">Standard</label>
+                                </div>
+                                <div class='col-sm-4'>
+                                    <select id="standard" class="form-control">
+                                        <option value=""> -- Select Standard -- </option>
+                                        <option value="8th Standard">8th Standard</option>
+                                        <option value="9th Standard">9th Standard</option>
+                                        <option value="10th Standard">10th Standard</option>
+                                        <option value="11th Standard">11th Standard</option>
+                                        <option value="12th Standard">12th Standard</option>
+                                    </select>
+                                </div>
+
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3"> Type of test
+                                    </label></div>
+                                <div class='col-sm-4'>
+                                    <select id="test-type" class="form-control">
+                                        <option value=""> -- Select Examination -- </option>
+                                        <option>SSLC Examination</option>
+                                        <option>HSC Examination</option>
+                                        <option>Mid-term test</option>
+                                        <option>Quarterly Examination</option>
+                                        <option>Half-yearly Examination</option>
+                                        <option>Annual Examination</option>
+                                        <option>Monthly test</option>
+                                        <option>Class test</option>
+                                        <option>Revision test</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class='row'>
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3">Maximum
+                                        Marks</label></div>
+                                <div class='col-sm-4'><input type="text" class="form-control" id="marks"
+                                        placeholder="Maximum Marks (enter numbers only)"></div>
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3">Exam Date</label>
+                                </div>
+                                <div class='col-sm-4'><input type="date" class="form-control" id="exam_date"
+                                        placeholder="Exam Date"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class='row'>
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3">Duration</label>
+                                </div>
+                                <div class='col-sm-2'><select id="hrs" class="form-control">
+                                        <option value=""> -- Hours -- </option>
+                                        <option>00</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select></div>
+                                <div class='col-sm-2'><select id="mins" class="form-control">
+                                        <option value=""> -- Minutes -- </option>
+                                        <option>00</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                        <option>25</option>
+                                        <option>26</option>
+                                        <option>27</option>
+                                        <option>28</option>
+                                        <option>29</option>
+                                        <option>30</option>
+                                        <option>31</option>
+                                        <option>32</option>
+                                        <option>33</option>
+                                        <option>34</option>
+                                        <option>35</option>
+                                        <option>36</option>
+                                        <option>37</option>
+                                        <option>38</option>
+                                        <option>39</option>
+                                        <option>40</option>
+                                        <option>41</option>
+                                        <option>42</option>
+                                        <option>43</option>
+                                        <option>44</option>
+                                        <option>45</option>
+                                        <option>46</option>
+                                        <option>47</option>
+                                        <option>48</option>
+                                        <option>49</option>
+                                        <option>50</option>
+                                        <option>51</option>
+                                        <option>52</option>
+                                        <option>53</option>
+                                        <option>54</option>
+                                        <option>55</option>
+                                        <option>56</option>
+                                        <option>57</option>
+                                        <option>58</option>
+                                        <option>59</option>
+                                    </select></div>
+
+                                <div class='col-sm-2'><label style="font-weight: bold;" class="pr-3">Subject
+                                        name</label></div>
+                                <div class='col-sm-4'><input type='text' id="subname" class="form-control"
+                                        placeholder="Subject name"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 form-group">
+                            <label style="font-weight: bold;">Instructions</label>
+                            <input type='text' id="ins" class="form-control"
+                                placeholder="Type your instructions here..."> </div>
+
+                        <div class="form-group">
+                            <div class='row'>
+                                <div class='col-sm-3'><label style="font-weight: bold;" class="pr-3">Number of
+                                        sections</label></div>
+                                <div class='col-sm-3'><input type='text' id="textbox0" class="form-control"
+                                        placeholder="Number of Sections"></div>
+                                <div class='col-sm-4'></div>
+                                <div class='col-sm-2'><input type='button' value='Create Sections'
+                                        class="btn btn-primary" id='addButton'></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="ques_form">
+
+                    </div>
+                    <div id="sec_container"></div>
+                </div>
+
+
+            </div>
+
+
+    </body>
+
+</html>

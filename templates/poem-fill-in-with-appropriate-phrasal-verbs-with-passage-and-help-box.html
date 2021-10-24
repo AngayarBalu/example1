@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var phrase_passage_container = "";
+    var phrase_passage_count = 0;
+    var phrase_passage_count1 = 0;
+    var phrase_passage_heading = "";
+    var phrase_passage_numb = 0;
+    var count1 = 0;
+    var text = "";
+    function phrase_passage_add_field() {
+        text = document.getElementById("phrase_passage_passage").textContent;
+        phrase_passage_numb = document.getElementById("phrase_noOfAnswers").value;
+        var phrase_passage_heading = document.getElementById("phrase_passage_heading").value;
+        phrase_passage_container = document.getElementById("phrase_passage_a");
+        if (phrase_passage_heading != "" && text != "" && phrase_passage_numb != 0) {
+            document.getElementById("phrase_passage_answersLabel").style.display = "block";
+            document.getElementById("phrase_noOfAnswers").style.display = "none";
+            document.getElementById("phrase_passage_addButton").style.display = "none";
+            for (i = 1; i <= phrase_passage_numb; i++) {
+                phrase_passage_container.innerHTML = phrase_passage_container.innerHTML +
+                    "<div id='phrase_passage_" + phrase_passage_count + "'>&nbsp;<div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>" + i + ".</label></div><div class='col-sm-10'><div style='height:40px;overflow:auto;' class='form-control input_text' id='phrase_passage_answer" + phrase_passage_count + "'contenteditable='true' data-placeholder='Type your answer here...' cols='200' rows='100'></div>&nbsp;</div></div>";
+                phrase_passage_count++;
+                if (phrase_passage_count != 0) {
+                    document.getElementById("phrase_passage_getvalue").style.display = "block";
+                    document.getElementById("phrase_passage_back").style.display = "block";
+                }
+            }
+        }
+        else {
+            alert("Please enter the heading,passage and number of answers");
+        }
+    }
+
+
+    function phrase_passage_add_helpbox_field() {
+        phrase_passage_heading = document.getElementById("phrase_passage_heading").value;
+        phrase_passage_container = document.getElementById("phrase_passage_c");
+        text = document.getElementById("phrase_passage_passage").textContent;
+        phrase_passage_numb = document.getElementById("phrase_noOfAnswers").value;
+        if (phrase_passage_heading != "" && text != "" && phrase_passage_numb != 0) {
+            if (phrase_passage_count1 == 0) {
+                document.getElementById("HelpBoxLabel").style.display = "block";
+                document.getElementById("phrase_passage_addHelpButton").style.display = "none";
+                phrase_passage_container.innerHTML = phrase_passage_container.innerHTML +
+                    "&nbsp;<div id='phrase_passage_1" + phrase_passage_count1 + "'><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Option</label></div><div class='col-sm-8'><div style='height:40px;' class='form-control input_text' id='phrase_passage_option" + phrase_passage_count1 + "'contenteditable='true' data-placeholder='Type help box options...' cols='200' rows='100'></div></div>&nbsp;<div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='phrase_passage_add_helpbox_field();' id='phrase_passage_addHelpButton" + phrase_passage_count1 + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='phrase_passage_removeHelpButton" + phrase_passage_count1 + "' onclick=phrase_passage_remove_helpbox_field('phrase_passage_1" + phrase_passage_count1 + "');></div></div></div></div>&nbsp;";
+                phrase_passage_count1++;
+            }
+            else if (phrase_passage_count1 > 0) {
+                var option = document.getElementById("phrase_passage_option" + (phrase_passage_count1 - 1)).textContent;
+                if (option != "") {
+                    document.getElementById('phrase_passage_addHelpButton' + (phrase_passage_count1 - 1)).style.display = "none";
+                    document.getElementById('phrase_passage_removeHelpButton' + (phrase_passage_count1 - 1)).style.display = "none";
+                    phrase_passage_container.innerHTML = phrase_passage_container.innerHTML +
+                        "&nbsp;<div id='phrase_passage_1" + phrase_passage_count1 + "'><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Option</label></div><div class='col-sm-8'><div style='height:40px;' class='form-control input_text' id='phrase_passage_option" + phrase_passage_count1 + "'contenteditable='true' data-placeholder='Type help box options...' cols='200' rows='100'></div></div>&nbsp;<div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='phrase_passage_add_helpbox_field();' id='phrase_passage_addHelpButton" + phrase_passage_count1 + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='phrase_passage_removeHelpButton" + phrase_passage_count1 + "' onclick=phrase_passage_remove_helpbox_field('phrase_passage_1" + phrase_passage_count1 + "');></div></div></div></div>&nbsp;";
+                    phrase_passage_count1++;
+                }
+                else {
+                    alert("Please enter previous option")
+                }
+            }
+
+        }
+        else {
+            alert("Please enter the heading, passage and no. of answers");
+        }
+    }
+    function phrase_passage_remove_helpbox_field(phrase_passage_id) {
+        if (phrase_passage_count1 > 1) {
+            var phrase_passage_myobj = document.getElementById(phrase_passage_id);
+            phrase_passage_myobj.remove();
+            phrase_passage_count1--;
+            document.getElementById('phrase_passage_addHelpButton' + (phrase_passage_count1 - 1)).style.display = "block";
+            document.getElementById('phrase_passage_removeHelpButton' + (phrase_passage_count1 - 1)).style.display = "block";
+        }
+
+        if (phrase_passage_count1 == 0) {
+            document.getElementById("HelpBoxLabel").style.display = "none";
+            document.getElementById("phrase_passage_addHelpButton").style.display = "block";
+        }
+    }
+
+    function phrase_passageBack() {
+        window.location.replace("/teacher/teacher-notes/poem");
+    }
+
+    function phrase_passage_getvalues() {
+        var phrase_passage_ques = [];
+        var phrase_passage_ans = [];
+        var phrase_passage_option = [];
+        for (i = 0; i < phrase_passage_count; i++) {
+            phrase_passage_ans[i] = document.getElementById("phrase_passage_answer" + i).textContent;
+        }
+        if (phrase_passage_count1 != 0) {
+            for (i = 0; i < phrase_passage_count1; i++) {
+                phrase_passage_option[i] = document.getElementById("phrase_passage_option" + i).textContent;
+            }
+        }
+        // alert(phrase_count);
+        if (Array.isArray(phrase_passage_option) && !phrase_passage_option.length) {
+            if (count(phrase_passage_ans) == phrase_passage_numb) {
+                if (count(phrase_passage_option) == phrase_passage_count1) {
+                    phrase_passage_heading = document.getElementById("phrase_passage_heading").value;
+                    phrase_passage_ques_obj ={}
+                    phrase_passage_ques_item ={}
+
+                    phrase_passage_ques_obj = {
+                        "user": user_id,
+                        "standard": std,
+                        "section": sec,
+                        "schoolname": schoolname,
+                        "subject": subname,
+                        "lesson-type": ch_type,
+                        "chapter-no": ch_no,
+                        "chapter-heading": ch_heading,
+                        "heading": phrase_passage_heading,
+                        "passage": text,
+                        "options": null,
+                        "answers": toObject(phrase_passage_ans)
+                    }
+
+                    phrase_passage_ques_item = {
+                                        "heading": phrase_passage_heading,
+                                        "type":"POEM",
+                                        "passage": text,
+                                        "answers": toObject(phrase_passage_ans),
+                                        "options": null
+                                    }
+                    alert("Fill in with appropriate phrasal verbs with help box and passage is saved successfully!");
+                    create_poem_fill_phrasal_verbs_with_passage(JSON.stringify(phrase_passage_ques_obj));
+                    document.getElementById('phrase_passage_getvalue').value = "Saved!";
+                    console.log(JSON.stringify(phrase_passage_ques_obj, null, '\t'));
+                    localStorage.setItem("poem_phrase_final_object", JSON.stringify(phrase_passage_ques_item));
+                } else {
+                    alert("Please enter all the options")
+                }
+            } else {
+                alert("Please enter all the answers")
+            }
+        }
+
+        else {
+            if (phrase_passage_numb > phrase_passage_count1) {
+                alert("no. of options should be greater than or equal to no. of answers")
+            }
+
+            else {
+                if (count(phrase_passage_ans) != phrase_passage_numb) {
+                    alert("Please enter all the answers")
+                }
+                else {
+                    for (i = 0; i < phrase_passage_count; i++) {
+                        if (phrase_passage_option.includes(phrase_passage_ans[i]) == true) {
+                            count1++;
+                            if (i == phrase_passage_count - 1) {
+                                if (count(phrase_passage_ans) == phrase_passage_count) {
+                                    phrase_passage_heading = document.getElementById("phrase_passage_heading").value;
+                                    var phrase_passage_ques_obj = {};
+                                    var phrase_passage_ques_item = {};
+                                    phrase_passage_ques_obj = {
+                                        "user": user_id,
+                                        "standard": std,
+                                        "section": sec,
+                                        "schoolname": schoolname,
+                                        "subject": subname,
+                                        "lesson-type": ch_type,
+                                        "chapter-no": ch_no,
+                                        "chapter-heading": ch_heading,
+                                        "heading": phrase_passage_heading,
+                                        "passage": text,
+                                        "answers": toObject(phrase_passage_ans),
+                                        "options": toObject(phrase_passage_option)
+                                    }
+
+                                    phrase_passage_ques_item = {
+                                        "heading": phrase_passage_heading,
+                                        "type":"POEM",
+                                        "passage": text,
+                                        "answers": toObject(phrase_passage_ans),
+                                        "options": toObject(phrase_passage_option)
+                                    }
+
+                                    alert("Fill in with appropriate phrasal verbs with help box and passage is saved successfully!");
+                                    document.getElementById('phrase_passage_getvalue').value = "Saved!";
+                                    create_poem_fill_phrasal_verbs_with_passage(JSON.stringify(phrase_passage_ques_obj));
+                                    console.log(JSON.stringify(phrase_passage_ques_obj, null, '\t'));
+                                    document.getElementById("final_submit").style.display = "block";
+                                    localStorage.setItem("poem_phrase_final_object", JSON.stringify(phrase_passage_ques_item));
+                                }
+                            }
+                        }
+                        else {
+                            alert("Check whether the given answers are present in options")
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='phrase_passage_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 style="font-size:25px;font-weight: bold;" class="text-center pb-3 display-5">Fill in
+                                with appropriate phrasal verbs with help box
+                                and passage
+                            </h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="phrase_passage_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+                            <div class="mt-3 form-group">
+                                <label style="font-weight: bold;">Passage</label>
+                                <div style="height:200px;overflow: auto;" name="message" id="phrase_passage_passage"
+                                    class="form-control" contenteditable="true"
+                                    data-placeholder="Type your passage here..." cols="200" rows="100"></div>
+                            </div>
+
+                            <div id="phrase_passage_b" class="row">
+                                <div class='col-sm-2'><input type='number' id="phrase_noOfAnswers" class="form-control"
+                                        placeholder="No. of answers"></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Answers'
+                                        class="btn btn-primary mr-3" onclick="phrase_passage_add_field();"
+                                        id='phrase_passage_addButton'></div>
+                                <div class="col-sm-6"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add HelpBox'
+                                        class="btn btn-primary mr-3" onclick="phrase_passage_add_helpbox_field();"
+                                        id='phrase_passage_addHelpButton'></div>
+                            </div>
+                            <div id="phrase_passage_c">
+                                <center><label style="display:none;font-size:25px;font-weight: bold;"
+                                        id="HelpBoxLabel">Help Box
+                                        Options</label></center>
+                            </div>
+                            <div id="phrase_passage_d">
+                                <center><label style="display:none;font-size:25px;font-weight: bold;"
+                                        id="phrase_passage_answersLabel">Answers</label></center>
+                            </div>
+                            <div id="phrase_passage_a"></div>
+                            <div id="phrase_passage_b" class="row">
+                                <div class="col-sm-9"></div>
+                                <div id="phrase_passage_sub" class="col-sm-1"><input style="height:40px;display: none;"
+                                        type='button' value='Back' class="form-control btn btn-primary"
+                                        onclick="phrase_passageBack();" id='phrase_passage_back'></div>
+                                <div id="phrase_passage_sub" class="col-sm-1"><input style="height:40px;display: none;"
+                                        type='button' value='Save' class="form-control btn btn-primary"
+                                        onclick="phrase_passage_getvalues();" id='phrase_passage_getvalue'></div>
+
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

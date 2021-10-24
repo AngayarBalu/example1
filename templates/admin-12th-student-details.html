@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+
+<script>
+    var dataObject;
+    var array = []
+    var myArray1 = []
+    var std;
+    var sec;
+    var count1 = 0 
+    function student_register() {
+        localStorage.setItem('std',"12")
+        window.location.replace("/admin/student-register")
+    }
+
+    function student_enroll() {
+        window.location.replace("/admin/student-hsc-enrollment")
+    }
+
+    function myFunction() {
+		var x = document.getElementById("section");
+		x.value = x.value.toUpperCase();
+	}
+   
+    async function getAll() {
+        let response = await fetch("/student/getAll",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xxx-form"
+                }
+            }
+        );
+
+        let data = await response.json();
+
+        return data;
+    }
+
+    const data = getAll()
+        .then((data) => {
+            var dataObject = ObjectToArray(data);
+            myArray1 = [...dataObject]
+            main(dataObject);
+        })
+        .then(() => {
+
+        })
+        .catch((err) => {
+            alert("error")
+        });
+
+    function main(dataArray) {
+
+        dataArray.forEach((element) => {
+            std = element["class"];
+            sec = element["section"]
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["class"] == "12" && element["schoolname"] == schoolname) {
+              count1++
+        }
+      });
+
+      if(count1==0){
+          document.getElementById('searchOption').style.display="none"
+          document.getElementById('heading').style.display="none"
+          document.getElementById('regdelete').style.display="none"
+          document.getElementById('data-table').innerHTML = ""
+          var table = document.getElementById("data-table");
+          localStorage.setItem('std',"9");
+          var tabledata2 = "";
+          tabledata2 += `<thead><tr><td>No records found.</td></tr></thead>`;
+          table.innerHTML = tabledata2;
+      }
+      else{
+        var table = document.getElementById('data-table');
+        console.log(dataArray);
+        let tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                            <tr>
+                                            <th>Name</th>
+                                            <th>Register Number</th>
+                                            <th>Class</th>
+                                            <th>Group</th>
+                                            <th>Student Profile</th>
+                                            <th>Student Progress</th>
+                                            <th>Student Report</th>
+                                            <th>Delete</th>
+                                            </tr>
+                                        </thead>`;
+        
+        dataArray.forEach(element => {
+
+
+            std = element["class"];
+            sec = element["section"];
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["class"] == "12" && element["schoolname"] == schoolname) {
+
+                tabledata2 += '<tbody>';
+                tabledata2 += '<tr>';
+                tabledata2 += '<th scope="row">' + (element["name"]) + '</td>';
+                tabledata2 += '<td>' + (element["regno"]) + '</td>';
+                tabledata2 += '<td>' +(element["class"])+" - "+ (element["section"]) + '</td>';
+                tabledata2 += '<td>';
+
+
+                for (key in element["enrolledCourses"]["groups"]) {
+                        tabledata2 += capitalizeFirstLetter(key) + " - " + capitalizeFirstLetter(element["enrolledCourses"]["groups"][key]["name"]);
+                }
+
+                tabledata2 += '</td>'
+
+                tabledata2 += '<td><button style="width:120px;" class="form-control btn btn-success" onclick="studentProfile(' + element["regno"] + ')">View Profile</button></td>';
+
+                tabledata2 += '<td><a style="width:140px;" class="form-control btn btn-warning" onclick="studentProgress(' + element["regno"] + ')">View progress</a></td>';
+
+                tabledata2 += '<td><a style="width:90px;" class="form-control btn btn-dark" onclick="studentReport(' + element["regno"] + ')">Report</a></td>';
+                
+                tabledata2 += '<td><button style="width:90px;" class="form-control btn btn-danger" onclick="deleteStudent(' + element["regno"] + ')"> Delete</button></td>';
+
+                tabledata2 += '</tr>';
+
+                tabledata2 += '</tbody>'
+
+                table.innerHTML = tabledata2;
+
+            }
+        });
+      }
+        return;
+    }
+
+    function loggedIn(loggedIn) {
+        if (loggedIn == true)
+            return '<p class="text-success">True</p>';
+        else
+            return '<p class="text-danger">False</p>';
+    }
+
+    function studentProfile(regno) {
+        localStorage.setItem("regno", regno);
+        window.location.replace("/admin/student-profile");
+    }
+
+    function studentProgress(regno){
+        localStorage.setItem("regno",regno);
+        localStorage.setItem("std","12");
+        window.location.replace("/admin/student-report");
+    }
+
+    function deleteStudent(regno) {
+        var fd = new FormData();
+        fd.append("regno", regno);
+        fetch('/student/delete', {
+            method: 'POST',
+            body: fd
+        }).then(function (response) {
+
+            //console.log(response);
+
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+
+        });
+    }
+
+    function student_deleteAll() {
+        var sec = document.getElementById("section").value;
+        if(sec!=""){
+            var r = confirm("Do you really want to delete?");
+        if (r == true) {
+            var fd = new FormData();
+            fd.append("class", "12");
+            fd.append("section", sec);
+            fetch('/student/delete_All', {
+                method: 'POST',
+                body: fd
+            }).then(function (response) {
+
+                //console.log(response);
+
+                return response.json();
+
+            }).then(function (data) {
+                console.log(data);
+            });
+        } else {
+
+        }
+        }else{
+            alert("please enter the section")
+        }
+    }
+
+
+function hello(elem){
+        var myArray = []
+        myArray = [...myArray1];
+
+        var input1 = "";
+        input1 = document.getElementById('input').value
+        if(input1 !== ""){
+        var myArr = []
+        if (elem.value !== "") {
+            for (var i = 0; i < myArray.length; i++) {
+            if (myArray[i]["regno"].indexOf(elem.value) > -1) {
+                myArr.push(myArray[i])     
+            }
+        }
+
+        if(myArr.length==0){
+        for (var i = 0; i < myArray.length; i++) {
+            if ((myArray[i]["name"]).toLowerCase().indexOf((elem.value).toLowerCase()) > -1) { 
+                myArr.push(myArray[i])      
+            } 
+        }
+        }
+
+
+        if(myArr.length!=0){
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+
+
+        localStorage.setItem('std',"9");
+
+        var tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                            <tr>
+                                            <th>Name</th>
+                                            <th>Register Number</th>
+                                            <th>Class</th>
+                                            <th>Group</th>
+                                            <th>Student Profile</th>
+                                            <th>Student Progress</th>
+                                            <th>Student Report</th>
+                                            <th>Delete</th>
+                                            </tr>
+                                        </thead>`;
+        
+        myArr.forEach(element => {
+
+
+            std = element["class"];
+            sec = element["section"];
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["class"] == "12" && element["schoolname"] == schoolname) {
+
+                tabledata2 += '<tbody>';
+                tabledata2 += '<tr>';
+                tabledata2 += '<th scope="row">' + (element["name"]) + '</td>';
+                tabledata2 += '<td>' + (element["regno"]) + '</td>';
+                tabledata2 += '<td>' +(element["class"])+" - "+ (element["section"]) + '</td>';
+                tabledata2 += '<td>';
+
+
+                for (key in element["enrolledCourses"]["groups"]) {
+                        tabledata2 += capitalizeFirstLetter(key) + " - " + capitalizeFirstLetter(element["enrolledCourses"]["groups"][key]["name"]);
+                }
+
+                tabledata2 += '</td>'
+
+                tabledata2 += '<td><button style="width:120px;" class="form-control btn btn-success" onclick="studentProfile(' + element["regno"] + ')">View Profile</button></td>';
+
+                tabledata2 += '<td><a style="width:140px;" class="form-control btn btn-warning" onclick="studentProgress(' + element["regno"] + ')">View progress</a></td>';
+
+                tabledata2 += '<td><a style="width:90px;" class="form-control btn btn-dark" onclick="studentReport(' + element["regno"] + ')">Report</a></td>';
+
+                tabledata2 += '<td><button style="width:90px;" class="form-control btn btn-danger" onclick="deleteStudent(' + element["regno"] + ')"> Delete</button></td>';
+
+                tabledata2 += '</tr>';
+
+                tabledata2 += '</tbody>'
+
+                table.innerHTML = tabledata2;
+
+            }
+        });
+
+    }
+
+    else{
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+        localStorage.setItem('std',"9");
+        var tabledata2 = "";
+        tabledata2 += `<thead><tr><td>No records found.</td></tr></thead>`;
+        table.innerHTML = tabledata2;
+     }
+}
+}
+else if(input1 == ""){
+        document.getElementById('data-table').innerHTML = ""
+        var table = document.getElementById("data-table");
+        localStorage.setItem('std',"9");
+        var tabledata2 = "";
+        tabledata2 += `<thead class="thead-light">
+                                            <tr>
+                                            <th>Name</th>
+                                            <th>Register Number</th>
+                                            <th>Class</th>
+                                            <th>Group</th>
+                                            <th>Student Profile</th>
+                                            <th>Student Progress</th>
+                                            <th>Student Report</th>
+                                            <th>Delete</th>
+                                            </tr>
+                                        </thead>`;
+        
+        myArray1.forEach(element => {
+
+
+            std = element["class"];
+            sec = element["section"];
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["class"] == "12" && element["schoolname"] == schoolname) {
+
+                tabledata2 += '<tbody>';
+                tabledata2 += '<tr>';
+                tabledata2 += '<th scope="row">' + (element["name"]) + '</td>';
+                tabledata2 += '<td>' + (element["regno"]) + '</td>';
+                tabledata2 += '<td>' +(element["class"])+" - "+ (element["section"]) + '</td>';
+                tabledata2 += '<td>';
+
+
+                for (key in element["enrolledCourses"]["groups"]) {
+                        tabledata2 += capitalizeFirstLetter(key) + " - " + capitalizeFirstLetter(element["enrolledCourses"]["groups"][key]["name"]);
+                }
+
+                tabledata2 += '</td>'
+
+                tabledata2 += '<td><button style="width:120px;" class="form-control btn btn-success" onclick="studentProfile(' + element["regno"] + ')">View Profile</button></td>';
+
+                tabledata2 += '<td><a style="width:140px;" class="form-control btn btn-warning" onclick="studentProgress(' + element["regno"] + ')">View progress</a></td>';
+
+                tabledata2 += '<td><a style="width:90px;" class="form-control btn btn-dark" onclick="studentReport(' + element["regno"] + ')">Report</a></td>';
+
+                tabledata2 += '<td><button style="width:90px;" class="form-control btn btn-danger" onclick="deleteStudent(' + element["regno"] + ')"> Delete</button></td>';
+
+                tabledata2 += '</tr>';
+
+                tabledata2 += '</tbody>'
+
+                table.innerHTML = tabledata2;
+
+            }
+        });
+
+    }
+}
+
+function studentReport(regno) {
+    localStorage.setItem("regno", regno);
+    window.location.replace("/admin/student-download-report");
+}
+
+
+
+</script>
+
+<body>
+    <div id="includedContent"></div>
+    <div class="container-fluid">
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                    <!-- Container-->
+                    <div id='report_TextBoxesGroup' class='container bg-light p-3'>
+                        <h5 style="font-size:25px;font-weight:bold;" class="text-center pb-3 display-5" id="heading">Student
+                            Details - 12th Standard</h5>
+                            <div class="row" id="regdelete">
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Enroll student'
+                                        class="btn btn-info mr-3" id='final_submit' onclick='student_enroll();'>
+                                </div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Register student'
+                                        class="btn btn-info mr-3" id='final_submit' onclick='student_register();'>
+                                </div>
+                                <div class=col-sm-4></div>
+                                <div class=col-sm-2><input style="height:40px;" type='text'
+                                    placeholder='Section' class="form-control" onblur='myFunction();' id='section'>
+                                </div>
+                                <div class=col-sm-2><input style="height:40px;" type='button'
+                                        value='Delete all students' class="btn btn-danger mr-3" id='final_submit'
+                                        onclick='student_deleteAll();'>
+                                </div>
+                                </div>
+                                <br>
+                                    <div class="row" id="searchOption">
+                                      <div class="col-sm-8"></div>
+                                        <div class="col-sm-4">
+                                            <div class="input-icons">
+                                                <i class="fa fa-search icon"></i>
+                                                <input type="search" id="input" class="form-control input-field" onkeyup="hello(this)" placeholder="Search"
+                                                aria-label="Search"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                <br>
+                                <div class="container"><table class="table" id="data-table"></table></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

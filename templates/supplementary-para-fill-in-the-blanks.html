@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+
+</head>
+
+<script>
+    var para_fill_container = "";
+    var para_fill_count = 0;
+    var para_fill_count1 = 0;
+    var para_fill_heading = "";
+    var para_fill_numb = 0;
+    var text = "";
+    var std = localStorage.getItem("std");
+    var subname = localStorage.getItem("subname");
+    var user_id = localStorage.getItem("user_id");
+    var ch_no = localStorage.getItem("ch_no");
+    var ch_type = localStorage.getItem("ch_type");
+    var ch_heading = localStorage.getItem("ch_heading");
+    function para_fill_add_field() {
+        text = document.getElementById("para_fill_passage").textContent;
+        para_fill_numb = document.getElementById("para_fill_answers").value;
+        var para_fill_heading = document.getElementById("para_fill_heading").value;
+        para_fill_container = document.getElementById("para_fill_a");
+        if (para_fill_heading != "") {
+            if (text != "") {
+                if (para_fill_numb != 0) {
+                    document.getElementById("para_fill_addButton").style.display = "none";
+                    document.getElementById("para_fill_answers").style.display = "none";
+                    document.getElementById("para_fill_answersLabel").style.display = "block";
+                    for (i = 1; i <= para_fill_numb; i++) {
+                        para_fill_container.innerHTML = para_fill_container.innerHTML +
+                            "<div id='para_fill_" + para_fill_count + "'>&nbsp;<div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>" + i + ".</label></div><div class='col-sm-11'><div style='height:40px;overflow:auto;' class='form-control input_text' id='para_fill_answer" + para_fill_count + "'contenteditable='true' data-placeholder='Type your answer here...' cols='200' rows='100'></div>&nbsp;</div></div>";
+                        para_fill_count++;
+                        if (para_fill_count != 0) {
+                            document.getElementById("para_fill_getvalue").style.display = "block";
+                            document.getElementById("para_fill_back").style.display = "block";
+                        }
+                    }
+                }
+                else {
+                    alert("Please enter the no. of answers");
+                }
+            }
+            else {
+                alert("Please enter the passage");
+            }
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+
+    function para_fill_add_helpbox_field() {
+        para_fill_heading = document.getElementById("para_fill_heading").value;
+        para_fill_container = document.getElementById("para_fill_c");
+        if (para_fill_heading != "") {
+            if (para_fill_count1 != 0) {
+                document.getElementById("HelpBoxLabel").style.display = "block";
+                document.getElementById("para_fill_addHelpButton").style.display = "none";
+            }
+            para_fill_container.innerHTML = para_fill_container.innerHTML +
+                "&nbsp;<div id='para_fill_1" + para_fill_count1 + "'><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Option</label></div><div class='col-sm-8'><div style='height:40px;' class='form-control input_text' id='para_fill_option" + para_fill_count1 + "'contenteditable='true' data-placeholder='Type help box options...' cols='200' rows='100'></div></div>&nbsp;<div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='para_fill_add_helpbox_field();' id='para_fill_addHelpButton'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' onclick=para_fill_remove_helpbox_field('para_fill_1" + para_fill_count1 + "');></div></div></div></div>&nbsp;";
+            para_fill_count1++;
+            if (para_fill_count1 != 0) {
+                document.getElementById("HelpBoxLabel").style.display = "block";
+                document.getElementById("para_fill_addHelpButton").style.display = "none";
+            }
+
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function para_fill_remove_helpbox_field(para_fill_id) {
+        var para_fill_myobj = document.getElementById(para_fill_id);
+        para_fill_myobj.remove();
+        para_fill_count1--;
+        if (para_fill_count1 == 0) {
+            document.getElementById("HelpBoxLabel").style.display = "none";
+            document.getElementById("para_fill_addHelpButton").style.display = "block";
+        }
+    }
+
+    function back() {
+        window.location.replace("/teacher/teacher-notes/supplementary")
+    }
+    function addAnother() {
+        window.location.replace("/teacher/teacher-notes/supplementary/supplementary-para-fill-in-the-blanks")
+    }
+
+    function para_fill_getvalues() {
+        var para_fill_ques = [];
+        var para_fill_ans = [];
+        var para_fill_option = [];
+        for (i = 0; i < para_fill_count; i++) {
+            para_fill_ans[i] = document.getElementById("para_fill_answer" + i).textContent;
+        }
+        if (para_fill_count1 != 0) {
+            for (i = 0; i < para_fill_count1; i++) {
+                para_fill_option[i] = document.getElementById("para_fill_option" + i).textContent;
+            }
+        }
+        // alert(phrase_count);
+        if (Array.isArray(para_fill_option) && !para_fill_option.length) {
+            var arraySet = new Set(para_fill_ans)
+            if (arraySet.has("")) {
+                alert("Please enter the answer")
+            }
+            else {
+                document.getElementById("para_fill_answersLabel").style.display = "none";
+                document.getElementById("para_fill_addHelpButton").style.display = "none";
+                // var para_fill_myobj = document.getElementById("para_fill_a");
+                // para_fill_myobj.remove();
+
+                if (para_fill_ans.length == para_fill_numb) {
+                    para_fill_heading = document.getElementById("para_fill_heading").value;
+                    para_fill_ques_obj = {}
+                    para_fill_ques_item = {}
+                    para_fill_ques_obj = {
+                        "user": user_id,
+                        "standard": std,
+                        "section": sec,
+                        "schoolname": schoolname,
+                        "subject": subname,
+                        "lesson-type": ch_type,
+                        "chapter-no": ch_no,
+                        "chapter-heading": ch_heading,
+                        "heading": para_fill_heading,
+                        "passage": text,
+                        "options": null,
+                        "answers": toObject(para_fill_ans)
+                    }
+                    alert("Fill in the blanks with the appropriate phrases is saved successfully!");
+                    // create_para_with_fill(JSON.stringify(para_fill_ques_obj));
+                    console.log(JSON.stringify(para_fill_ques_obj, null, '\t'));
+                    // document.getElementById("para_fill_getvalue").style.display = "none";
+                    // document.getElementById("para_fill_another").style.display = "block";
+                    // var para_fill_myobj = document.getElementById("para_fill_h");
+                    // para_fill_myobj.remove();
+                    // var para_fill_myobj = document.getElementById("para_fill_p");
+                    // para_fill_myobj.remove();
+                    // document.getElementById("para_fill_another").style.display = "block";
+                    create_supplementary_para_fill(JSON.stringify(para_fill_ques_obj, null, '\t'))
+                }
+            }
+        }
+
+        else {
+            if (para_fill_numb > para_fill_count1) {
+                alert("no. of options should be greater than or equal to no. of answers")
+            }
+
+            else {
+                if (para_fill_ans.length == para_fill_numb) {
+                    var arraySet2 = new Set(para_fill_ans)
+                    if (arraySet2.has("")) {
+                        alert("Please enter the answer")
+                    }
+                    else {
+                        if (para_fill_option.some(r => para_fill_ans.indexOf(r) >= 0)) {
+                            document.getElementById("para_fill_answersLabel").style.display = "none";
+                            document.getElementById("para_fill_addHelpButton").style.display = "none";
+                            // var para_fill_myobj = document.getElementById("para_fill_a");
+                            // para_fill_myobj.remove();
+                            // var para_fill_myobj = document.getElementById("para_fill_c");
+                            // para_fill_myobj.remove();
+
+                            para_fill_heading = document.getElementById("para_fill_heading").value;
+                            var para_fill_ques_obj = {};
+                            var para_fill_ques_item = {};
+                            para_fill_ques_obj = {
+                                "user": user_id,
+                                "standard": std,
+                                "section": sec,
+                                "schoolname": schoolname,
+                                "subject": subname,
+                                "lesson-type": ch_type,
+                                "chapter-no": ch_no,
+                                "chapter-heading": ch_heading,
+                                "heading": para_fill_heading,
+                                "passage": text,
+                                "answers": toObject(para_fill_ans),
+                                "options": toObject(para_fill_option)
+                            }
+
+                            para_fill_ques_item = {
+                                "heading": para_fill_heading,
+                                "type":"FILL",
+                                "passage": text,
+                                "answers": toObject(para_fill_ans),
+                                "options": toObject(para_fill_option)
+                            }
+
+                            alert("Fill in the blanks with the appropriate phrases is saved successfully!");
+                            // create_fill_phrasal_verbs_with_passage(JSON.stringify(para_fill_ques_obj));
+                            console.log(JSON.stringify(para_fill_ques_obj, null, '\t'));
+                            // document.getElementById("para_fill_getvalue").style.display = "none";
+                            // document.getElementById("para_fill_another").style.display = "block";
+                            // var para_fill_myobj = document.getElementById("para_fill_h");
+                            // para_fill_myobj.remove();
+                            // var para_fill_myobj = document.getElementById("para_fill_p");
+                            // para_fill_myobj.remove();
+                            create_supplementary_para_fill(JSON.stringify(para_fill_ques_obj, null, '\t'))
+                            document.getElementById("final_submit").style.display = "block";
+                            localStorage.setItem("supple_para_fill_final_object", JSON.stringify(para_fill_ques_item));
+                        }
+                        else {
+                            alert("Check whether the given answers are present in options")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='para_fill_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 style="font-size:25px;font-weight: bold;" class="text-center pb-3 display-5">Fill in the
+                                blanks with the appropriate phrases given below to form a complete meaningful paragraph.
+                            </h5>
+
+                            <!-- Heading -->
+                            <div class="form-group" id="para_fill_h">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="para_fill_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+                            <div class="mt-3 form-group" id="para_fill_p">
+                                <label style="font-weight: bold;">Paragraph with fill in the blanks</label>
+                                <div style="height:200px;overflow:auto;" name="message" id="para_fill_passage"
+                                    class="form-control" contenteditable="true"
+                                    data-placeholder="Type your paragraph here..." cols="200" rows="100"></div>
+                            </div>
+
+                            <div id="para_fill_b" class="row">
+                                <div class=col-sm-2><input type='text' id="para_fill_answers" class="form-control"
+                                        placeholder="No. of answers"></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Answers'
+                                        class="btn btn-primary mr-3" onclick="para_fill_add_field();"
+                                        id='para_fill_addButton'></div>
+                                <div class="col-sm-6"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add HelpBox'
+                                        class="btn btn-primary mr-3" onclick="para_fill_add_helpbox_field();"
+                                        id='para_fill_addHelpButton'></div>
+                            </div>
+                            <div id="para_fill_c">
+                                <center><label style="display:none;font-size:25px;font-weight: bold;"
+                                        id="HelpBoxLabel">Help Box
+                                        Options</label></center>
+                            </div>
+                            <div id="para_fill_d">
+                                <center><label style="display:none;font-size:25px;font-weight: bold;"
+                                        id="para_fill_answersLabel">Answers</label></center>
+                            </div>
+                            <div id="para_fill_a"></div>
+                            <div id="para_fill_b" class="row">
+                                <div id="para_fill_sub" class="col-sm-1"><input style="height:40px;display: none;"
+                                        type='button' value='Back' class="form-control btn btn-primary"
+                                        onclick="back();" id='para_fill_back'></div>
+                                <div id="para_fill_sub" class="col-sm-1"><input style="height:40px;display: none;"
+                                        type='button' value='Save' class="form-control btn btn-primary"
+                                        onclick="para_fill_getvalues();" id='para_fill_getvalue'></div>
+                                <div class="col-sm-8"><label></label></div>
+                                <div id="para_fill_sub" class="col-sm-2"><input style="height:40px;display: none;"
+                                        type='button' value='Add another' class="form-control btn btn-primary"
+                                        onclick="addAnother();" id='para_fill_another'></div>
+
+                            </div>
+
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var formal_letter_container = "";
+    var formal_letter_count = 0;
+    function formal_letter_add_field() {
+        var formal_letter_heading = document.getElementById("formal_letter_heading").value;
+        formal_letter_container = document.getElementById("formal_letter_a");
+        if (formal_letter_heading != "") {
+            if (formal_letter_count == 0) {
+                formal_letter_container.innerHTML = formal_letter_container.innerHTML +
+                    "<div id='formal_letter_" + formal_letter_count + "'><div class='form-group'><label for='question' style='font-weight: bold;'>Question</label><div style='height:80px;overflow: auto;' class='form-control input_text' id='formal_letter_question" + formal_letter_count + "'contenteditable='true' data-placeholder='Type your question here...' cols='200' rows='100'></div><br><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>From</label></div></div><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline1" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 1' cols='200' rows='100'></div><div class='col-sm-8'></div></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline2" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 2' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline3" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 3' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline4" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 4' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>To</label></div></div><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline1" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 1' cols='200' rows='100'></div><div class='col-sm-8'></div></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline2" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 2' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline3" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 3' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline4" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 4' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-3'><label style='font-weight:bold;'>Respected sir/madam,</label></div></div></div><br><div class='row'><div class='col-sm-1'></div><div class='col-sm-1'><label style='font-weight:bold;'>Sub:</label></div><div class='col-sm-8'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_subject" + formal_letter_count + "'contenteditable='true' data-placeholder='Subject' cols='200' rows='100'></div></div></div><br><div class='row'><div class='col-sm-12'><div style='height:200px;overflow: auto;' class='form-control input_text' id='formal_letter_body" + formal_letter_count + "'contenteditable='true' data-placeholder='Type your letter body here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-4'></div><div class='col-sm-4'><label style='font-weight:bold;'>Thanking you,</div><div class='col-sm-4'></div></div><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Place:</label></div><div class='col-sm-2'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_place" + formal_letter_count + "'contenteditable='true' data-placeholder='Place' cols='200' rows='100'></div></div><div class='col-sm-5'></div><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_yours" + formal_letter_count + "'contenteditable='true' data-placeholder='Yours obediently' cols='200' rows='100'></div></div></div><br><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Date:</label></div><div class='col-sm-2'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_date" + formal_letter_count + "'contenteditable='true' data-placeholder='Date' cols='200' rows='100'></div></div><div class='col-sm-5'></div><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_yoursname" + formal_letter_count + "'contenteditable='true' data-placeholder='Your name' cols='200' rows='100'></div></div></div><br><div class='row'><div class='col-sm-3'><label style='font-weight:bold;'>Address on the envelope</label></div></div><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline1" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 1' cols='200' rows='100'></div><div class='col-sm-8'></div></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline2" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 2' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline3" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 3' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline4" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 4' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-10'></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='formal_letter_add_field();' id='formal_letter_addButton" + formal_letter_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='formal_letter_removeButton" + formal_letter_count + "' onclick=formal_letter_remove_field('formal_letter_" + formal_letter_count + "');></div></div></div></div>";
+                formal_letter_count++;
+            }
+            else if (formal_letter_count > 0) {
+                var ques = document.getElementById("formal_letter_question" + (formal_letter_count - 1)).textContent;
+                var sub = document.getElementById("formal_letter_subject" + (formal_letter_count - 1)).textContent;
+                var date = document.getElementById("formal_letter_date" + (formal_letter_count - 1)).textContent;
+                var body = document.getElementById("formal_letter_body" + (formal_letter_count - 1)).textContent;
+                var place = document.getElementById("formal_letter_place" + (formal_letter_count - 1)).textContent;
+                var yours = document.getElementById("formal_letter_yours" + (formal_letter_count - 1)).textContent;
+                var yoursname = document.getElementById("formal_letter_yoursname" + (formal_letter_count - 1)).textContent;
+                var from_addr1 = document.getElementById("formal_letter_from_addressline1" + (formal_letter_count - 1)).textContent;
+                var from_addr2 = document.getElementById("formal_letter_from_addressline2" + (formal_letter_count - 1)).textContent;
+                var to_addr1 = document.getElementById("formal_letter_to_addressline1" + (formal_letter_count - 1)).textContent;
+                var to_addr2 = document.getElementById("formal_letter_to_addressline2" + (formal_letter_count - 1)).textContent;
+                var env_addr1 = document.getElementById("formal_letter_env_addressline1" + (formal_letter_count - 1)).textContent;
+                var env_addr2 = document.getElementById("formal_letter_env_addressline2" + (formal_letter_count - 1)).textContent;
+
+
+                if (ques != "" && sub!="" && date!="" && place!="" && body!="" && yours!="" && yoursname!="" && from_addr1!="" && from_addr2!="" && to_addr1!="" && to_addr2!="" && env_addr1!="" && env_addr2!="") {
+                    document.getElementById("formal_letter_addButton" + (formal_letter_count - 1)).style.display = "none";
+                    document.getElementById("formal_letter_removeButton" + (formal_letter_count - 1)).style.display = "none";
+                    formal_letter_container.innerHTML = formal_letter_container.innerHTML +
+                    "<div id='formal_letter_" + formal_letter_count + "'><div class='form-group'><label for='question' style='font-weight: bold;'>Question</label><div style='height:80px;overflow: auto;' class='form-control input_text' id='formal_letter_question" + formal_letter_count + "'contenteditable='true' data-placeholder='Type your question here...' cols='200' rows='100'></div><br><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>From</label></div></div><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline1" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 1' cols='200' rows='100'></div><div class='col-sm-8'></div></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline2" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 2' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline3" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 3' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_from_addressline4" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 4' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>To</label></div></div><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline1" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 1' cols='200' rows='100'></div><div class='col-sm-8'></div></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline2" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 2' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline3" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 3' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_to_addressline4" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 4' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-3'><label style='font-weight:bold;'>Respected sir/madam,</label></div></div></div><br><div class='row'><div class='col-sm-1'></div><div class='col-sm-1'><label style='font-weight:bold;'>Sub:</label></div><div class='col-sm-8'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_subject" + formal_letter_count + "'contenteditable='true' data-placeholder='Subject' cols='200' rows='100'></div></div></div><br><div class='row'><div class='col-sm-12'><div style='height:200px;overflow: auto;' class='form-control input_text' id='formal_letter_body" + formal_letter_count + "'contenteditable='true' data-placeholder='Type your letter body here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-4'></div><div class='col-sm-4'><label style='font-weight:bold;'>Thanking you,</div><div class='col-sm-4'></div></div><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Place:</label></div><div class='col-sm-2'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_place" + formal_letter_count + "'contenteditable='true' data-placeholder='Place' cols='200' rows='100'></div></div><div class='col-sm-5'></div><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_yours" + formal_letter_count + "'contenteditable='true' data-placeholder='Yours obediently' cols='200' rows='100'></div></div></div><br><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>Date:</label></div><div class='col-sm-2'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_date" + formal_letter_count + "'contenteditable='true' data-placeholder='Date' cols='200' rows='100'></div></div><div class='col-sm-5'></div><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_yoursname" + formal_letter_count + "'contenteditable='true' data-placeholder='Your name' cols='200' rows='100'></div></div></div><br><div class='row'><div class='col-sm-3'><label style='font-weight:bold;'>Address on the envelope</label></div></div><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline1" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 1' cols='200' rows='100'></div><div class='col-sm-8'></div></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline2" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 2' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline3" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 3' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-4'><div style='height:40px;overflow: auto;' class='form-control input_text' id='formal_letter_env_addressline4" + formal_letter_count + "'contenteditable='true' data-placeholder='Address Line 4' cols='200' rows='100'></div></div><div class='col-sm-8'></div></div><br><div class='row'><div class='col-sm-10'></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='formal_letter_add_field();' id='formal_letter_addButton" + formal_letter_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='formal_letter_removeButton" + formal_letter_count + "' onclick=formal_letter_remove_field('formal_letter_" + formal_letter_count + "');></div></div></div></div>";
+                    formal_letter_count++;
+                } else {
+                    alert("Please enter all the fields")
+                }
+            }
+
+            if (formal_letter_count != 0) {
+                document.getElementById("formal_letter_addButton").style.display = "none";
+                document.getElementById("formal_letter_getvalue").style.display = "block";
+                document.getElementById("formal_letter_back").style.display = "block";
+            }
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function formal_letter_remove_field(formal_letter_id) {
+        if (formal_letter_count > 1) {
+            var formal_letter_myobj = document.getElementById(formal_letter_id);
+            formal_letter_myobj.remove();
+            formal_letter_count--;
+            document.getElementById("formal_letter_addButton" + (formal_letter_count - 1)).style.display = "block";
+            document.getElementById("formal_letter_removeButton" + (formal_letter_count - 1)).style.display = "block";
+        }
+
+        if (formal_letter_count == 0) {
+            document.getElementById("formal_letter_addButton").style.display = "block";
+            document.getElementById("formal_letter_getvalue").style.display = "none";
+            document.getElementById("formal_letter_back").style.display = "none";
+        }
+    }
+
+    function formal_letterBack() {
+        window.location.replace("/teacher/teacher-notes/prose")
+    }
+
+    function formal_letter_getvalues() {
+        var formal_letter= [];
+        var formal_obj = {};
+        var count = 1;
+        for (i = 0; i < formal_letter_count; i++) {
+            
+            var formal_letter_ques = ''
+            var formal_letter_from_addr = [];
+            var formal_letter_to_addr = [];
+            var formal_letter_env_addr = [];
+            var formal_letter_date = ''
+            var formal_letter_place = ''
+            var formal_letter_subject = ''
+            var formal_letter_body = ''
+            var formal_letter_yours = ''
+            var formal_letter_yoursname = ''
+            
+            formal_letter_ques = document.getElementById("formal_letter_question" + i).textContent;
+            for(var j=1;j<=4;j++){
+                formal_letter_from_addr.push(document.getElementById("formal_letter_from_addressline"+ j + i).textContent)
+                formal_letter_to_addr.push(document.getElementById("formal_letter_to_addressline"+ j + i).textContent)
+                formal_letter_env_addr.push(document.getElementById("formal_letter_env_addressline"+ j + i).textContent)
+            }
+            
+            formal_letter_date = document.getElementById("formal_letter_date" + i).textContent; 
+            formal_letter_place = document.getElementById("formal_letter_place" + i).textContent; 
+            formal_letter_subject = document.getElementById("formal_letter_subject" + i).textContent; 
+            formal_letter_body = document.getElementById("formal_letter_body" + i).textContent; 
+            formal_letter_yours = document.getElementById("formal_letter_yours" + i).textContent;
+            formal_letter_yoursname = document.getElementById("formal_letter_yoursname" + i).textContent;  
+            formal_letter_from_addr = formal_letter_from_addr.filter(item => item);  
+            formal_letter_to_addr = formal_letter_to_addr.filter(item => item);  
+            formal_letter_env_addr = formal_letter_env_addr.filter(item => item);  
+
+            formal_obj[count] = {
+                'question':formal_letter_ques,
+                'from-address':formal_letter_from_addr,
+                'to-address':formal_letter_to_addr,
+                'subject':formal_letter_subject,
+                'body':formal_letter_body,
+                'yours':formal_letter_yours,
+                'name':formal_letter_yoursname,
+                'place':formal_letter_place,
+                'date':formal_letter_date,
+                'envelope-address':formal_letter_env_addr
+            }
+            count++;
+            
+        }
+
+        var ques = document.getElementById("formal_letter_question" + (formal_letter_count - 1)).textContent;
+                var sub = document.getElementById("formal_letter_subject" + (formal_letter_count - 1)).textContent;
+                var date = document.getElementById("formal_letter_date" + (formal_letter_count - 1)).textContent;
+                var body = document.getElementById("formal_letter_body" + (formal_letter_count - 1)).textContent;
+                var place = document.getElementById("formal_letter_place" + (formal_letter_count - 1)).textContent;
+                var yours = document.getElementById("formal_letter_yours" + (formal_letter_count - 1)).textContent;
+                var yoursname = document.getElementById("formal_letter_yoursname" + (formal_letter_count - 1)).textContent;
+                var from_addr1 = document.getElementById("formal_letter_from_addressline1" + (formal_letter_count - 1)).textContent;
+                var from_addr2 = document.getElementById("formal_letter_from_addressline2" + (formal_letter_count - 1)).textContent;
+                var to_addr1 = document.getElementById("formal_letter_to_addressline1" + (formal_letter_count - 1)).textContent;
+                var to_addr2 = document.getElementById("formal_letter_to_addressline2" + (formal_letter_count - 1)).textContent;
+                var env_addr1 = document.getElementById("formal_letter_env_addressline1" + (formal_letter_count - 1)).textContent;
+                var env_addr2 = document.getElementById("formal_letter_env_addressline2" + (formal_letter_count - 1)).textContent;
+
+
+                if (ques != "" && sub!="" && date!="" && place!="" && body!="" && yours!="" && yoursname!="" && from_addr1!="" && from_addr2!="" && to_addr1!="" && to_addr2!="" && env_addr1!="" && env_addr2!="") {
+
+                var formal_letter_heading = document.getElementById("formal_letter_heading").value;
+                    var formal_letter_ques_obj = {};
+                    var formal_letter_ques_item = {};
+                    formal_letter_ques_obj = {
+                        "user": user_id,
+                        "standard": std,
+                        "section": sec,
+                        "schoolname": schoolname,
+                        "subject": subname,
+                        "lesson-type": ch_type,
+                        "chapter-no": ch_no,
+                        "chapter-heading": ch_heading,
+                        "heading": formal_letter_heading,
+                        "questions": formal_obj
+                    }
+
+                    formal_letter_ques_item = {
+                        "heading": formal_letter_heading,
+                        "type":"FORMAL",
+                        "questions": formal_obj
+                    }
+
+                    alert("Letter writing (formal) is saved successfully!");
+                    document.getElementById('formal_letter_getvalue').value = "Saved!";
+                    create_formal_letter_writing(JSON.stringify(formal_letter_ques_obj));
+                    console.log(JSON.stringify(formal_letter_ques_obj, null, '\t'))
+                    document.getElementById("final_submit").style.display = "block";
+                    localStorage.setItem("formal_letter_final_object", JSON.stringify(formal_letter_ques_item));
+            }else{
+                alert("Please enter all the fields")
+            }
+        }
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='formal_letter_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Letter Writing(formal)</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="formal_letter_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+                            <div id="formal_letter_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="formal_letter_add_field();"
+                                        id='formal_letter_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="formal_letter_a"></div>
+                            <div id="formal_letter_sub" class="row">
+                                <div class=col-sm-1><input style="display:none;height:40px;" type='button' value='Back'
+                                        class="btn btn-primary mr-3" onclick="formal_letterBack();" id='formal_letter_back'></div>
+                                <div class=col-sm-1><input style="display:none;height:40px;" type='button' value='Save'
+                                        class="btn btn-primary mr-3" onclick="formal_letter_getvalues();" id='formal_letter_getvalue'>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

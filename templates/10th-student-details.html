@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10th standard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/filename.jpg" type="image/gif"
+        sizes="16x16">
+</head>
+
+<style>
+    /* [contenteditable=true]:empty:not(:focus):before {
+        content: attr(data-placeholder)
+    } */
+</style>
+<style>
+    body {
+        font-family: Arial;
+    }
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
+
+<script>
+    var dataObject;
+    // function student_enroll(){
+    //     window.location.replace("/admin/enroll-sslc-student")
+    // }
+    function student_register() {
+        window.location.replace("/admin/student-register")
+    }
+
+    async function getAll() {
+        
+        let response = await fetch("/student/getAll",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xxx-form"
+                },
+            }
+        );
+
+        let data = await response.json();
+
+        return data;
+    }
+
+    const data = getAll()
+        .then((data) => {
+
+            var dataObject = ObjectToArray(data);
+            main(dataObject);
+        })
+        .then(() => {
+
+        })
+        .catch((err) => {
+            alert("error")
+        });
+
+
+
+    function ObjectToArray(obj) {
+        var arr = [];
+        for (key in obj) {
+            arr.push(obj[key]);
+        }
+        return arr
+    }
+
+    function main(dataArray) {
+        let table = document.getElementById('data-table');
+        console.log(dataArray);
+
+        var std;
+        var sec;
+
+        let tabledata2 = "";
+        
+        tabledata2 += `<thead class="thead-light">
+                                            <tr>
+                                            <th>Name</th>
+                                            <th>Register Number</th>
+                                            <th>Class</th>
+                                            <th>Enrolled Courses</th>
+                                            <th>Student Profile</th>
+                                            <th>Delete</th>
+                                            </tr>
+                                        </thead>`;
+
+        dataArray.forEach(element => {
+
+            std = element["class"];
+            sec = element["section"]
+            var schoolname = localStorage.getItem("schoolname");
+            if (element["class"] == "10" && element["schoolname"] == schoolname) {
+
+                tabledata2 += '<tbody>';
+                tabledata2 += '<tr>';
+                tabledata2 += '<th scope="row">' + (element["name"]) + '</td>';
+                tabledata2 += '<td>' + (element["regno"]) + '</td>';
+                tabledata2 += '<td>' + (element["class"]) + " - " + (element["section"]) + '</td>';
+
+                tabledata2 += '<td>';
+                for (key in element["enrolledCourses"]) {
+                    
+                    for (val in element["enrolledCourses"][key]) {
+
+                        tabledata2 += element["enrolledCourses"][key][val];
+
+                    }
+                    tabledata2 += ','
+                }
+                tabledata2 += '</td>'
+
+                tabledata2 += '<td><a class="form-control btn btn-primary" onclick="studentProfile(' + element["regno"] + ')">View profile</a></td>';
+
+                tabledata2 += '<td><button class="form-control btn btn-primary" onclick="deleteStudent(' + element["regno"] + ')"> Delete</button></td>';
+
+                tabledata2 += '</tr>';
+
+                tabledata2 += '</tbody>'
+
+                table.innerHTML = tabledata2;
+
+
+            }
+
+        });
+
+        return;
+
+
+
+
+    }
+
+    function loggedIn(loggedIn) {
+        if (loggedIn == true)
+            return '<p class="text-success">True</p>';
+        else
+            return '<p class="text-danger">False</p>';
+    }
+
+    function deleteStudent(regno) {
+        var fd = new FormData();
+        fd.append("regno", regno);
+        fetch('/student/delete', {
+            method: 'POST',
+            body: fd
+        }).then(function (response) {
+
+            //console.log(response);
+
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+            if(data.status == "success"){
+                location.reload();
+            }
+        });
+    }
+
+
+    function studentProfile(regno){
+        localStorage.setItem("regno",regno);
+        window.location.replace("/admin/student-profile");
+    }
+
+
+
+    function student_deleteAll() {
+       // var sec= "";
+        var sec = document.getElementById('section').value;
+        if(sec!= ""){
+            var r = confirm("Do you really want to delete?");
+        if (r == true) {
+            
+            var fd = new FormData();
+            fd.append("class", "10");
+            fd.append("section", sec.toUpperCase());
+            fetch('/student/delete_All', {
+                method: 'POST',
+                body: fd
+            }).then(function (response) {
+
+                //console.log(response);
+
+                return response.json();
+
+            }).then(function (data) {
+                console.log(data);
+                if(data.status=="success"){
+                    alert("Deleted successfully!")
+                }
+                else if(data.response=="User not found"){
+                    alert("No users found")
+                }
+            });
+        } else {
+
+        }
+        }else{
+            alert("Please enter the section")
+        }
+
+    }
+</script>
+
+<body>
+    <div class="container-fluid">
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+
+                    <!-- Container-->
+                    <div id='report_TextBoxesGroup' class='container bg-light p-3'>
+                        <h5 style="font-size:25px;font-weight:bold;" class="text-center pb-3 display-5">Student
+                            Details - 10th Standard</h5>
+                        
+
+                        <div >
+                            <div class="row">
+                                <!-- <div class=col-sm-2><input style="height:40px;" type='button' value='Enroll student'
+                                        class="btn btn-primary mr-3" id='final_submit' onclick='student_enroll();'>
+                                </div> -->
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Register student'
+                                        class="btn btn-primary mr-3" id='final_submit' onclick='student_register();'>
+                                </div>
+                                <div class=col-sm-6></div>
+                                <div class=col-sm-2><input style="height:40px;" type='text'
+                                    placeholder='Section' class="form-control" id='section'>
+                                </div>
+                                <div class=col-sm-2><input style="height:40px;" type='button'
+                                        value='Delete all students' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='student_deleteAll();'>
+                                </div>
+                                <br><br><br>
+                                <div class="container">
+                                    <div id="info-panel">
+                                    </div>
+
+                                    <table class="table" id="data-table">
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

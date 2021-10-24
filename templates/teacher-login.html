@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Teacher Portal</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	<script defer src="\static\teacher.js"></script>
+	<script defer src="\static\index.js"></script>
+	<link rel="stylesheet" href="\static\login-page.css">
+	<link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+	<script>
+		function showHidePwd() {
+			var input = document.getElementById("teacher-password");
+			if (input.type === "password") {
+				input.type = "text";
+				document.getElementById("eye").className = "far fa-eye";
+			} else {
+				input.type = "password";
+				document.getElementById("eye").className = "far fa-eye-slash";
+			}
+		}
+
+		function getEmail(){
+			$('#narratModal').on('hide.bs.modal', function() {
+			let val = $('.myInput').val();
+			$('#cash_narrat').val(val);
+    		})
+		}
+
+		function mySelect(){
+			var email = document.getElementById('email').value;
+			var fd =  new FormData();
+			fd.append('email',email)
+			fetch("http://127.0.0.1:5487/teacher/getNameId", {
+				method: "POST",
+				body: fd,
+			})
+				.then(function (response) {
+				//console.log(response);
+
+				return response.json();
+				})
+				.then(function (data) {
+				console.log(data);
+				if(data.status=="success"){
+					alert("Email id sent successfully check your mail to reset password...")
+					window.location.replace('/teacher/login')
+				}
+				else{
+					alert("Something went wrong, please try again")
+					window.location.replace('/teacher/login')
+				}
+			});
+			
+		}
+	</script>
+	<style>
+		input {
+			box-sizing: border-box;
+			width: 100%;
+			font-size: 18px;
+			border: none;
+			padding: 10px 10px;
+			border-radius: 3px;
+			font-family: 'Poppins', sans-serif;
+			color: #4a4a4a;
+			letter-spacing: 0.5px;
+			box-shadow: 0 5px 30px rgba(22, 89, 233, 0.4);
+		}
+		span {
+			position: absolute;
+			right: 15px;
+			transform: translate(0, -50%);
+			top: 50%;
+			cursor: pointer;
+		}
+
+		.fa {
+			font-size: 20px;
+			color: #7a797e;
+		}
+	</style>
+
+	<!-- Modal HTML -->
+	<div class="modal-dialog modal-login">
+		<div style="border-style:solid; border-color: gray;" class="modal-content">
+			<div class="modal-header">
+				<div class="avatar">
+					<img src="\static\filename.jpg" alt="Avatar">
+				</div>
+				<h4 class="modal-title">Teacher Login</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<input type="text" id="teacher-id" class="form-control" name="teacher-id" placeholder="Teacher Id"
+						required="required">
+				</div>
+				<div class='form-label-group input-group'>
+					<input type="password" id="teacher-password" name="teacher-password" placeholder="Password"
+						required="required">
+					<div class="input-group-append">
+						<span class="input-group-text">
+							<i id="eye" class="far fa-eye-slash" onclick="showHidePwd();"></i>
+						</span>
+					</div>
+				</div>
+				<br>
+
+				<div class="form-group">
+					<button type="submit" id="login-form-submit" class="btn btn-primary btn-lg btn-block login-btn"
+						onclick="login()">Login</button>
+				</div>
+				<center>Not yet registered? <a style="color: gray; font-size: 15px;" href="/teacher/register">Register
+						here</a></center>
+				<center><a style="color: gray; font-size: 15px;" href="/teacher/forgot-email">Forgot Password?</a></center>
+			</div>
+		</div>
+
+</body>
+
+</html>

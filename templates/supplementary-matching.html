@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher  Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+
+</head>
+
+<script>
+    var match_container = "";
+    var match_count = 0;
+    var match_ques = [];
+    var match_ans = [];
+    var match_opt = [];
+    function match_add_field() {
+        var match_heading = document.getElementById("match_heading").value;
+        match_container = document.getElementById("match_a");
+        if (match_heading != "") {
+            if (match_count == 0) {
+                document.getElementById("match_addAnswerBtn").style.display = "block";
+                document.getElementById("match_back1").style.display = "block";
+                match_container.innerHTML = match_container.innerHTML +
+                    "<div id='match_" + match_count + "'><div class='row'><div class='col-sm-5'><label style='font-weight: bold; ' >Questions</label></div><div class='col-sm-5'><label style='font-weight: bold;'>Options</label></div></div><div class='row'><div class = 'col-sm-5'><div style='height:40px;overflow:auto;' class='form-control input_text' id='match_question" + match_count + "'contenteditable='true' data-placeholder='Type question here...' ></div></div><div class='col-sm-5'><div style='height:40px;overflow:auto;' class='form-control input_text' id='match_option" + match_count + "'contenteditable='true' data-placeholder='Type option here...' ></div></div><div class='col-sm-1'><input id='addbtn" + match_count + "' type='button' value='+' class='form-control btn btn-primary' onclick='match_add_field();' id='match_addButton'></div><div class ='col-sm-1'><input id='removebtn" + match_count + "' type='button' class='form-control btn btn-danger' value='-' onclick=match_remove_field('match_" + match_count + "');></div></div>&nbsp;</div></div>";
+                match_count++;
+            }
+            else if (match_count > 0) {
+                var ques = document.getElementById("match_question" + (match_count - 1)).textContent;
+                var ans = document.getElementById("match_option" + (match_count - 1)).textContent;
+                if (ques != "" && ans != "") {
+                    document.getElementById("addbtn" + (match_count - 1)).style.display = "none";
+                    document.getElementById("removebtn" + (match_count - 1)).style.display = "none";
+                    match_container.innerHTML = match_container.innerHTML +
+                        "<div id='match_" + match_count + "'><div class='row'><div class = 'col-sm-5'><div style='height:40px;overflow:auto;' class='form-control input_text' id='match_question" + match_count + "'contenteditable='true' data-placeholder='Type question here...' ></div></div><div class='col-sm-5'><div style='height:40px;overflow:auto;' class='form-control input_text' id='match_option" + match_count + "'contenteditable='true' data-placeholder='Type option here...' ></div></div><div class='col-sm-1'><input id='addbtn" + match_count + "' type='button' value='+' class='form-control btn btn-primary' onclick='match_add_field();' id='match_addButton'></div><div class ='col-sm-1'><input id='removebtn" + match_count + "' type='button' class='form-control btn btn-danger' value='-' onclick=match_remove_field('match_" + match_count + "');></div></div>&nbsp;</div></div>";
+                    match_count++;
+                } else {
+                    alert("Please enter the above question and option")
+                }
+            }
+            if (match_count != 0) {
+                document.getElementById("match_addButton").style.display = "none";
+            }
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function match_remove_field(match_id) {
+        if (match_count > 1) {
+            var match_myobj = document.getElementById(match_id);
+            match_myobj.remove();
+            match_count--;
+            document.getElementById("addbtn" + (match_count - 1)).style.display = "block";
+            document.getElementById("removebtn" + (match_count - 1)).style.display = "block";
+        }
+
+        if (match_count == 0) {
+            document.getElementById("match_back1").style.display = "none";
+            document.getElementById("match_addAnswerBtn").style.display = "none";
+            document.getElementById("match_addButton").style.display = "block";
+            document.getElementById("match_getvalue").style.display = "none";
+            document.getElementById("match_back").style.display = "none";
+        }
+    }
+    function addAnswer() {
+        for (i = 0; i < match_count; i++) {
+            match_ques[i] = document.getElementById("match_question" + i).textContent;
+            match_opt[i] = document.getElementById("match_option" + i).textContent;
+        }
+        if (match_ques.length == match_count) {
+            var arraySet = new Set(match_ques)
+            if (arraySet.has("")) {
+                alert("Please enter all the questions")
+            }
+            else {
+                if (match_opt.length == match_count) {
+                    var arraySet2 = new Set(match_opt)
+                    if (arraySet2.has("")) {
+                        alert("Please enter all the options")
+                    }
+                    else {
+                        for (i = 0; i < match_count; i++) {
+                            document.getElementById("addbtn" + i).style.display = "none";
+                            document.getElementById("removebtn" + i).style.display = "none";
+                            document.getElementById("match_addAnswerBtn").style.display = "none";
+                            document.getElementById("match_back1").style.display = "none";
+                        }
+                        for (i = 0; i < match_count; i++) {
+                            if (i == 0) {
+                                match_container.innerHTML = match_container.innerHTML + "<div class='row'><div class = 'col-sm-1' ><label style='font-weight:bold;'>Answers</label></div></div>"
+                                match_container.innerHTML = match_container.innerHTML +
+                                    "<div id='matchh_" + i + "'><div class='row'><div class = 'col-sm-1' style='font-weight:bold;'>" + (i + 1) + ". </div><div class = 'col-sm-2'><div style='height:40px;' class='form-control input_text' id='match_answer" + i + "'contenteditable='true' data-placeholder='Answer' ></div></div></div>";
+                            }
+                            else {
+                                match_container.innerHTML = match_container.innerHTML +
+                                    "&nbsp;<div id='matchh_" + i + "'><div class='row'><div class = 'col-sm-1' style='font-weight:bold;'>" + (i + 1) + ". </div><div class = 'col-sm-2'><div style='height:40px;' class='form-control input_text' id='match_answer" + i + "'contenteditable='true' data-placeholder='Answer' ></div></div></div>";
+                            }
+                        }
+                        match_container.innerHTML = match_container.innerHTML + "&nbsp;"
+                        document.getElementById("match_getvalue").style.display = "block";
+                        document.getElementById("match_back").style.display = "block";
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    function supplementary_matching_back() {
+        window.location.replace("/teacher/teacher-notes/supplementary")
+    }
+
+    function addAnother() {
+        window.location.replace("/teacher/teacher-notes/supplementary/supplementary-matching")
+    }
+
+    function match_getvalues() {
+        var matchAns = [];
+        var matchOptNum = []
+        for (i = 0; i < match_count; i++) {
+            var ans = document.getElementById("match_answer" + i).textContent;
+            match_ans[i] = match_opt[ans - 1]
+            if (ans != "") {
+                matchAns.push(ans);
+            }
+            matchOptNum.push(i + 1)
+        }
+
+        if (count(matchAns) == match_count) {
+            for (i = 0; i < matchOptNum.length; i++) {
+                if (matchOptNum.includes(parseInt(document.getElementById("match_answer" + i).textContent)) == true) {
+                    if (i == matchOptNum.length - 1) {
+                        var match_heading = document.getElementById("match_heading").value;
+                        var match_ques_obj = {};
+                        var match_ques_item = {};
+                        match_ques_obj = {
+                            "user": user_id,
+                            "standard": std,
+                            "section": sec,
+                            "schoolname": schoolname,
+                            "subject": subname,
+                            "lesson-type": ch_type,
+                            "chapter-no": ch_no,
+                            "chapter-heading": ch_heading,
+                            "heading": match_heading,
+                            "questions": toObject(match_ques),
+                            "options": toObject(match_opt),
+                            "answers": toObject(match_ans)
+                        }
+
+                        match_ques_item = {
+                            "heading": match_heading,
+                            "type":"MATCH",
+                            "questions": toObject(match_ques),
+                            "options": toObject(match_opt),
+                            "answers": toObject(match_ans)
+                        }
+
+                        alert("Matching in supplementary is saved successfully!");
+                        document.getElementById('match_getvalue').value = "Saved!";
+                        document.getElementById("match_another").style.display = "block";
+                        create_supplementary_matching(JSON.stringify(match_ques_obj));
+                        console.log(JSON.stringify(match_ques_obj, null, '\t'))
+                        document.getElementById("final_submit").style.display = "block";
+                        localStorage.setItem("supple_match_final_object", JSON.stringify(match_ques_item));
+                    }
+                } else {
+                    alert("Please enter valid option number")
+                }
+            }
+        }
+    }
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='match_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Match the following</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group" id="match_h">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="match_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+
+                            <div id="match_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="match_add_field();" id='match_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="match_a"></div>
+
+                            <div id="match_pic_b" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="MatchingBack()"
+                                        id='match_back1'>
+                                </div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Add answers' class="btn btn-primary mr-3" onclick="addAnswer();"
+                                        id='match_addAnswerBtn'>
+                                </div>
+                            </div>
+
+                            <div id="match_sub" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3"
+                                        onclick="supplementary_matching_back()" id='match_back'>
+                                </div>
+                                <div class="col-sm-1"><input style="display:none;height:40px;" type='button'
+                                        value='Save' class="btn btn-primary mr-3" onclick="match_getvalues();"
+                                        id='match_getvalue'></div>
+                                <div class="col-sm-8"><label></label></div>
+                                <div class="col-sm-2"><input style="display:none;height:40px;" type='button'
+                                        value='Add another' class="btn btn-primary mr-3" onclick="addAnother();"
+                                        id='match_another'></div>
+
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

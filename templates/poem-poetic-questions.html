@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+<script>
+    var opt = 0;
+    var no_of_options = 0;
+    var compre_opt_obj = [];
+    var compre_opt_obj1 = [];
+    var compre_flag = [];
+    var compre_count = 0;
+    var cnnt = 0;
+    var container = ""
+    var countt = 0;
+    var countt1 = 0;
+    function compre_add() {
+        var compre_head = document.getElementById('compre-heading').value;
+        container = document.getElementById('para_a');
+        if (compre_head != "") 
+        {
+            document.getElementById("compre_getvalue").style.display = "block";
+            document.getElementById("compre_back").style.display = "block";
+            document.getElementById("compre_addButton").style.display = "none";
+            container.innerHTML = container.innerHTML +
+                "<div id='input_text" + compre_count + "'>&nbsp;<div class='form-group'><label for='poemlines' style='font-weight: bold;'>Poem lines</label><div style='height:100px;overflow:auto;' class='form-control input_text' id='compre-question" + compre_count + "'contenteditable='true' data-placeholder='Type your poemlines here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-2'><input style='display:none;' type='button' id='compre_myCheck1" + compre_count + "' class = 'btn btn-danger' name='compre' value='Remove options' onclick='compre_removeFunction(" + compre_count + ")'>&nbsp;</div><div class='col-sm-8'><label></label></div><div class='col-sm-2'><input type='button' id='compre_myCheck" + compre_count + "' class = 'btn btn-primary' name='compre' value='Add Questions' onclick='compre_myFunction(" + compre_count + ")'>&nbsp;</div></div></div><div id='compre_Check" + compre_count + "'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='compre_add_field(" + compre_count + ");' id='compre_addButton" + compre_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='compre_removeButton" + compre_count + "' onclick=compre_remove_field('input_text" + compre_count + "');></div></div></div></div>";
+            compre_count++;
+        } 
+        else {
+            alert("Please enter the heading")
+        }
+    }
+
+    function compre_add_field(counter) {
+        if (document.getElementById('compre-question' + counter).textContent != "") {
+            var compre_head = document.getElementById('compre-heading').value;
+            if (compre_head != "") {
+                var n = compre_check(compre_count - 1)
+                if (n == undefined) {
+                    if (cnnt == compre_count) {
+                        document.getElementById('compre_addButton' + (compre_count - 1)).style.display = "none"
+                        document.getElementById('compre_removeButton' + (compre_count - 1)).style.display = "none"
+                        container.innerHTML = container.innerHTML +
+                            "<div id='input_text" + compre_count + "'>&nbsp;<div class='form-group'><label for='poemlines' style='font-weight: bold;'>Poem lines</label><div style='height:100px;overflow:auto;' class='form-control input_text' id='compre-question" + compre_count + "'contenteditable='true' data-placeholder='Type your poemlines here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-2'><input style='display:none;' type='button' id='compre_myCheck1" + compre_count + "' class = 'btn btn-danger' name='compre' value='Remove options' onclick='compre_removeFunction(" + compre_count + ")'>&nbsp;</div><div class='col-sm-8'><label></label></div><div class='col-sm-2'><input type='button' id='compre_myCheck" + compre_count + "' class = 'btn btn-primary' name='compre' value='Add Questions' onclick='compre_myFunction(" + compre_count + ")'>&nbsp;</div></div></div><div id='compre_Check" + compre_count + "'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='compre_add_field(" + compre_count + ");' id='compre_addButton" + compre_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='compre_removeButton" + compre_count + "' onclick=compre_remove_field('input_text" + compre_count + "');></div></div></div></div>";
+                        compre_count++;
+                    }
+                    else {
+                        alert("Please check whether you added the questions for above poemlines")
+                    }
+                }
+                if (n == true) {
+                    if (cnnt == compre_count) {
+                        document.getElementById('compre_addButton' + (compre_count - 1)).style.display = "none"
+                        document.getElementById('compre_removeButton' + (compre_count - 1)).style.display = "none"
+                        container.innerHTML = container.innerHTML +
+                            "<div id='input_text" + compre_count + "'>&nbsp;<div class='form-group'><label for='poemlines' style='font-weight: bold;'>Poem lines</label><div style='height:100px;oveflow:auto;' class='form-control input_text' id='compre-question" + compre_count + "'contenteditable='true' data-placeholder='Type your poemlines here...' cols='200' rows='100'></div>&nbsp;<div class='row'><div class='col-sm-2'><input style='display:none;' type='button' id='compre_myCheck1" + compre_count + "' class = 'btn btn-danger' name='compre' value='Remove options' onclick='compre_removeFunction(" + compre_count + ")'>&nbsp;</div><div class='col-sm-8'><label></label></div><div class='col-sm-2'><input type='button' id='compre_myCheck" + compre_count + "' class = 'btn btn-primary' name='compre' value='Add Questions' onclick='compre_myFunction(" + compre_count + ")'>&nbsp;</div></div></div><div id='compre_Check" + compre_count + "'></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='compre_add_field(" + compre_count + ");' id='compre_addButton" + compre_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='compre_removeButton" + compre_count + "' onclick=compre_remove_field('input_text" + compre_count + "');></div></div></div></div>";
+                        compre_count++;
+                    }
+                    else {
+                        alert("Please check whether you added the questions for above poemlines")
+                    }
+                }
+                if (n == false) {
+                    alert("Please enter all the options")
+                }
+            }
+            else {
+                alert("Please enter the heading")
+            }
+        } else {
+            alert("Please enter the above poemlines")
+        }
+    }
+
+    function compre_myFunction(compre_counter) {
+        document.getElementById('compre_myCheck' + compre_counter).style.display = "none";
+        checkBox = document.getElementById('compre_myCheck' + compre_counter);
+        var table = document.getElementById("compre_Check" + compre_counter);
+        table.innerHTML += '<div class="row"><div class="col-sm-2"><div style="height:40px;" class="form-control " id="compre_noofoption' + compre_counter + '" contenteditable="true" data-placeholder="No.of questions" cols="100" rows="30"></div></div>&nbsp;<div class="col-sm-2"><input type="button" value="Create Questions" class="btn btn-primary" id="compre_addOption' + compre_counter + '" onclick="compre_addOption(' + compre_counter + ')"></div></div><div id="compre_option' + compre_counter + '"></div><br>';
+    }
+    function compre_removeFunction(compre_counter) {
+        document.getElementById('compre_myCheck' + compre_counter).style.display = "block";
+        var table = document.getElementById("compre_Check" + compre_counter);
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
+    }
+
+    function compre_addOption(compre_counter) {
+        compre_flag[compre_counter] = compre_counter;
+        cnnt++;
+        no_option = document.getElementById("compre_noofoption" + compre_counter).textContent;
+        numbering = 97;
+
+        if (no_option != 0) {
+            for (i = 0; i < no_option; i++) {
+                var res = String.fromCharCode(numbering);
+                var table = document.getElementById("compre_option" + compre_counter);
+                if (i == 0) {
+                    table.innerHTML += '<br><br>';
+                }
+                table.innerHTML += '<div class="row"><div class="col-sm-2"><label style="font-weight:bold;">Question ' + res + ' .</lable></div></div><div class="row"><div class="col-sm-12"><div style="height:40px;overflow:auto;" class="form-control" id="compre_options' + opt + '" data-placeholder="Type your question here..." contenteditable="true" cols="100" rows="30"></div></div></div>&nbsp;';
+                table.innerHTML += '<div class="row"><div class="col-sm-2"><label style="font-weight:bold;">Answer ' + res + ' .</lable></div></div><div class="row"><div class="col-sm-12"><div style="height:100px;overflow:auto;" class="form-control" id="compre_options1' + opt + '" data-placeholder="Type your answer here..." contenteditable="true" cols="100" rows="30"></div></div></div>&nbsp;';
+                numbering++;
+                opt++;
+            }
+        }
+        else {
+            alert("enter all options");
+        }
+
+    }
+    function compre_remove_field(id) {
+        if (compre_count > 1) {
+            var myobj = document.getElementById(id);
+            myobj.remove();
+            compre_count--;
+            delete compre_flag[compre_count];
+            document.getElementById('compre_addButton' + (compre_count - 1)).style.display = "block"
+            document.getElementById('compre_removeButton' + (compre_count - 1)).style.display = "block"
+        }
+    }
+
+    function compre_check(j) {
+        // if (document.getElementById('myCheck' + j).clicked !== null) {
+        document.getElementById('compre_myCheck' + j).addEventListener("click", () => {
+            compre_count_opt[j] = parseInt(document.getElementById('compre_noofoption' + j).textContent);
+            if (compre_count_opt[j] == 0) {
+                // alert("Please enter number of options");
+                return false;
+            }
+            else {
+                for (i = 0; i < compre_count_opt[j]; i++) {
+                    compre_option[compre_choice] = document.getElementById('compre_options' + compre_choice).textContent;
+                    console.log("option : " + compre_option[compre_choice])
+                    compre_choice++;
+                }
+                return true;
+            }
+        });
+    }
+
+    function compreBack() {
+        window.location.replace("/teacher/teacher-notes/poem");
+    }
+
+    function compre_save() {
+        compre_ch = 0;
+        var compre_questions = {}
+        var compre_ques_arr = [];
+        var compre_option = [];
+        compre_count_opt = [];
+        compre_opt_arr = [];
+        var compre_choice = 0;
+
+        compre_ch1 = 0;
+        var compre_questions = {}
+        var compre_ques_arr1 = [];
+        var compre_option1 = [];
+        compre_count_opt1 = [];
+        compre_opt_arr1 = [];
+        var compre_choice1 = 0;
+
+        for (i = 0; i < compre_count; i++) {
+            var inData = document.getElementById('compre-question' + i).textContent;
+            if (inData != "") {
+                compre_ques_arr.push(inData);
+            }
+            console.log(compre_flag)
+            if (compre_flag.indexOf(i) !== -1) {
+                // alert("if part")
+                compre_count_opt[i] = parseInt(document.getElementById('compre_noofoption' + i).textContent);
+                compre_count_opt1[i] = parseInt(document.getElementById('compre_noofoption' + i).textContent);
+                cnnt = 0;
+
+                if (document.getElementById('compre_noofoption' + i).textContent == "") {
+                    // alert("Please enter number of options");
+                    cnnt++;
+                }
+
+                for (j = 0; j < compre_count_opt[i]; j++) {
+                    countt = 0;
+                    if (document.getElementById('compre_options' + compre_ch).textContent == "") {
+                        countt++;
+                        break;
+                    }
+                    else {
+                        compre_option[compre_ch] = document.getElementById('compre_options' + compre_ch).textContent;
+                        console.log("Options : " + compre_option[compre_ch]);
+                        compre_opt_obj.push(compre_option[compre_ch]);
+                        compre_opt_arr.push(compre_option[compre_ch]);
+                        compre_ch++;
+                    }
+                }
+
+                for (j = 0; j < compre_count_opt1[i]; j++) {
+                    countt1 = 0;
+                    if (document.getElementById('compre_options1' + compre_ch1).textContent == "") {
+                        countt1++;
+                        break;
+                    }
+                    else {
+                        compre_option1[compre_ch1] = document.getElementById('compre_options1' + compre_ch1).textContent;
+                        console.log("Options : " + compre_option1[compre_ch1]);
+                        compre_opt_obj1.push(compre_option1[compre_ch1]);
+                        compre_opt_arr1.push(compre_option1[compre_ch1]);
+                        compre_ch1++;
+                    }
+                }
+
+                compre_questions[i + 1] = { "poemlines": inData, "type": "MCQSL", "quotedWords": null, "quoteType": null, "questions": toObject(compre_opt_obj), "answers": toObject(compre_opt_obj1) };
+                compre_opt_obj = [];
+                compre_opt_obj1 = [];
+            }
+        }
+
+        var question = [];
+        for (k = 0; k < compre_count; k++) {
+            var compre_head = document.getElementById('compre-heading').value;
+            var ques = document.getElementById('compre-question' + k).textContent;
+            question.push(ques);
+            if (cnnt == 0) {
+                if (countt > 0) {
+                    alert("Please enter question which you selected");
+                    break;
+                }
+                else {
+                    if (countt1 > 0) {
+                        alert("Please enter answer which you selected");
+                        break;
+                    }
+                    else {
+                        if (ques != "") {
+                            if (count(question) == compre_count) {
+                                if (k == (compre_count - 1)) {
+                                    var compre_ques_item = {};
+                                    var compre_ques_obj = {};
+                                    compre_ques_obj = {
+                                        "user": user_id,
+                                        "chapter-type": "poem",
+                                        "standard": std,
+                                        "section": sec,
+                                        "schoolname": schoolname,
+                                        "subject": subname,
+                                        "lesson-type": ch_type,
+                                        "chapter-no": ch_no,
+                                        "chapter-heading": ch_heading,
+                                        "heading": compre_head,
+                                        "questions": compre_questions
+                                    }
+
+                                    compre_ques_item = {
+                                        "heading": compre_head,
+                                        "type":"NORMAL",
+                                        "questions": compre_questions
+                                    }
+
+                                    alert("Poetic lines with questions is saved successfully!");
+                                    document.getElementById('compre_getvalue').value = "Saved!";
+                                    console.log(JSON.stringify(compre_ques_obj, null, '\t'));
+                                    create_poetic_lines_questions(JSON.stringify(compre_ques_obj, null, '\t'));
+                                    document.getElementById("final_submit").style.display = "block";
+                                    localStorage.setItem("poem_question_final_object", JSON.stringify(compre_ques_item));
+                                }
+                            }
+                        }
+                        else {
+                            alert("Please enter the above poemlines")
+                        }
+                    }
+                }
+            } else {
+                alert("Please enter the no. of options")
+            }
+        }
+    }
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='para_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Poetic lines with questions</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="compre-heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+                            <div id="para_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="compre_add();" id='compre_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="para_a"></div>
+                            <div id="short_sub" class="row">
+                                <div class="col-sm-1"><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="compreBack();"
+                                        id='compre_back'></div>
+                                <div class="col-sm-1"><input style="display:none;height:40px;" type='button'
+                                        value='Save' class="btn btn-primary mr-3" onclick="compre_save();"
+                                        id='compre_getvalue'></div>
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

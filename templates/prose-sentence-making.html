@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var sentence_container = "";
+    var sentence_count = 0;
+    function sentence_add_field() {
+        var sentence_heading = document.getElementById("sentence_heading").value;
+        sentence_container = document.getElementById("sentence_a");
+        if (sentence_heading != "") {
+            if (sentence_count == 0) {
+                sentence_container.innerHTML = sentence_container.innerHTML +
+                    "<div id='sentence_" + sentence_count + "'><div class='row'><div class='col-sm-3'><label style='font-weight: bold; ' >Word</label></div><div class='col-sm-9'><label style='font-weight: bold;'>Sentence</label></div></div><div class='row'><div class = 'col-sm-3'><div style='height:40px;overflow:auto;' class='form-control input_text' id='sentence_question" + sentence_count + "'contenteditable='true' data-placeholder='Type word here...' ></div></div><div class='col-sm-9'><div style='height:40px;overflow:auto;' class='form-control input_text' id='sentence_answer" + sentence_count + "'contenteditable='true' data-placeholder='Type sentence here...' ></div></div></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='sentence_add_field();' id='sentence_addButton" + sentence_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='sentence_removeButton" + sentence_count + "' onclick=sentence_remove_field('sentence_" + sentence_count + "');></div></div></div></div>";
+                sentence_count++;
+            }
+            else if (sentence_count > 0) {
+                var ques = document.getElementById("sentence_question" + (sentence_count - 1)).textContent;
+                var ans = document.getElementById("sentence_answer" + (sentence_count - 1)).textContent;
+                if (ques != "" && ans != "") {
+                    document.getElementById("sentence_addButton" + (sentence_count - 1)).style.display = "none";
+                    document.getElementById("sentence_removeButton" + (sentence_count - 1)).style.display = "none";
+                    sentence_container.innerHTML = sentence_container.innerHTML +
+                        "&nbsp;<div id='sentence_" + sentence_count + "'><div class='row'><div class = 'col-sm-3'><div style='height:40px;overflow:auto;' class='form-control input_text' id='sentence_question" + sentence_count + "'contenteditable='true' data-placeholder='Type word here...' ></div></div><div class='col-sm-9'><div style='height:40px;overflow:auto;' class='form-control input_text' id='sentence_answer" + sentence_count + "'contenteditable='true' data-placeholder='Type sentence here...' ></div></div></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='sentence_add_field();' id='sentence_addButton" + sentence_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='sentence_removeButton" + sentence_count + "' onclick=sentence_remove_field('sentence_" + sentence_count + "');></div></div></div></div>";
+                    sentence_count++;
+                } else {
+                    alert("Please enter the above question and answer")
+                }
+            }
+
+            if (sentence_count != 0) {
+                document.getElementById("sentence_addButton").style.display = "none";
+                document.getElementById("sentence_getvalue").style.display = "block";
+                document.getElementById("sentence_back").style.display = "block";
+            }
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function sentence_remove_field(sentence_id) {
+        // alert(sentence_id)
+        if (sentence_count > 1) {
+            var sentence_myobj = document.getElementById(sentence_id);
+            sentence_myobj.remove();
+            sentence_count--;
+            document.getElementById("sentence_addButton" + (sentence_count - 1)).style.display = "block";
+            document.getElementById("sentence_removeButton" + (sentence_count - 1)).style.display = "block";
+        }
+
+        if (sentence_count == 0) {
+            document.getElementById("sentence_addButton").style.display = "block";
+            document.getElementById("sentence_getvalue").style.display = "none";
+            document.getElementById("sentence_back").style.display = "none";
+        }
+    }
+
+    function back() {
+        window.location.replace("/teacher/teacher-notes/prose")
+    }
+
+    function sentence_getvalues() {
+        var sentence_ques = [];
+        var sentence_ans = [];
+        for (i = 0; i < sentence_count; i++) {
+            sentence_ques[i] = document.getElementById("sentence_question" + i).textContent;
+            sentence_ans[i] = document.getElementById("sentence_answer" + i).textContent;
+        }
+        if (sentence_ques.length == sentence_count) {
+            var arraySet = new Set(sentence_ques)
+            if (arraySet.has("")) {
+                alert("Please enter the question")
+            }
+            else {
+                if (sentence_ans.length == sentence_count) {
+                    var arraySet2 = new Set(sentence_ans)
+                    if (arraySet2.has("")) {
+                        alert("Please enter the answer")
+                    }
+                    else {
+                        var sentence_heading = document.getElementById("sentence_heading").value;
+                        var sentence_ques_obj = {};
+                        var sentence_ques_item = {};
+                        sentence_ques_obj = {
+                            "user": user_id,
+                            "standard": std,
+                            "section": sec,
+                            "schoolname": schoolname,
+                            "subject": subname,
+                            "lesson-type": ch_type,
+                            "chapter-no": ch_no,
+                            "chapter-heading": ch_heading,
+                            "heading": sentence_heading,
+                            "questions": toObject(sentence_ques),
+                            "answers": toObject(sentence_ans)
+                        }
+
+                        sentence_ques_item = {
+                            "heading": sentence_heading,
+                            "type":"NORMAL",
+                            "questions": toObject(sentence_ques),
+                            "answers": toObject(sentence_ans)
+                        }
+
+                        alert("Sentence making is saved successfully!");
+                        document.getElementById('sentence_getvalue').value = "Saved!";
+                        create_sentence_making(JSON.stringify(sentence_ques_obj));
+                        console.log(JSON.stringify(sentence_ques_obj, null, '\t'))
+                        document.getElementById("final_submit").style.display = "block";
+                        localStorage.setItem("sentence_final_object", JSON.stringify(sentence_ques_item));
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='sentence_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Sentence Making</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="sentence_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+                            <div id="sentence_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="sentence_add_field();"
+                                        id='sentence_addButton'></div>
+                            </div>
+                            <div id="sentence_a"></div>
+                            <div id="sentence_sub" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="back()" id='sentence_back'>
+                                </div>
+                                <div class=col-sm-1><input style="display:none;height:40px;" type='button' value='Save'
+                                        class="btn btn-primary mr-3" onclick="sentence_getvalues();"
+                                        id='sentence_getvalue'></div>
+                            </div>
+
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+                <div>
+                    <!-- End of component container -->
+
+                </div>
+                <!-- End of part container-->
+            </div>
+            <!-- End of section container-->
+        </div>
+        <!-- End of main container-->
+    </div>
+    </div>
+</body>
+
+</html>

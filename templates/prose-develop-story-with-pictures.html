@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var fileOutput = [];
+    var std = localStorage.getItem("std");
+    var sec = localStorage.getItem("section");
+    var subname = localStorage.getItem("subname");
+    var user_id = localStorage.getItem("user_id");
+    var ch_no = localStorage.getItem("ch_no");
+    var ch_type = localStorage.getItem("ch_type");
+    var ch_heading = localStorage.getItem("ch_heading");
+    function encodeImageFileAsURL(element, develop_story_pic_count) {
+        var file = element.files[0];
+        var reader = new FileReader();
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage" + develop_story_pic_count).files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview" + develop_story_pic_count).src = oFREvent.target.result;
+        };
+        reader.onloadend = function () {
+            fileOutput[develop_story_pic_count] = reader.result;
+        }
+        reader.readAsDataURL(file);
+    };
+
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        };
+    };
+
+
+    var develop_story_pic_container = "";
+    var develop_story_pic_count = 0;
+    var develop_story_pic_heading = "";
+    function develop_story_pic_add_field() {
+        develop_story_pic_heading = document.getElementById("develop_story_pic_heading").value;
+        develop_story_pic_container = document.getElementById("develop_story_pic_a");
+        if (develop_story_pic_heading != "") {
+            if (develop_story_pic_count == 0) {
+                document.getElementById("develop_story_pic_ansButton").style.display = "block";
+                develop_story_pic_container.innerHTML = develop_story_pic_container.innerHTML +
+                    "<div id='develop_story_pic_" + develop_story_pic_count + "'><div class='form-group'><label for='answer' style='font-weight: bold;'>Pictures:</label><div class='row'><div class='col-sm-12'><div><table style='width:50%'><tr><th rowspan='2'><img id='uploadPreview" + develop_story_pic_count + "' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='uploadImage" + develop_story_pic_count + "' type='file' onchange='encodeImageFileAsURL(this," + develop_story_pic_count + ")' /></th></tr><tr></tr></table><br></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='develop_story_pic_add_field();' id='develop_story_pic_addButton" + develop_story_pic_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='develop_story_pic_removeButton" + develop_story_pic_count + "' onclick=develop_story_pic_remove_field('develop_story_pic_" + develop_story_pic_count + "');></div></div></div></div>";
+                develop_story_pic_count++;
+            }
+            else if (develop_story_pic_count > 0) {
+                if (count(fileOutput) == develop_story_pic_count) {
+                    document.getElementById("develop_story_pic_addButton" + (develop_story_pic_count - 1)).style.display = "none";
+                    document.getElementById("develop_story_pic_removeButton" + (develop_story_pic_count - 1)).style.display = "none";
+                    develop_story_pic_container.innerHTML = develop_story_pic_container.innerHTML +
+                        "<div id='develop_story_pic_" + develop_story_pic_count + "'><div class='form-group'><div class='row'><div class='col-sm-12'><div><table style='width:50%'><tr><th rowspan='2'><img id='uploadPreview" + develop_story_pic_count + "' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='uploadImage" + develop_story_pic_count + "' type='file' onchange='encodeImageFileAsURL(this," + develop_story_pic_count + ")' /></th></tr><tr></tr></table><br></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='develop_story_pic_add_field();' id='develop_story_pic_addButton" + develop_story_pic_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='develop_story_pic_removeButton" + develop_story_pic_count + "' onclick=develop_story_pic_remove_field('develop_story_pic_" + develop_story_pic_count + "');></div></div></div></div>";
+                    develop_story_pic_count++;
+                } else {
+                    alert("Please upload the image")
+                }
+            }
+
+            if (develop_story_pic_count != 0) {
+                document.getElementById("develop_story_pic_addButton").style.display = "none";
+            }
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+
+    function addAnswer() {
+        if (count(fileOutput) == develop_story_pic_count) {
+            document.getElementById("develop_story_pic_ansButton").style.display = "none";
+            document.getElementById("develop_story_pic_answ").style.display = "block";
+            document.getElementById("develop_story_pic_getvalue").style.display = "block";
+            document.getElementById("develop_story_pic_back").style.display = "block";
+        }
+        else {
+            alert("Please upload the picture");
+        }
+    }
+
+    function develop_back(){
+        window.location.replace("/teacher/teacher-notes/prose");
+    }
+    
+    function develop_story_pic_remove_field(develop_story_pic_id) {
+        if (develop_story_pic_count > 1) {
+            var develop_story_pic_myobj = document.getElementById(develop_story_pic_id);
+            develop_story_pic_myobj.remove();
+            develop_story_pic_count--;
+            fileOutput.pop();
+            document.getElementById("develop_story_pic_addButton" + (develop_story_pic_count - 1)).style.display = "block";
+            document.getElementById("develop_story_pic_removeButton" + (develop_story_pic_count - 1)).style.display = "block";
+        }
+
+        if (develop_story_pic_count == 0) {
+            document.getElementById("develop_story_pic_addButton").style.display = "block";
+            document.getElementById("develop_story_pic_getvalue").style.display = "none";
+            document.getElementById("develop_story_pic_back").style.display = "none";
+        }
+    }
+
+    function develop_story_pic_getvalues() {
+        if (fileOutput.length == develop_story_pic_count) {
+            var arraySet = new Set(fileOutput)
+            if (arraySet.has("")) {
+                alert("Please upload all the images")
+            }
+            else {
+                develop_story_pic_heading = document.getElementById("develop_story_pic_heading").value;
+                story = document.getElementById("develop_story_pic_story").textContent;
+                if (story != "") {
+                    var develop_story_pic_ques_obj = {};
+                    var develop_story_pic_ques_item = {};
+                    develop_story_pic_ques_obj = {
+                        "user": user_id,
+                        "standard": std,
+                        "section": sec,
+                        "schoolname": schoolname,
+                        "subject": subname,
+                        "lesson-type": ch_type,
+                        "chapter-no": ch_no,
+                        "chapter-heading": ch_heading,
+                        "heading": develop_story_pic_heading,
+                        "questions": toObject(fileOutput),
+                        "answers": story
+                    }
+
+                    develop_story_pic_ques_item = {
+                        "heading": develop_story_pic_heading,
+                        "type":"IMG",
+                        "questions": toObject(fileOutput),
+                        "answers": story
+                    }
+                    alert("Develop stories using pictures is saved successfully!");
+                    document.getElementById('develop_story_pic_getvalue').value = "Saved!";
+                    create_develop_stories(JSON.stringify(develop_story_pic_ques_obj));
+                    console.log(JSON.stringify(develop_story_pic_ques_obj, null, '\t'))
+                    // document.getElementById("develop_story_pic_getvalue").style.display = "none";
+                    document.getElementById("final_submit").style.display = "block";
+                    localStorage.setItem("develop_story_final_object", JSON.stringify(develop_story_pic_ques_item));
+                } else {
+                    alert("Please enter the story");
+                }
+            }
+        }
+        else {
+            alert("Please upload all the images")
+        }
+    }
+</script>
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='develop_story_pic_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Develop a story with pictures</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="develop_story_pic_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+
+                            <div id="develop_story_pic_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="develop_story_pic_add_field();"
+                                        id='develop_story_pic_addButton'>
+                                </div>
+                            </div>
+
+                            <div id="develop_story_pic_a"></div>
+                            <div id="develop_story_pic_ansButton" style="display:none;" class="row">
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add answer'
+                                        class="btn btn-primary mr-3" onclick="addAnswer();"
+                                        id='develop_story_pic_answerBtn'></div>
+                            </div>
+                            <div id="develop_story_pic_answ" style="display: none;" class="mt-3 form-group">
+                                <label style="font-weight: bold;">Story</label>
+                                <div style="height:200px;overflow:auto;" name="message" id="develop_story_pic_story"
+                                    class="form-control" contenteditable="true"
+                                    data-placeholder="Type your story here..." cols="200" rows="100"></div>
+                            </div>
+                            <div id="develop_story_pic_sub" class="row">
+                                <div class=col-sm-1><input style="display:none;height:40px;" type='button' value='Back'
+                                        class="btn btn-primary mr-3" onclick="develop_back();" id='develop_story_pic_back'>
+                                </div>
+                                <div class=col-sm-1><input style="display:none;height:40px;" type='button' value='Save'
+                                        class="btn btn-primary mr-3" onclick="develop_story_pic_getvalues();"
+                                        id='develop_story_pic_getvalue'></div>
+                            </div>
+
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

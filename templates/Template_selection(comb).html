@@ -1,0 +1,662 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question Paper Setup</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/index-js"></script>
+
+    <!-- <script type="text/javascript" src="\static\index.js"></script> -->
+    <script src="\static\mark.js"></script>
+    <script src="\static\play_print_download.js"></script>
+    <script src="\static\synonyms(options).js"></script>
+    <script src="\static\antonyms(options).js"></script>
+    <script src="\static\synonyms.js"></script>
+    <script src="\static\antonyms.js"></script>
+    <script src="\static\ans_vocabulary.js"></script>
+    <script src="\static\ans_gram1.js"></script>
+    <script src="\static\ans_gram2.js"></script>
+    <script src="\static\punctuation.js"></script>
+    <script src="\static\short_questions.js"></script>
+    <script src="\static\paragraph(prose).js"></script>
+    <script src="\static\memorypoem.js"></script>
+    <!-- <script src="\static\poeticlines.js"></script>
+    <script src="\static\figofspeech.js"></script> -->
+    <script src="\static\poetic_lines.js"></script>
+    <script src="\static\fig_speech.js"></script>
+    <script src="\static\paragraph(poem).js"></script>
+    <script src="\static\paper1_comprehension.js"></script>
+    <script src="\static\errorspot.js"></script>
+    <script src="\static\paper1_imagecomprehension.js"></script>
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+    <script type="text/javascript" src="\static\paragraph-with-fill.js"></script>
+    <script type="text/javascript" src="\static\identify-character-speaker.js"></script>
+    <script type="text/javascript" src="\static\choose-the-correct-answer.js"></script>
+    <script type="text/javascript" src="\static\match-the-following.js"></script>
+    <script type="text/javascript" src="\static\comprehension-questions.js"></script>
+    <script type="text/javascript" src="\static\mind-map.js"></script>
+    <script type="text/javascript" src="\static\note-making.js"></script>
+    <script type="text/javascript" src="\static\supplementary-paragraph-questions.js"></script>
+    <script type="text/javascript" src="\static\dialog-writing.js"></script>
+    <script type="text/javascript" src="\static\letter-writing.js"></script>
+    <script type="text/javascript" src="\static\formal-letter.js"></script>
+    <script type="text/javascript" src="\static\informal-letter.js"></script>
+    <script type="text/javascript" src="\static\develop-paragraph.js"></script>
+    <script type="text/javascript" src="\static\matching-slogan-products.js"></script>
+    <script type="text/javascript" src="\static\advertisement-questions.js"></script>
+    <script type="text/javascript" src="\static\expand-the-headlines.js"></script>
+    <script type="text/javascript" src="\static\road-map.js"></script>
+    <script type="text/javascript" src="\static\pie-chart.js"></script>
+    <script type="text/javascript" src="\static\poem-paraphrase.js"></script>
+    <script type="text/javascript" src="\static\translation.js"></script>
+    <script type="text/javascript" src="\static\pic-compre.js"></script>
+    <script type="text/javascript" src="\static\dialog-fill.js"></script>
+    <script type="text/javascript" src="\static\translation-picture comprehension.js"></script>
+
+
+</head>
+<script>
+    // Warning before leaving the page (back button, or outgoinglink)
+
+    window.onbeforeunload = function () {
+
+        return "You haven't saved your changes";
+
+    };
+</script>
+
+<body>
+    <div style="padding-bottom:20px;" class="jumbotron">
+        <center>
+
+            <div class='row'>
+                <div class='col-sm-1'></div>
+                <div class='col-sm-1'><img src="\static\filename.jpg" alt="Eduscribe"></div><br>
+                <div class='col-sm-8'>
+                    <h3 id="type_test" style='padding-top: 20px;'></h3>
+                    <h3 id="std" style='padding-top: 20px;'></h3>
+                    <h3 id="subname" style='padding-top: 20px;'></h3>
+                </div>
+            </div>
+        </center>
+        <br>
+        <div class="row">
+            <div class="col-sm-1"><label></label></div>
+            <div class="col-sm-4">
+                <b>
+                    <p class="a" id="time_allowed"></p>
+                </b>
+            </div>
+            <div class="col-sm-4"><label></label></div>
+            <div class="col-sm-3">
+                <b>
+                    <p class="a" id="max_marks"></p>
+                </b>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="getAll">
+
+        </div>
+
+
+    </div>
+
+
+    <div class="container" id="wholesec">
+
+
+
+    </div>
+    <div id="add">
+
+    </div>
+</body>
+<style>
+    [contenteditable=true]:empty:not(:focus):before {
+        content: attr(data-placeholder)
+    }
+</style>
+<script>
+
+    var opt = 0;
+    var option = [];
+    var count_opt = [];
+    var checkBox = "";
+    var no_option = 0;
+    var counter = 1;
+
+    var poectic_count_opt = [];
+
+    var item4 = {};
+    var play = "";
+    var obj_play = {};
+
+    var ques_no_syn = 0;
+    var ques_no_compre = 0;
+    var ques_no_err = 0;
+
+    var sectioncount = 1;
+    var sec_count = 0;
+
+    var mark_syn = 0;
+    var mark_ant = 0;
+    var mark_ans_voc = 0;
+    var mark_ans_grmr1 = 0;
+    var mark_ans_grmr2 = 0;
+    var mark_punc = 0;
+    var mark_shortques = 0;
+    var mark_pro_para_ques = 0;
+    var mark_mem = 0;
+    var mark_poet = 0;
+    var mark_fig = 0;
+    var mark_poem_para_ques = 0;
+    var mark_compre = 0;
+    var mark_errques = 0;
+    var mark_img_compre = 0;
+    var mark_syn_opt_total_marks = 0;
+    var mark_ant_opt_total_marks = 0;
+
+    var marks_syn = 0;
+    var marks_ant = 0;
+    var marks_ans_voc = 0;
+    var marks_ans_grmr1 = 0;
+    var marks_ans_grmr2 = 0;
+    var marks_punc = 0;
+    var marks_shortques = 0;
+    var marks_pro_para_ques = 0;
+    var marks_mem = 0;
+    var marks_poet = 0;
+    var marks_fig = 0;
+    var marks_poem_para_ques = 0;
+    var marks_compre = 0;
+    var marks_errques = 0;
+    var marks_img_compre = 0;
+    var marks_syn_opt_total_marks = 0;
+    var marks_ant_opt_total_marks = 0;
+
+    var no_of_ques_syn = 0;
+    var no_of_ques_ant = 0;
+    var no_of_ques_ans_vocabulary = 0;
+    var no_of_ques_ans_grmr1 = 0;
+    var no_of_ques_ans_grmr2 = 0;
+    var no_of_ques_punc = 0;
+    var no_of_ques_shortques = 0;
+    var no_of_ques_pro_para_ques = 0;
+    var no_of_ques_mem = 0;
+    var no_of_ques_poet = 0;
+    var no_of_ques_fig = 0;
+    var no_of_ques_poem_para_ques = 0;
+    var no_of_ques_compre = 0;
+    var no_of_ques_errques = 0;
+    var no_of_ques_img_compre = 0;
+    var no_of_ques_syn_opt = 0;
+    var no_of_ques_ant_opt = 0;
+
+    var each_mark_synonyms = 0;
+    var each_mark_antonyms = 0;
+    var each_mark_ans_vocabulary = 0;
+    var each_mark_ans_gram1 = 0;
+    var each_mark_ans_gram2 = 0;
+    var each_mark_punc = 0;
+    var each_mark_shortques = 0;
+    var each_mark_pro_para = 0;
+    var each_mark_mem = 0;
+    var each_mark_poet = 0;
+    var each_mark_fig = 0;
+    var each_mark_poem_para = 0;
+    var each_mark_compre = 0;
+    var each_mark_errques = 0;
+    var each_mark_img_compre = 0;
+    var each_mark_syn_opt = 0;
+    var each_mark_ant_opt = 0;
+
+    var num_ques_syn = 0;
+    var num_ques_ant = 0;
+    var num_ques_ans_voc = 0;
+    var num_ques_ans_grmr1 = 0;
+    var num_ques_ans_grmr2 = 0;
+    var num_ques_punc = 0;
+    var num_ques_shortques = 0;
+    var num_ques_pro_para = 0;
+    var num_ques_mem = 0;
+    var num_ques_poet = 0;
+    var num_ques_fig = 0;
+    var num_ques_poem_para = 0;
+    var num_ques_compre = 0;
+    var num_ques_errques = 0;
+    var num_ques_img_compre = 0;
+    var num_ques_syn_opt = 0;
+    var num_ques_ant_opt = 0;
+
+
+    var item_syn = {};
+    var item_ant = {};
+    var item_ans_voc = {};
+    var item_ans_grmr1 = {};
+    var item_ans_grmr2 = {};
+    var item_punc = {};
+    var item_shortques = {};
+    var item_pro_paraques = {};
+    var item_mem = {};
+    var item_poet = {};
+    var item_fig = {};
+    var item_poem_paraques = {};
+    var item_compre = {};
+    var item_errques = {};
+    var item_img_compre = {};
+    var syn_opt_item1 = {};
+    var syn_opt_item2 = {};
+    var ant_opt_item1 = {};
+    var ant_opt_item2 = {};
+    var item_syn_options = {};
+    var obj_syn_options = {};
+    var item_ant_options = {};
+    var obj_ant_options = {};
+
+    var item_fill = {};
+    var item_ch_speaker = {};
+    var item_match = {};
+    var item_choose = {};
+    var item_second_compre_ques = {};
+    var item_mind_map = {};
+    var item_supple_para_ques = {};
+    var item_note_making = {};
+    var item_dialog_ques = {};
+    var item_match1 = {};
+    var item_ad_ques = {};
+    var item_ex_head = {};
+    var item_pie_chart = {};
+    var item_dev_para = {};
+    var item_road_map = {};
+    var item_poem_ques = {};
+    var item_translation = {};
+    var item_pic_compre = {};
+    var item_trans_pic_compre = {};
+    var item_informal_letter = {};
+    var item_formal_letter = {};
+    var item_dialog_fill = {};
+    var item_trans_pic = {};
+    var item_pie_chart = {};
+    var item_normal_letter_ques = {};
+
+
+
+    var section1 = {};
+    var sections = {};
+    var part1 = {};
+    var p_name = "";
+    var sec_title = {};
+
+    var obj_syn = {};
+    var obj_ant = {};
+    var obj_ans_voc = {};
+    var obj_ans_grmr1 = {};
+    var obj_ans_grmr2 = {};
+    var obj_punc = {};
+    var obj_shortques = {};
+    var obj_pro_paraques = {};
+    var obj_mem = {};
+    var obj_poet = {};
+    var obj_fig = {};
+    var obj_poem_paraques = {};
+    var obj_errques = {};
+    var obj_compre = {};
+    var obj_img_compre = {};
+    var obj_eng_ques = {};
+    var obj_syn_opt = {};
+    var obj_ant_opt = {};
+
+    var obj_fill = {};
+    var obj_ch_speaker = {};
+    var obj_match = {};
+    var obj_choose = {};
+    var obj_second_compre_ques = {};
+    var obj_mind_map = {};
+    var obj_supple_para_ques = {};
+    var obj_note_making = {};
+    var obj_dialog_ques = {};
+    var obj_match1 = {};
+    var obj_ad_ques = {};
+    var obj_ex_head = {};
+    var obj_dev_para = {};
+    var obj_formal_letter = {};
+    var obj_informal_letter = {};
+    var obj_translation = {};
+    var obj_pic_compre = {};
+    var obj_road_map = {};
+    var obj_poem_ques = {};
+    var obj_dialog_fill = {};
+    var obj_trans_pic = {};
+    var obj_normal_letter_ques = {};
+    var obj_pie_chart = {};
+
+    var compre_quote = {};
+    var s_sec = 0;
+
+    var school_name = localStorage.getItem("School_name");
+    var std = localStorage.getItem("Standard");
+    var test_types = localStorage.getItem("Type_of_test");
+
+    var maximum_marks = localStorage.getItem("Total_Marks");
+    var section_count = localStorage.getItem("Section_Count");
+    var section_titles = JSON.parse(localStorage.getItem("Selection_of_titles"));
+    var no_of_parts = JSON.parse(localStorage.getItem("No_of_parts"));
+    var sectionmarks = JSON.parse(localStorage.getItem("Each_section_marks"));
+    var question_types = JSON.parse(localStorage.getItem("Selection_question_types"));
+    var part_marks = JSON.parse(localStorage.getItem("Each_part_marks"));
+
+    var subject_name = localStorage.getItem("Name of the subject");
+    var retrievedData9 = localStorage.getItem("Maximum hours");
+    var retrievedData10 = localStorage.getItem("Maximum minutes");
+    var instruct = localStorage.getItem("Instructions");
+    var exam_date = localStorage.getItem("Exam_date");
+
+    var reg_teacher = localStorage.getItem("regId");
+    var pwd = localStorage.getItem("password");
+
+    var time = "Time Allowed : " + retrievedData9 + " hours " + retrievedData10 + " minutes ";
+    var time_allowed = retrievedData9 + " hours " + retrievedData10 + " minutes ";
+    var mark = "Maximum Marks : " + maximum_marks;
+
+    var arr = exam_date.split("-");
+    var months = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    var month_index = parseInt(arr[1] - 1);
+    var year_index = parseInt(arr[2]);
+
+    var temp = 1;
+    var c = 65;
+    var cha = 64;
+    //making sure it still is an array
+    var getAlldiv = document.getElementById("getAll");
+    document.getElementById("subname").innerHTML = subject_name.toUpperCase();
+    document.getElementById("time_allowed").innerHTML = time;
+    document.getElementById("max_marks").innerHTML = mark;
+    //document.getElementById("school_name").innerHTML = school_name;
+
+    if (test_types != "SSLC Examination" && test_types != "HSC Examination") {
+        document.getElementById("std").innerHTML = std.toUpperCase();
+        document.getElementById("type_test").innerHTML = test_types.toUpperCase() + ' - ' + months[month_index].toUpperCase() + ' ' + year_index;
+    }
+
+    var con_no = 1;
+    getAlldiv.innerHTML = "";
+    getAlldiv.innerHTML += '<div class="row"><div class="col-sm-12"><p style="font-weight:bold;">Instructions : </p><p>' + instruct + '</p></div></div>';
+    getAlldiv.innerHTML += '<div class="row"><div class="col-sm-10"><p style="font-weight:bold;">Note : </p><p>This question paper contains <strong>' + numberToWords(section_count) + '</strong> section(s).</p></div></div>';
+
+    getpartvalues(sectioncount);
+
+    function getpartvalues(sectioncount) {
+
+        sec_count = sectioncount;
+
+        console.clear();
+
+        var res = String.fromCharCode(c);
+        var cap = String.fromCharCode(cha);
+
+        alert("Question Starting Number : " + con_no);
+
+        if (part1 != {}) {
+            if (sectioncount - 1 != 0) {
+                sec_title = { "title": section_titles[sectioncount - 1], "marks": sectionmarks[sectioncount - 1] }
+                section1["section " + (cap)] = { ...sec_title, ...part1 };
+                console.log(JSON.stringify(section1, null, '\t'));
+                part1 = {};
+            }
+
+        }
+
+        var sum_section = 0;
+        s_sec = 0;
+        var temp = 1;
+
+        var wholesec = document.getElementById("wholesec");
+        var sec_div = document.createElement("div");
+        sec_div.id = "sec" + sectioncount;
+        wholesec.innerHTML = "";
+
+        for (var i = 1; i < sectioncount; i++) {
+            sum_section += parseInt(no_of_parts[i]);
+            s_sec += parseInt(no_of_parts[i]);
+        }
+
+        sec_div.innerHTML += '<center><h4>SECTION - ' + res + '</h4><p style="font-size:20px; font-weight:bold;">(' + section_titles[sectioncount] + ' - ' + sectionmarks[sectioncount] + ' MARKS)</p><center>';
+        console.log("No of parts in Section " + res + " are " + no_of_parts[sectioncount]);
+        temp = 1;
+
+        for (var i = sum_section + 1; i <= (parseInt(no_of_parts[sectioncount]) + sum_section); i++) {
+
+            sec_div.innerHTML += '<center><h4>Part - ' + integer_to_roman1(temp) + '</h4></center>';
+            var parts_name = question_types[i];
+            p_name = question_types[i];
+            console.log("Synonyms1 " + p_name);
+
+            for (var j = 0; j < parts_name.length; j++) {
+
+                if (parts_name[j] == "Synonyms with paragraph") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="container bg-light p-3"><h5 class="text-center pb-3 display-5">Synonyms with paragraph</h5><div class="form-group"><div class="form-inline mb-3"><div class="form-group mb-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Question Number</label><input type="text" class="form-control" id="question-number_synonyms" placeholder="Question Number"></div><div class="form-group mb-2 ml-md-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_synonyms" placeholder="Marks"></div></div></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_synonyms" class="form-control" placeholder="Type your heading..."></div><div class="mt-3"><label for="_marks" style="font-weight: bold;">Numbering option </label> <br><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="radio_1" name="type_synonyms" value="Numbers_synonyms" onClick="getResultsSynonyms(this)"><label for="radio_1" class="form-check-label">Numbers </label></div><div class="form-check form-check-inline"><input type="radio" id="radio_2" name="type_synonyms" class="form-check-input" value="Alphabets_synonyms" onClick="getResultsSynonyms(this)"><label for="radio_2" class="form-check-label">Alphabets </label></div><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="radio_3" name="type_synonyms" value="Roman letters_synonyms" onClick="getResultsSynonyms(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label></div><div class="form-inline mt-3" id="dvtext_synonyms" style="display: none;"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="starting-number_synonyms"placeholder="Numbering From" /> </div></div></div><div class="mt-3 form-group"><label style="font-weight: bold;">Paragraph</label><div style="height:200px; " name="message" id="txt_synonyms" class="form-control"contenteditable="true" onkeyup="myFunctionsSynonyms()"data-placeholder="Type your paragraph here..." cols="200" rows="100"></div></div><div class="form-group"><label for="number-of-questions_synonyms" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_synonyms" class="form-control" placeholder="Number of questions"></div><div class="form-group"><label for="number-of-options" style="font-weight: bold; ">Number of options </label><input type="text" id="number-of-options_synonyms" class="form-control" placeholder="Number of options"></div><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_synonyms"></div><div id="a"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Synonyms") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="syn_opt_TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Synonyms</h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_syn_options" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_syn_options" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_syn_options" class="form-control" placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_syn_options" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_syn_options"></div><div id="syn_c"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Antonyms with paragraph") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="container bg-light p-3"><h5 class="text-center pb-3 display-5">Antonyms with paragraph</h5><div class="form-group"><div class="form-inline mb-3"><div class="form-group mb-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Question Number</label><input type="text" class="form-control" id="question-number_antonyms" placeholder="Question Number"></div><div class="form-group mb-2 ml-md-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_antonyms" placeholder="Marks"></div></div></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_antonyms" class="form-control" placeholder="Type your heading..."></div><div class="mt-3"><label for="_marks" style="font-weight: bold;">Numbering option </label> <br><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="radio_4" name="type_antonyms" value="Numbers_antonyms" onClick="getResultsAntonyms(this)"><label for="radio_1" class="form-check-label">Numbers </label></div><div class="form-check form-check-inline"><input type="radio" id="radio_5" name="type_antonyms" class="form-check-input" value="Alphabets_antonyms" onClick="getResultsAntonyms(this)"><label for="radio_2" class="form-check-label">Alphabets </label></div><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="radio_6" name="type_antonyms" value="Roman letters_antonyms" onClick="getResultsAntonyms(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label></div><div class="form-inline mt-3" id="dvtext_antonyms" style="display: none;"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="starting-number_antonyms" placeholder="Numbering From" /> </div></div></div><div class="mt-3 form-group"><label style="font-weight: bold;">Paragraph</label><div style="height:200px; " name="message" id="txt_antonyms" class="form-control"contenteditable="true" onkeyup="myFunctionsAntonyms()"data-placeholder="Type your paragraph here..." cols="200" rows="100"></div></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_antonyms" class="form-control" placeholder="Number of questions"></div><div class="form-group"><label for="number-of-options" style="font-weight: bold; ">Number of options </label><input type="text" id="number-of-options_antonyms" class="form-control" placeholder="Number of options"></div><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_antonyms"></div><div id="b"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Antonyms") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Antonyms</h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_ant_options" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_ant_options" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_ant_options" class="form-control" placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_ant_options" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_ant_options"></div><div id="ant_c"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Answer the following - I (Vocabulary)") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Answer the following questions - I (Vocabulary) </h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_ans_vocabulary" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_ans_vocabulary" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_ans_vocabulary" class="form-control"placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_ans_vocabulary" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_ans_vocabulary"></div><div id="c"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Answer the following - I (Grammar)") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Answer the following questions - I (Grammar) </h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_ans_gram1" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_ans_gram1" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_ans_gram1" class="form-control"placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_ans_gram1" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_ans_gram1"></div><div id="d"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Answer the following - II (Grammar)") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Answer the following questions - II (Grammar) </h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_ans_gram2" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_ans_gram2" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_ans_gram2" class="form-control"placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_ans_gram2" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_ans_gram2"></div><div id="gram2"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Punctuation") {
+                    //sec_div.innerHTML += '<object style="height: 500px; width: 100%;" type="text/html" data="Punctuation.html" ></object>';
+                    sec_div.innerHTML += '<div class="container"><form><div id="punct_TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Punctuation Questions</h5><div class="form-group"><div class="form-inline mb-3"><div class="form-group mb-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Question Number</label><input type="text" class="form-control" id="punct-question-number"placeholder="Question Number"></div><div class="form-group mb-2 ml-md-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="punct_marks" placeholder="Marks"></div></div></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="punct_heading" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="punct-number-of-questions" class="form-control"placeholder="Number of questions"></div><div class="mt-3"><label for="_marks" style="font-weight: bold;">Numbering option </label> <br><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="punct_radio_1" name="type" value="punct_Numbers" onClick="getResults_punct(this)"><label for="radio_1" class="form-check-label">Numbers </label></div><div class="form-check form-check-inline"><input type="radio" id="punct_radio_2" name="type" class="form-check-input" value="punct_Alphabets" onClick="getResults_punct(this)"><label for="radio_2" class="form-check-label">Alphabets </label></div><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="punct_radio_3" name="type" value="punct_Roman letters" onClick="getResults_punct(this)"><label for="radio_3" class="form-check-label">Roman Letters</label></div><div class="form-inline mt-3" id="punct_dvtext" style="display:none;"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="punct-starting-number" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="punct_addButton"></div><div id="punct"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Short questions") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Short Questions</h5><div class="form-group"><div class="form-inline mb-3"><div class="form-group mb-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Question Number</label><input type="text" class="form-control" id="question-number_shortques"placeholder="Question Number"></div><div class="form-group mb-2 ml-md-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_shortques" placeholder="Marks"></div></div></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_shortques" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_shortques" class="form-control"placeholder="Number of questions"></div><div class="mt-3"><label for="_marks" style="font-weight: bold;">Numbering option </label> <br><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="radio_shortques1" name="type_shortques" value="Numbers_shortques" onclick="getResultsShortQuestions(this)"><label for="radio_1" class="form-check-label">Numbers </label></div><div class="form-check form-check-inline"><input type="radio" id="radio_shortques2" name="type_shortques" class="form-check-input" value="Alphabets_shortques" onClick="getResultsShortQuestions(this)"><label for="radio_2" class="form-check-label">Alphabets </label></div><div class="form-check form-check-inline"><input type="radio" class="form-check-input" id="radio_shortques3" name="type_shortques" value="Roman letters_shortques" onClick="getResultsShortQuestions(this)"><label for="radio_3" class="form-check-label">Roman Letters</label></div><div class="form-inline mt-3" id="dvtext_shortques" style="display:none;"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_shortques" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_shortques"></div><div id="g"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Paragraph questions (Prose)") {
+                    sec_div.innerHTML += ' <div class="container"> <form> <div id="prosepara_TextBoxesGroup" class="bg-light p-3"> <h5 class="text-center pb-3 display-5">Paragraph writing (Prose)</h5> <div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Question Number</label> <input type="text" class="form-control" id="prosepara-question-number" placeholder="Question Number"> </div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="prosepara_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="prosepara_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="prosepara-number-of-questions" class="form-control" placeholder="Number of questions"> </div> <div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="prosepara_radio_1" name="type" value="prosepara_Numbers" onClick="getResults_prosepara(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="prosepara_radio_2" name="type" class="form-check-input" value="prosepara_Alphabets" onClick="getResults_prosepara(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="prosepara_radio_3" name="type" value="prosepara_Roman letters" onClick="getResults_prosepara(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="prosepara_dvtext" style="display:none;"> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="prosepara-starting-number" placeholder="Numbering From" /> </div> </div> <br><br> <div class="d-flex flex-row align-items-center justify-content-start"> <input type="button" value="Create" class="btn btn-primary mr-3" id="prosepara_addButton"> </div> <div id="prosepara"></div> </div> </form> </div>';
+                }
+
+                if (parts_name[j] == "Memory poem") {
+                    sec_div.innerHTML += '<div class="container"> <form> <div id="memory_TextBoxesGroup" class="bg-light p-3"> <h5 class="text-center pb-3 display-5">Memory Poem</h5> <div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Question Number</label> <input type="text" class="form-control" id="memory-question-number" placeholder="Question Number"> </div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="memory_marks" placeholder="Marks"> </div> </div> </div><div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="memory_heading" class="form-control" placeholder="Type your heading..."> </div><div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="memory-number-of-questions" class="form-control" placeholder="Number of questions" /> </div><div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="memory_radio_1" name="type" value="memory_Numbers" onClick="getResults_memory(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="memory_radio_2" name="type" class="form-check-input" value="memory_Alphabets" onClick="getResults_memory(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="memory_radio_3" name="type" value="memory_Roman letters" onClick="getResults_memory(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div><div class="form-inline mt-3" id="memory_dvtext" style="display:none;"> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="memory-starting-number" placeholder="Numbering From" /> </div> </div> </div><button type="button" id="memory_addButton" class="btn btn-primary mt-2">Add</button><div id="memory"></div> </div> </div> </form> </div> ';
+                }
+
+                // if (parts_name[j] == "Poetic lines with questions") {
+                //     sec_div.innerHTML += '<div class="container"> <form><div id="poem_TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Poetic Lines</h5><div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Question Number</label><input type="text" class="form-control" id="poem-question-number" placeholder="Question Number"></div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="poem_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="poem_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="poem-number-of-questions" class="form-control" placeholder="Number of questions" /> </div> <div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="poem_radio_1" name="type" value="poem_Numbers" onClick="getResults_poem(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="poem_radio_2" name="type" class="form-check-input" value="poem_Alphabets" onClick="getResults_poem(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="poem_radio_3" name="type" value="poem_Roman letters" onClick="getResults_poem(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="poem_dvtext" style="display:none; "> <div class="form-group"> <label style="font-weight: bold;" for="poem-starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="poem-starting-number" placeholder="Numbering From" /> </div> </div> </div> <button type="button" id="poem_addButton" class="btn btn-primary mt-2">Add</button> <div id="l"></div> </div> </form> </div>';
+                // }
+
+                if (parts_name[j] == "Poetic lines with questions") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Poetic Lines</h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_poet" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_poet" class="form-control" placeholder="Type your heading here..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_poet" class="form-control" placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_poet" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_poet"></div><div id="poet_d"></div></div></form></div>';
+                }
+
+                // if (parts_name[j] == "Figure of speech") {
+                //     sec_div.innerHTML += '<div class="container"> <form><div id="figure_TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Figure of Speech</h5><div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"><label style="font-weight: bold;" class="pr-3">Question Number</label><input type="text" class="form-control" id="figure-question-number" placeholder="Question Number"></div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="figure_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="figure_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="figure-number-of-questions" class="form-control" placeholder="Number of questions" /> </div> <div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="figure_radio_1" name="type" value="figure_Numbers" onClick="getResults_figure(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="figure_radio_2" name="type" class="form-check-input" value="figure_Alphabets" onClick="getResults_figure(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="figure_radio_3" name="type" value="figure_Roman letters" onClick="getResults_figure(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="figure_dvtext" style="display:none; "> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="figure-starting-number" placeholder="Numbering From" /> </div> </div> </div> <button type="button" id="figure_addButton" class="btn btn-primary mt-2">Add</button> <div id="m"></div> </div> </form> </div>';
+                // }
+
+                if (parts_name[j] == "Figure of speech") {
+                    sec_div.innerHTML += '<div class="container"><form><div id="TextBoxesGroup" class="bg-light p-3"><h5 class="text-center pb-3 display-5">Figure of Speech</h5><div class="form-group"><label style="font-weight: bold;" class="pr-3">Marks</label><input type="text" class="form-control" id="marks_fig" placeholder="Marks"></div><div class="form-group"><label style="font-weight: bold;">Heading</label><input type="text" id="heading_fig" class="form-control" placeholder="Type your heading..."></div><div class="form-group"><label for="number-of-questions" style="font-weight: bold; ">Number of questions</label><input type="text" id="number-of-questions_fig" class="form-control" placeholder="Number of questions"></div><div class="form-inline mt-3"><div class="form-group"><label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label><input type="text" class="form-control" id="starting-number_fig" placeholder="Numbering From" /></div></div><br><br><div class="d-flex flex-row align-items-center justify-content-start"><input type="button" value="Create" class="btn btn-primary mr-3" id="addButton_fig"></div><div id="fig_d"></div></div></form></div>';
+                }
+
+                if (parts_name[j] == "Paragraph questions (Poem)") {
+                    sec_div.innerHTML += ' <div class="container"> <form> <div id="poempara_TextBoxesGroup" class="bg-light p-3"> <h5 class="text-center pb-3 display-5">Paragraph writing (Poem)</h5> <div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Question Number</label> <input type="text" class="form-control" id="poempara-question-number" placeholder="Question Number"> </div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="poempara_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="poempara_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="poempara-number-of-questions" class="form-control" placeholder="Number of questions"> </div> <div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="poempara_radio_1" name="type" value="poempara_Numbers" onClick="getResults_poempara(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="poempara_radio_2" name="type" class="form-check-input" value="poempara_Alphabets" onClick="getResults_poempara(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="poempara_radio_3" name="type" value="poempara_Roman letters" onClick="getResults_poempara(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="poempara_dvtext" style="display:none;"> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="poempara-starting-number" placeholder="Numbering From" /> </div> </div> <br><br> <div class="d-flex flex-row align-items-center justify-content-start"> <input type="button" value="Create" class="btn btn-primary mr-3" id="poempara_addButton"> </div> <div id="poempara"></div> </div> </form> </div>';
+                }
+
+                if (parts_name[j] == "Comprehension(prose)") {
+                    sec_div.innerHTML += '<div class="container"> <form> <div id="compre_TextBoxesGroup" class="bg-light p-3"> <h5 class="text-center pb-3 display-5">Comprehension (Prose)</h5> <div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Question Number</label> <input type="text" class="form-control" id="compre-question-number" placeholder="Question Number"> </div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="compre_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="compre_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="mt-3 form-group"> <label style="font-weight: bold;">Paragraph</label> <div style="height:200px; " name="message" id="compre_txt" class="form-control" contenteditable="true" data-placeholder="Type your paragraph here..." cols="200" rows="100"></div> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="compre-number-of-questions" class="form-control" placeholder="Number of questions"> </div> <div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="compre_radio_1" name="type" value="compre_Numbers" onClick="getResults_compre(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="compre_radio_2" name="type" class="form-check-input" value="compre_Alphabets" onClick="getResults_compre(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="compre_radio_3" name="type" value="compre_Roman letters" onClick="getResults_compre(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="compre_dvtext" style="display:none;"> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="compre-starting-number" placeholder="Numbering From" /> </div> </div> <br><br> <div class="d-flex flex-row align-items-center justify-content-start"> <input type="button" value="Create" class="btn btn-primary mr-3" id="compre_addButton"> </div> <div id="compre"></div> </div> </form> </div>';
+                }
+
+                if (parts_name[j] == "Error Spotting") {
+                    sec_div.innerHTML += '<div class="container"> <form> <div id="error_TextBoxesGroup" class="bg-light p-3"> <h5 class="text-center pb-3 display-5">Errors Spotting</h5> <div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Question Number</label> <input type="text" class="form-control" id="error-question-number" placeholder="Question Number"> </div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="error_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="error_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="error-number-of-questions" class="form-control" placeholder="Number of questions"> </div><div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="error_radio_1" name="type" value="error_Numbers" onClick="getResults_error(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="error_radio_2" name="type" class="form-check-input" value="error_Alphabets" onClick="getResults_error(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="error_radio_3" name="type" value="error_Roman letters" onClick="getResults_error(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="error_dvtext" style="display:none;"> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="error-starting-number" placeholder="Numbering From" /> </div> </div> <br><br><div class="d-flex flex-row align-items-center justify-content-start"> <input type="button" value="Create" class="btn btn-primary mr-3" id="error_addButton"> </div> <div id="error"></div> </div> </form> </div>';
+                }
+
+                if (parts_name[j] == "Image Comprehension") {
+                    sec_div.innerHTML += '<div class="container"> <form> <div id="image_TextBoxesGroup" class="bg-light p-3"> <h5 class="text-center pb-3 display-5">Image Comprehension</h5> <div class="form-group"> <div class="form-inline mb-3"> <div class="form-group mb-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Question Number</label> <input type="text" class="form-control" id="image-question-number" placeholder="Question Number"> </div> <div class="form-group mb-2 ml-md-2 px-md-2"> <label style="font-weight: bold;" class="pr-3">Marks</label> <input type="text" class="form-control" id="image_marks" placeholder="Marks"> </div> </div> </div> <div class="form-group"> <label style="font-weight: bold;">Heading</label> <input type="text" id="image_heading" class="form-control" placeholder="Type your heading..."> </div> <div class="form-group"> <label for="number-of-questions" style="font-weight: bold; ">Number of questions </label> <input type="text" id="image-number-of-questions" class="form-control" placeholder="Number of questions" /> </div> <div class="mt-3"> <label for="_marks" style="font-weight: bold;">Numbering option </label> <br> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="image_radio_1" name="type" value="image_Numbers" onClick="getResults_image(this)"> <label for="radio_1" class="form-check-label">Numbers </label> </div> <div class="form-check form-check-inline"> <input type="radio" id="image_radio_2" name="type" class="form-check-input" value="image_Alphabets" onClick="getResults_image(this)"> <label for="radio_2" class="form-check-label">Alphabets </label> </div> <div class="form-check form-check-inline"> <input type="radio" class="form-check-input" id="image_radio_3" name="type" value="image_Roman letters" onClick="getResults_image(this)"> <label for="radio_3" class="form-check-label">Roman Letters</label> </div> <div class="form-inline mt-3" id="image_dvtext" style="display:none; "> <div class="form-group"> <label style="font-weight: bold;" for="starting-number" class="pr-3">Numbering From</label> <input type="text" class="form-control" id="image-starting-number" placeholder="Numbering From" /> </div> </div> </div> <br> <div> <table style="width:50%"> <tr> <th rowspan="2"><img id="uploadPreview" style="width: 300px; height: 250px;" /></th> <th rowspan="2"><input id="uploadImage" type="file" onchange="encodeImageFileAsURL(this)" /></th> </tr> <tr> </tr> </table> <br> <input type="button" value="Create" class="btn btn-primary form-control-sm" id="image_addButton"> </div> <div id="image_compre"></div> </div> </form> </div>';
+                }
+
+                if (parts_name[j] == "Fill the paragraph with appropriate phrases") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='fill_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Fill in the blanks with appropriate phrases to form a meaningful paragraph</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='fill-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='fill-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='fill_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3 form-group'><label style='font-weight: bold;'>Question</label><div style='height:200px;overflow: auto; ' name='message' id='fill-paragraph' class='form-control' contenteditable='true' data-placeholder='Type your paragraph here...' cols='200' rows='100'></div></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='fill_radio_1' name='fill_type' value='fill_Numbers' onClick='fill_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='fill_radio_2' name='fill_type' class='form-check-input' value='fill_Alphabets' onClick='fill_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='fill_radio_3' name='fill_type' value='fill_Roman letters' onClick='fill_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>RomanLetters</label></div><div class='form-inline mt-3' id='fill_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='fill_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of options</label><input type='text' id='fill-options' class='form-control' placeholder='No. of options'></div><div id='fill_b' class='row'><div class='col-sm-10'><label></label></div><div class=col-sm-2><input style='height:40px;' type='button' value='Add Options' class='btn btn-primary mr-3' onclick='fill_add_field();' id='fill_addButton'></div></div><div id='fill_a'></div><div id='fill_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='fill_getvalues();' id='fill_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Identify character or speaker") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='ch_speaker_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Identify character/speaker</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control'id='ch_speaker-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='ch_speaker-marks'placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='ch_speaker_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='ch_speaker_radio_1' name='ch_speaker_type'value='ch_speaker_Numbers' onClick='ch_speaker_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='ch_speaker_radio_2' name='ch_speaker_type' class='form-check-input' value='ch_speaker_Alphabets' onClick='ch_speaker_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='ch_speaker_radio_3' name='ch_speaker_type' value='ch_speaker_Roman letters' onClick='ch_speaker_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='ch_speaker_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='ch_speaker_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='ch_speaker-questions' class='form-control' placeholder='No. of questions'></div><div id='ch_speaker_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='ch_speaker_add_field();' id='ch_speaker_addButton'></div></div><div id='ch_speaker_a'></div><div id='ch_speaker_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='ch_speaker_getvalues();' id='ch_speaker_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Choose the correct answer") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='TextBoxesGroup' class='bg-light p-3'><h5 class='text-center pb-3 display-5'>Choose the correct answer</h5><div class='form-group'><div class='form-inline mb-3'><div class='form-group mb-2 px-md-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label><input type='text' class='form-control' id='choose-question-number' placeholder='Heading Number'></div><div class='form-group mb-2 ml-md-2 px-md-2'><label style='font-weight: bold;' class='pr-3'>Marks</label><input type='text' class='form-control' id='choose-marks' placeholder='Marks'></div></div></div><div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='choose-heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'><label for='number-of-questions' style='font-weight: bold; '>Number of questions</label><input type='text' id='choose-number-of-questions' class='form-control' placeholder='Number of questions'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='choose-radio_1' name='choose-type' value='choose-Numbers'onClick='choose_getResults(this)'><label for='radio_1' class='form-check-label'>Numbers </label></div><div class='form-check form-check-inline'><input type='radio' id='choose-radio_2' name='choose-type' class='form-check-input' value='choose-Alphabets' onClick='choose_getResults(this)'><label for='radio_2' class='form-check-label'>Alphabets </label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='choose-radio_3' name='choose-type' value='choose-Roman letters' onClick='choose_getResults(this)'><label for='radio_3' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='choose_dvtext' style='display:none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='choose-starting-number' placeholder='Numbering From' /></div></div><br><br><div class='row'><div class='col-sm-10'></div><div class='col-sm-2'><input type='button' value='Add' class='btn btn-primary mr-3' id='choose-addButton'></div></div><div id='choose-a'></div></div></form></div> ";
+                }
+
+                if (parts_name[j] == "Match the following appropriately") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='match_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Match the following</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='match-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='match-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='match_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='match_radio_1' name='match_type' value='match_Numbers' onClick='match_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='match_radio_2' name='match_type' class='form-check-input' value='match_Alphabets' onClick='match_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='match_radio_3' name='match_type' value='match_Roman letters' onClick='match_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='match_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='match_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='match-questions' class='form-control'placeholder='No. of questions'></div><div class='form-group'><label style='font-weight: bold;'>Number of options</label><input type='text' id='match-options' class='form-control' placeholder='No. of options'></div><div id='match_b' class='row'><div class='col-sm-10'><label></label></div><div class=col-sm-2><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='match_add_field();' id='match_addButton'></div></div><div id='match_a'></div><div id='match_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='match_getvalues();' id='match_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Comprehension questions(supply)") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='second_compre_TextBoxesGroup' class='bg-light p-3'><h5 class='text-center pb-3 display-5'>Read the passage and answer the questions below.</h5><div class='form-group'><div class='form-inline mb-3'><div class='form-group mb-2 px-md-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label><input type='text' class='form-control' id='second_compre_ques-question-number' placeholder='Heading Number'></div><div class='form-group mb-2 ml-md-2 px-md-2'><label style='font-weight: bold;' class='pr-3'>Marks</label><input type='text' class='form-control' id='second_compre_ques-marks' placeholder='Marks'></div></div></div><div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='second_compre_ques-heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'><label for='number-of-questions' style='font-weight: bold; '>Number of questions</label><input type='text' id='second_compre_ques-number-of-questions' class='form-control' placeholder='Number of questions'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='second_compre_ques_radio_1' name='second_compre_ques-type'value='second_compre_ques-Numbers' onClick='second_compre_ques_getResults(this)'><label for='radio_1' class='form-check-label'>Numbers </label></div><div class='form-check form-check-inline'><input type='radio' id='second_compre_ques_radio_2' name='second_compre_ques-type' class='form-check-input' value='second_compre_ques-Alphabets' onClick='second_compre_ques_getResults(this)'><label for='radio_2' class='form-check-label'>Alphabets </label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='second_compre_ques_radio_3' name='second_compre_ques-type' value='second_compre_ques-Roman letters' onClick='second_compre_ques_getResults(this)'><label for='radio_3' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='second_compre_dvtext' style='display:none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='second_compre_ques-starting-number' placeholder='Numbering From' /></div></div><br><br><div class='mt-3 form-group'><label style='font-weight: bold;'>Passage</label><div style='height:200px;overflow:auto;' name='message' id='second_compre_ques-passage' class='form-control' contenteditable='true' data-placeholder='Type your passage here...' cols='200' rows='100'></div></div><div class='row'><div class='col-sm-10'></div><div class='col-sm-2'><input type='button' value='Add' class='btn btn-primary mr-3' onclick='second_compre_ques_addFields();' id='second_compre_ques-addButton'></div></div><div id='second_compre_ques-a'></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Study the mind map and fill in the blanks") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='mind_map_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Study the given mind map and fill in the incomplete details </h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='mind_map-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='mind_map-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='mind_map_heading' class='form-control' placeholder='Type your heading...'></div><br><div><table style='width:50%'><tr><th rowspan='2'><img id='mind_map_uploadPreview' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='mind_map_uploadImage' type='file' onchange='mind_map_encodeImageFileAsURL(this)' /></th></tr><tr></tr></table><br><div id='mind_map_sub' class='row'><div class='col-sm-1'><input style='height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='mind_map_getvalues();' id='mind_map_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Paragraph questions ( Supplementary )") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Supplementary paragraph questions</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='supple_para-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='supple_para-marks' placeholder='Marks'></div></div>&nbsp; <div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='supple_para_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='supple_para_radio_1' name='supple_para_type' value='supple_para_Numbers' onClick='supple_para_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='supple_para_radio_2' name='supple_para_type' class='form-check-input' value='supple_para_Alphabets' onClick='supple_para_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='supple_para_radio_3' name='supple_para_type' value='supple_para_Roman letters' onClick='supple_para_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='supple_para_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='supple_para_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='supple_para-questions' class='form-control' placeholder='No. of questions'></div><div id='supple_para_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='supple_para_add_field();' id='supple_para_addButton'></div></div><div id='supple_para_a'></div><div id='supple_para_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='supple_para_getvalues();' id='supple_para_getvalue'></div></div></div></div></form></div> ";
+                }
+
+                if (parts_name[j] == "Note-making or Summarise notes") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='note_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Note Making </h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='note-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='note-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='note_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3 form-group'><label style='font-weight: bold;'>Passage</label><div style='height:200px;overflow: auto;' name='message' id='note-passage' class='form-control' contenteditable='true' data-placeholder='Type your passage here...' cols='200' rows='100'></div></div><div id='note_sub' class='row'><div class='col-sm-1'><input style='height:40px;' type='button'value='Save' class='btn btn-primary mr-3' onclick='note_getvalues();'id='note_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Dialogue writing") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='dialog_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Dialog Writing</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='dialog-heading-number'placeholder='Heading No.'></div><div class='col-sm-2'></div> <div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='dialog-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='dialog_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='dialog_radio_1' name='dialog_type'value='dialog_Numbers' onClick='dialog_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='dialog_radio_2' name='dialog_type' class='form-check-input' value='dialog_Alphabets' onClick='dialog_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='dialog_radio_3' name='dialog_type'value='dialog_Roman letters' onClick='dialog_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='dialog_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='dialog_starting-number'placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='dialog-questions' class='form-control' placeholder='No. of questions'></div> <div id='dialog_b' class='row'><div class='col-sm-10'><label></label></div><div class=col-sm-2><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='dialog_add_field();' id='dialog_addButton'></div></div><div id='dialog_a'></div><div id='dialog_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='dialog_getvalues();' id='dialog_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Letter writing questions") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='normal_letter_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Letter Writing</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='normal_letter-heading-number'placeholder='Heading No.'></div><div class='col-sm-2'></div> <div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='normal_letter-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='normal_letter_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='normal_letter_radio_1' name='normal_letter_type'value='normal_letter_Numbers' onClick='normal_letter_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='normal_letter_radio_2' name='normal_letter_type' class='form-check-input' value='normal_letter_Alphabets' onClick='normal_letter_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='normal_letter_radio_3' name='normal_letter_type'value='normal_letter_Roman letters' onClick='normal_letter_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='normal_letter_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='normal_letter_starting-number'placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='normal_letter-questions' class='form-control' placeholder='No. of questions'></div> <div id='normal_letter_b' class='row'><div class='col-sm-10'><label></label></div><div class=col-sm-2><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='normal_letter_add_field();' id='normal_letter_addButton'></div></div><div id='normal_letter_a'></div><div id='normal_letter_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='normal_letter_getvalues();' id='normal_letter_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Letter writing ( Formal )") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='letter_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Letter writing (Formal)</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='letter-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='letter-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='letter_heading' class='form-control'placeholder='Type your heading...'></div><div class='form-group'><label style='font-weight: bold;' class='pr-3'>No. of questions</label><input type='text' class='form-control' id='letter-num-question'  placeholder='No. of questions'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='letter_radio_1' name='letter_type'  value='letter_Numbers' onClick='letter_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label> </div><div class='form-check form-check-inline'><input type='radio' id='letter_radio_2' name='letter_type' class='form-check-input'  value='letter_Alphabets' onClick='letter_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='letter_radio_3' name='letter_type' value='letter_Roman letters' onClick='letter_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='letter_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='letter_starting-number'  placeholder='Numbering From' /></div></div></div><div class='row'><div class='col-sm-11'></div><div class='col-sm-1'><input style='height:40px;' type='button' value='Add'  class='btn btn-primary mr-3' onclick='letter_addquestions();'></div></div><div id='letter_a'></div> &nbsp;<div id='in-letter_sub' class='row'><div class='col-sm-1'><input style='height:40px;display:none;' type='button' value='Save' class='btn btn-primary mr-3' onclick='letter_getvalues();' id='letter_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Letter writing ( Informal )") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='informal_letter_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Letter writing (Informal)</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='informal_letter-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='informal_letter-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='informal_letter_heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'><label style='font-weight: bold;' class='pr-3'>No. of questions</label><input type='text' class='form-control' id='informal_letter-num-question' placeholder='No. of questions'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='informal_letter_radio_1' name='informal_letter_type' value='informal_letter_Numbers' onClick='informal_letter_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='informal_letter_radio_2' name='informal_letter_type' class='form-check-input' value='informal_letter_Alphabets' onClick='informal_letter_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets </label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='informal_letter_radio_3' name='informal_letter_type' value='informal_letter_Roman informal_letters' onClick='informal_letter_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman letters</label></div><div class='form-inline mt-3' id='informal_letter_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='informal_letter_starting-number' placeholder='Numbering From' /></div></div></div><div class='row'><div class='col-sm-11'></div><div class='col-sm-1'><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='informal_letter_addquestions();'></div></div><div id='informal_letter_a'></div>&nbsp;<div id='in-informal_letter_sub' class='row'><div class='col-sm-1'><input style='height:40px;display:none;' type='button' value='Save' class='btn btn-primary mr-3' onclick='informal_letter_getvalues();' id='informal_letter_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Advertisement questions") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='ad_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Advertisement questions</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='ad-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='ad-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label> <input type='text' id='ad_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='ad_radio_1' name='ad_type' value='ad_Numbers' onClick='ad_getResults(this)'> <label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='ad_radio_2' name='ad_type' class='form-check-input' value='ad_Alphabets' onClick='ad_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='ad_radio_3' name='ad_type' value='ad_Roman letters' onClick='ad_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='ad_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='ad_starting-number' placeholder='Numbering From' /></div></div></div> &nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='ad-questions' class='form-control' placeholder='No. of questions'></div><div id='ad_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='ad_add_field();' id='ad_addButton'> </div></div><div id='ad_a'></div><div id='ad_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='ad_getvalues();' id='ad_getvalue'></div></div></div></div></form></div> ";
+                }
+
+                if (parts_name[j] == "Expand the headlines") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='ex_head_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Expand the headlines</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='ex_head-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='ex_head-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='ex_head_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br> <div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='ex_head_radio_1' name='ex_head_type'value='ex_head_Numbers' onClick='ex_head_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='ex_head_radio_2' name='ex_head_type' class='form-check-input'value='ex_head_Alphabets' onClick='ex_head_getResults(this)'> <label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='ex_head_radio_3' name='ex_head_type' value='ex_head_Roman letters' onClick='ex_head_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='ex_head_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label> <input type='text' class='form-control' id='ex_head_starting-number' placeholder='Numbering From' /></div></div></div> &nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='ex_head-questions' class='form-control' placeholder='No. of questions'></div><div id='ex_head_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='ex_head_add_field();' id='ex_head_addButton'></div></div><div id='ex_head_a'></div><div id='ex_head_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='ex_head_getvalues();' id='ex_head_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Study the pie-chart and answer the questions") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='pie_chart_TextBoxesGroup' class='bg-light p-3'><h5 class='text-center pb-3 display-5'>Study the pie chart and answer the questions below.</h5><div class='form-group'><div class='form-inline mb-3'><div class='form-group mb-2 px-md-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label><input type='text' class='form-control' id='pie_chart-question-number' placeholder='Heading Number'></div><div class='form-group mb-2 ml-md-2 px-md-2'><label style='font-weight: bold;' class='pr-3'>Marks</label><input type='text' class='form-control' id='pie_chart-marks' placeholder='Marks'></div></div></div><div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='pie_chart-heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'> <label for='number-of-questions' style='font-weight: bold; '>Number of questions</label><input type='text' id='pie_chart-number-of-questions' class='form-control' placeholder='Number of questions'></div> <div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='pie_chart_radio_1' name='pie_chart-type' value='pie_chart-Numbers' onClick='pie_chart_getResults(this)'><label for='radio_1' class='form-check-label'>Numbers </label></div><div class='form-check form-check-inline'><input type='radio' id='pie_chart_radio_2' name='pie_chart-type' class='form-check-input' value='pie_chart-Alphabets' onClick='pie_chart_getResults(this)'><label for='radio_2' class='form-check-label'>Alphabets </label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='pie_chart_radio_3' name='pie_chart-type' value='pie_chart-Roman letters' onClick='pie_chart_getResults(this)'><label for='radio_3' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='pie_chart_dvtext' style='display:none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='pie_chart-starting-number' placeholder='Numbering From' /></div></div><br><br><br><div><table style='width:50%'><tr><th rowspan='2'><img id='pie_chart_uploadPreview' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='pie_chart_uploadImage' type='file' onchange='pie_chart_encodeImageFileAsURL(this)' /></th></tr><tr></tr></table><br><div class='row'><div class='col-sm-10'></div><div class='col-sm-2'><input type='button' value='Add' class='btn btn-primary mr-3'  onclick='pie_chart_addFields();' id='pie_chart-addButton'></div></div><div id='pie_chart-a'></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Match the following products and slogans appropriately") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='match1_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Match the following products and slogans appropriately</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='match1-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='match1-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='match1_heading' class='form-control' placeholder='Type your heading...'></div> <div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='match1_radio_1' name='match1_type' value='match1_Numbers' onClick='match1_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers </label></div><div class='form-check form-check-inline'><input type='radio' id='match1_radio_2' name='match1_type' class='form-check-input' value='match1_Alphabets' onClick='match1_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets </label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='match1_radio_3' name='match1_type' value='match1_Roman letters' onClick='match1_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='match1_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='match1_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='match1-questions' class='form-control' placeholder='No. of questions'></div><div class='form-group'><label style='font-weight: bold;'>Number of options</label><input type='text' id='match1-options' class='form-control' placeholder='No. of options'></div><div id='match1_b' class='row'><div class='col-sm-10'><label></label></div><div class=col-sm-2><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='match1_add_field();' id='match1_addButton'></div></div><div id='match1_a'></div><div id='match1_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='match1_getvalues();'id='match1_getvalue'></div></div></div></div></form></div> ";
+                }
+
+                if (parts_name[j] == "Write a paragraph using outlines") {
+                    sec_div.innerHTML += "<div class='container'><form> <div id='dev_para_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Write a paragraph using outlines</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='dev_para-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='dev_para-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='dev_para_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='dev_para_radio_1' name='dev_para_type' value='dev_para_Numbers' onClick='dev_para_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='dev_para_radio_2' name='dev_para_type' class='form-check-input' value='dev_para_Alphabets' onClick='dev_para_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='dev_para_radio_3' name='dev_para_type' value='dev_para_Roman letters' onClick='dev_para_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div> <div class='form-inline mt-3' id='dev_para_dvtext' style='display: none;'> <div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='dev_para_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='dev_para-questions' class='form-control' placeholder='No. of questions'></div><div id='dev_para_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='dev_para_add_field();' id='dev_para_addButton'></div></div><div id='dev_para_a'></div><div id='dev_para_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='dev_para_getvalues();' id='dev_para_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Observe the map and write the instructions") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='road_map_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Observe the map and write the instructions</h5> <div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='road_map-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div> <div class='col-sm-2'><input type='text' class='form-control' id='road_map-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='road_map_heading' class='form-control' placeholder='Type your heading...'></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Question</label><input type='text' id='road_map_question' class='form-control' placeholder='Type your question...'></div><br><div><table style='width:50%'><tr><th rowspan='2'><img id='road_map_uploadPreview' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='road_map_uploadImage' type='file' onchange='road_map_encodeImageFileAsURL(this)' /></th></tr><tr></tr></table><br><div id='trans_sub' class='row'><div class='col-sm-1'><input style='height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='road_map_getvalues();' id='road_map_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Read the poem and complete the paraphrase") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='poem_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Read the poem and fill in the blanks</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='poem-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div> <div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='poem-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='poem_heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'><label style='font-weight: bold;'>Poem Name</label><input type='text' id='poem_name' class='form-control' placeholder='Type the poem name...'></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Author name</label><input type='text' id='author_name' class='form-control' placeholder='Type the author name...'></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of poemlines</label><input type='text' id='poem-questions' class='form-control' placeholder='No. of questions'></div> <div id='poem_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='poem_add_field();' id='poem_addButton'></div></div><div id='poem_a'></div><div id='poem_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='poem_getvalues();' id='poem_getvalue'></div></div></div></div></form></div>";
+                }
+
+                // if (parts_name[j] == "Translation") {
+                //     sec_div.innerHTML += "<div class='container'><form><div id='trans_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Translation </h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='trans-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='trans-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'> <label style='font-weight: bold;'>Heading</label><input type='text' id='trans_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3 form-group'><label style='font-weight: bold;'>Question</label><div style='height:200px; ' name='message' id='trans-passage' class='form-control' contenteditable='true' data-placeholder='Type your passage here...' cols='200' rows='100'></div></div><div id='trans_sub' class='row'><div class='col-sm-1'><input style='height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='trans_getvalues();' id='trans_getvalue'></div></div></div></div></form></div>";
+                // }
+
+                if (parts_name[j] == "Translation") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='trans_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Translation </h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='trans-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='trans-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'> <label style='font-weight: bold;'>Heading</label><input type='text' id='trans_heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='trans-questions' class='form-control' placeholder='No. of questions'></div><div id='trans_b' class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-2'><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='trans_add_field();' id='trans_addButton'></div></div><div id='trans_a'></div><div id='trans_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='trans_getvalues();' id='trans_getvalue'></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Picture comprehension") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='trans_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Picture Comprehension </h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='picture_compre-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='picture_compre-marks' placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='picture_compre_heading' class='form-control' placeholder='Type your heading...'></div><br><div><table style='width:50%'><tr><th rowspan='2'><img id='picture_compre_uploadPreview' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='picture_compre_uploadImage' type='file'onchange='picture_compre_encodeImageFileAsURL(this)' /></th></tr><tr></tr></table><br><div id='trans_sub' class='row'><div class='col-sm-1'><input style='height:40px;' type='button'  value='Save' class='btn btn-primary mr-3' onclick='picture_compre_getvalues();' id='picture_compre_getvalue'></div></div></div></div></form></div>";
+                }
+
+                // if (parts_name[j] == "Translation and Picture comprehension") {
+                //     sec_div.innerHTML += "<div class='container'><form><div id='trans_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Translation and picture comprehension</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='trans-pic-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='trans-pic-marks'  placeholder='Marks'></div></div><h5 class='text-center pb-3 display-5'>Translation</h5>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label> <input type='text' id='translation_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3 form-group'><label style='font-weight: bold;'>Question</label><div style='height:200px; ' name='message' id='translation-passage' class='form-control' contenteditable='true' data-placeholder='Type your passage here...' cols='200' rows='100'></div></div><br><h5 class='text-center pb-3 display-5'>Picture Comprehension </h5>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='pic_compre_heading' class='form-control' placeholder='Type your heading...'></div><br><div><table style='width:50%'><tr><th rowspan='2'><img id='picture_compre_trans_uploadPreview' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='picture_compre_trans_uploadImage' type='file' onchange='picture_compre_trans_encodeImageFileAsURL(this)' /></th></tr><tr></tr></table><br><div id='trans_sub' class='row'><div class='col-sm-1'><input style='height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='trans_picture_getvalues();' id='trans_picture_getvalue'></div></div></div></div></form></div>";
+                // }
+
+                if (parts_name[j] == "Translation and Picture comprehension") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='translation_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Translation and picture comprehension</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control' id='translation-pic-heading-number' placeholder='Heading Number'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='translation-pic-marks' placeholder='Marks'></div></div><h5 class='text-center pb-3 display-5'>Translation</h5>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label> <input type='text' id='translation_heading' class='form-control' placeholder='Type your heading...'></div><div class='form-group'><label style='font-weight: bold;'>Number of questions</label><input type='text' id='translation-questions' class='form-control' placeholder='No. of questions'></div><div id='translation_b' class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-2'><input style='height:40px;' type='button' value='Add Questions' class='btn btn-primary mr-3' onclick='translation_add_field();' id='translation_addButton'></div></div><div id='translation_a'></div><div><h5 class='text-center pb-3 display-5'>Picture Comprehension </h5>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='pic_compre_heading' class='form-control' placeholder='Type your heading...'></div><br><table style='width:50%'><tr><th rowspan='2'><img id='picture_compre_trans_uploadPreview' style='width: 300px; height: 250px;' /></th><th rowspan='2'><input id='picture_compre_trans_uploadImage' type='file' onchange='picture_compre_trans_encodeImageFileAsURL(this)' /></th></tr><tr></tr></table><br><div id='translation_sub' class='row'><div class='col-sm-1'><input style='height:40px; display:none;' type='button' value='Save' class='btn btn-primary mr-3' onclick='translation_picture_getvalues();' id='translation_picture_getvalue'></div></div></div></div></form></div>";
+                }
+
+                if (parts_name[j] == "Dialogue writing (Fill in the blanks)") {
+                    sec_div.innerHTML += "<div class='container'><form><div id='dialog_fill_TextBoxesGroup' class='container bg-light p-3'><h5 class='text-center pb-3 display-5'>Dialogue Writing(Fill in the blanks)</h5><div class='row'><div class='col-sm-2'><label style='font-weight: bold;' class='pr-3'>Heading Number</label></div><div class='col-sm-2'><input type='text' class='form-control'id='dialog_fill-heading-number' placeholder='Heading No.'></div><div class='col-sm-2'></div><div class='col-sm-3'></div><div class='col-sm-1'><label style='font-weight: bold;' class='pr-3'>Marks</label></div><div class='col-sm-2'><input type='text' class='form-control' id='dialog_fill-marks'placeholder='Marks'></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Heading</label><input type='text' id='dialog_fill_heading' class='form-control' placeholder='Type your heading...'></div><div class='mt-3'><label for='_marks' style='font-weight: bold;'>Numbering option </label> <br><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='dialog_fill_radio_1' name='dialog_fill_type'value='dialog_fill_Numbers' onClick='dialog_fill_getResults(this)'><label for='radio_1' style='font-weight: normal;' class='form-check-label'>Numbers</label></div><div class='form-check form-check-inline'><input type='radio' id='dialog_fill_radio_2' name='dialog_fill_type' class='form-check-input' value='dialog_fill_Alphabets' onClick='dialog_fill_getResults(this)'><label for='radio_2' style='font-weight: normal;' class='form-check-label'>Alphabets</label></div><div class='form-check form-check-inline'><input type='radio' class='form-check-input' id='dialog_fill_radio_3' name='dialog_fill_type' value='dialog_fill_Roman letters' onClick='dialog_fill_getResults(this)'><label for='radio_3' style='font-weight: normal;' class='form-check-label'>Roman Letters</label></div><div class='form-inline mt-3' id='dialog_fill_dvtext' style='display: none;'><div class='form-group'><label style='font-weight: bold;' for='starting-number' class='pr-3'>Numbering From</label><input type='text' class='form-control' id='dialog_fill_starting-number' placeholder='Numbering From' /></div></div></div>&nbsp;<div class='form-group'><label style='font-weight: bold;'>Number of lines</label><input type='text' id='dialog_fill-questions' class='form-control' placeholder='No. of questions'></div><div id='dialog_fill_b' class='row'><div class='col-sm-11'><label></label></div><div class=col-sm-1><input style='height:40px;' type='button' value='Add' class='btn btn-primary mr-3' onclick='dialog_fill_add_field();' id='dialog_fill_addButton'></div></div><div id='dialog_fill_a'></div><div id='dialog_fill_sub' class='row'><div class='col-sm-1'><input style='display:none;height:40px;' type='button' value='Save' class='btn btn-primary mr-3' onclick='dialog_fill_getvalues();' id='dialog_fill_getvalue'></div></div></div></div></form></div> ";
+                }
+
+
+
+
+            }
+            temp++;
+        }
+
+        if (sectioncount < section_count) {
+            document.getElementById("add").innerHTML = ""
+            document.getElementById("add").innerHTML = '<center><input type="button" style="padding-left: 10px;" class="btn btn-primary" value="Next" name="next" onclick="getpartvalues(' + (sectioncount + 1) + ')"/></center><br>'
+        }
+
+        if (sectioncount == section_count) {
+            document.getElementById("add").innerHTML = ""
+            document.getElementById("add").innerHTML = '<center><input type="button" style="padding-left: 10px;" class="btn btn-primary" value="Proceed To Print" onclick="print()" name="print" /></center><br>'
+        }
+
+        console.log("Total Marks : " + maximum_marks);
+        console.log("No of sections : " + section_count);
+        console.log("Section choosen titles");
+        console.log(section_titles);
+        console.log("Parts based on sections");
+        console.log(no_of_parts);
+        console.log("Section marks");
+        console.log(sectionmarks);
+        console.log("Question Types");
+        console.log(question_types);
+        console.log("Part Marks");
+        console.log(part_marks);
+
+
+        c++;
+        cha++;
+
+        wholesec.appendChild(sec_div);
+    }
+
+</script>
+
+</html>

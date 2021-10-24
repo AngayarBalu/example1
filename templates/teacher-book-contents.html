@@ -1,0 +1,256 @@
+<html>
+
+<head>
+    <title>Teacher Portal</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script defer src="\static\teacher.js"></script>
+	<script defer src="\static\index.js"></script>
+	<link rel="stylesheet" href="\static\login-page.css">
+	<link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+
+</head>
+
+<body>
+    <div class="bs-example">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a href="#" class="navbar-brand"><b>Eduscribe</b></a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="\teacher\home-page" class="nav-item nav-link">Home</a>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Upload contents</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\book-contents" class="dropdown-item">Book contents</a>
+                            <a href="\teacher\teacher-notes" class="dropdown-item">Your Notes</a>
+                            <a href="\teacher\file-details" class="dropdown-item">File Details</a>
+                            <a href="\teacher\upload-assignment" class="dropdown-item">Assignments</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Students</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\9th-standard" class="dropdown-item">9th Standard</a>
+                            <a href="\teacher\10th-standard" class="dropdown-item">10th Standard</a>
+                            <a href="\teacher\11th-standard" class="dropdown-item">11th Standard</a>
+                            <a href="\teacher\12th-standard" class="dropdown-item">12th Standard</a>
+
+                        </div>
+                    </div>
+
+                    <a href="\teacher\notifications" class="nav-item nav-link">&nbsp;&nbsp;Notifications 🔔</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Enrollments</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\sslc-enrollment" class="dropdown-item">SSLC</a>
+                            <a href="\teacher\hsc-enrollment" class="dropdown-item">HSC</a>
+                        </div>
+                    </div>
+
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Time tables</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\view-class-time-table" class="dropdown-item">Class - Time table</a>
+                            <a href="\teacher\exam-time-table" class="dropdown-item">Exam - Time table</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <form class="form-inline">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Settings</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\profile" class="dropdown-item">My Profile</a>
+                            <!-- <a href="" class="dropdown-item">Time Table</a> -->
+                            <a class="dropdown-item" onclick="logout()">Log Out</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <div class="container p-5">
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Chapter Number</label></div>
+                        <div class="col-sm-3"><input type="text" class="form-control" id="ch_no" placeholder="Chapter No."></div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Select the type</label></div>
+                        <div class="col-sm-3"><select class="form-control" id="choices">
+                            <option value="prose-solution"> PROSE - Solution</option>
+                            <option value="grammar-solution"> GRAMMAR - Solution</option>
+                            <option value="poem-solution"> POEM - Solution</option>
+                            <option value="supplementary-solution"> SUPPLEMENTARY - Solution</option>
+                            <option value="prose-lesson"> PROSE - Lesson</option>
+                            <option value="poem-lesson"> POEM - Lesson</option>
+                            <option value="supplementary-lesson"> SUPPLEMENTARY - Lesson</option>
+                        </select></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Enter Standard</label></div>
+                        <div class="col-sm-3"> <input type="text" class="form-control" id="std" placeholder="Enter standard"></div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Enter the Section</label></div>
+                        <div class="col-sm-3"><input type="text" class="form-control" id="sec" placeholder="Enter section"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Chapter Heading</label></div>
+                        <div class="col-sm-10"><input type="text" class="form-control" id="heading" placeholder="Type the heading here..."></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label class="form-label pr-3" for="customFile">Choose File:</label></div>
+                        <div class="col-sm-8"><input type="file" accept="application/pdf" id="fileinput" class="form-control"
+                            id="customFile" /></div>
+                        <div class="col-sm-2"><input style="width: 150px;" onclick="upload()" type='button' value='Next'
+                            class="btn btn-primary" id='addButton'></div>
+                    </div>
+                </div>
+
+                <div class="mt-3 form-group">
+                    <label style="font-weight: bold;">Preview</label>
+                    <textarea style="height:200px; " name="message" id="ins" class="form-control" cols="200"
+                        rows="100"></textarea>
+                </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+</body>
+<script>
+    
+    function upload() {
+        var data1 = {};
+        var schoolname = "";
+        var chapter_no = document.getElementById('ch_no').value;
+        var unit_type = document.getElementById('choices').value;
+        var ch_head = document.getElementById('heading').value;
+        var std = document.getElementById('std').value;
+        var sec = (document.getElementById('sec').value).toUpperCase();
+        const input = document.getElementById('fileinput');
+        
+        var userId;
+        
+        var area = document.getElementById('ins');
+        area.value = "Default value";
+        var fd = new FormData();
+        fd.append('regId', userId);
+        fd.append('ch_no', chapter_no);
+        fd.append('unit_type', unit_type);
+        fd.append('heading', ch_head);
+        fd.append('class',std);
+        fd.append('section',sec);
+        fd.append('schoolname',schoolname);
+        fd.append('file', input.files[0]);
+        var filename = input.files[0].name;
+        console.log("filename"+filename)
+        var createdAt = new Date();
+        console.log("created at: "+createdAt)
+        var regId = localStorage.getItem("teacher-id");
+        // This will upload the file after having read it
+
+        
+        fetch('/uploads', { // Your POST endpoint
+            method: 'POST',
+            body: fd
+        }).then(
+            response => response.json() // if the response is a JSON object
+        ).then(
+            success => area.value = success.data // Handle the success response object
+        ).catch(
+            error => console.log(error) // Handle the error response object
+        );
+
+
+    var fd = new FormData();
+    fd.append('regId', regId);
+    fetch('/admin-portal/teacher-profile', {
+        method: 'POST',
+        body: fd
+    }).then(function (response) {
+
+        return response.json();
+
+    }).then(function (data) {
+        console.log(data)
+        schoolname= data["schoolname"];
+        userId = data["regId"];
+        console.log(school);
+        //updateFileDetails(schoolname,filename,createdAt,regId,ch_head,chapter_no,unit_type);
+    });
+    }
+
+
+    // function updateFileDetails(school,filename,createdAt,regId,ch_head,chapter_no,unit_type){
+    //     var fd = new FormData();
+        
+    //     fd.append('file_name', filename);
+    //     fd.append('created_at', createdAt);
+    //     fd.append('regId', regId);
+    //     fd.append('schoolname', school);
+    //     fd.append('class', std);
+    //     fd.append('section', sec);
+    //     fd.append("chapter_no",chapter_no);
+    //     fd.append("name",ch_head);
+    //     fd.append("unit_type",unit_type);
+
+    //     fetch('/update/fileDetails', {
+    //         method: 'POST',
+    //         body: fd
+    //     }).then(function (response) {
+    //         return response.json();
+
+    //     }).then(function (data) {
+    //         console.log(data);
+    //     });
+    // }
+
+</script>
+
+</html>

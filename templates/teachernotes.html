@@ -1,0 +1,210 @@
+<html>
+
+<head>
+    <title>Teacher Portal</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+    
+    <script>
+        function proceed() {
+            var user_id = localStorage.getItem("teacher-id");
+            var ch_no = document.getElementById('ch_no').value;
+            var ch_type = document.getElementById('lesson-type').value;
+            var ch_heading = document.getElementById('ch_heading').value;
+            var sub_name = document.getElementById('subname').value;
+            var std = document.getElementById('std').value;
+            var schoolname = localStorage.getItem('schoolname');
+            var sec = document.getElementById('section').value;
+            if (sub_name != "" && std != "" && ch_no != 0 && ch_heading != "" && ch_type != "" && sec!="") {
+                localStorage.setItem("user_id", user_id);
+                localStorage.setItem("ch_no", parseInt(ch_no));
+                localStorage.setItem("ch_type", ch_type);
+                localStorage.setItem("ch_heading", ch_heading);
+                localStorage.setItem("subname", sub_name);
+                localStorage.setItem("std", std);
+                localStorage.setItem("section", sec);
+                localStorage.setItem("schoolname", schoolname);
+                if (ch_type == "prose" && sub_name=="english" && std=="10th Standard") {
+                    window.location.replace("/teacher/teacher-notes/prose")
+                }
+                else if (ch_type == "supplementary" && sub_name=="english" && std=="10th Standard" ) {
+                    window.location.replace("/teacher/teacher-notes/supplementary")
+                }
+                else if (ch_type == "poem" && sub_name=="english" && std=="10th Standard") {
+                    window.location.replace("/teacher/teacher-notes/poem")
+                }
+                else if (ch_type == "grammar" && sub_name=="english" && std=="10th Standard") {
+                    window.location.replace("/teacher/teacher-notes/grammar")
+                }
+            }
+            else {
+                alert("Please enter all the values")
+            }
+        }
+    </script>
+    </script>
+</head>
+
+<body>
+    <div class="bs-example">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a href="#" class="navbar-brand"><b>Eduscribe</b></a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="\teacher\home-page" class="nav-item nav-link">Home</a>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Upload contents</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\book-contents" class="dropdown-item">Book contents</a>
+                            <a href="\teacher\teacher-notes" class="dropdown-item">Your Notes</a>
+                            <a href="\teacher\file-details" class="dropdown-item">File Details</a>
+                            <a href="\teacher\upload-assignment" class="dropdown-item">Assignments</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Students</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\9th-standard" class="dropdown-item">9th Standard</a>
+                            <a href="\teacher\10th-standard" class="dropdown-item">10th Standard</a>
+                            <a href="\teacher\11th-standard" class="dropdown-item">11th Standard</a>
+                            <a href="\teacher\12th-standard" class="dropdown-item">12th Standard</a>
+
+                        </div>
+                    </div>
+
+                    <a href="\teacher\notifications" class="nav-item nav-link">&nbsp;&nbsp;Notifications 🔔</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Enrollments</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\sslc-enrollment" class="dropdown-item">SSLC</a>
+                            <a href="\teacher\hsc-enrollment" class="dropdown-item">HSC</a>
+                        </div>
+                    </div>
+
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Time tables</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\view-class-time-table" class="dropdown-item">Class - Time table</a>
+                            <a href="\teacher\exam-time-table" class="dropdown-item">Exam - Time table</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                <a href="\teacher\discussion-forum" class="nav-item nav-link">Discussion Forum</a>
+                
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Settings</a>
+                        <div class="dropdown-menu">
+                            <a href="\teacher\profile" class="dropdown-item">My Profile</a>
+                            <!-- <a href="" class="dropdown-item">Time Table</a> -->
+                            <a class="dropdown-item" onclick="logout()">Log Out</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <br><br><br>
+    <div class="container p-5">
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Select Standard</label>
+                        </div>
+                        <div class="col-sm-4"> <select id="std" class="form-control">
+                                <option> -- Select standard -- </option>
+                                <option value="6th Standard"> 6th Standard </option>
+                                <option value="7th Standard"> 7th Standard </option>
+                                <option value="8th Standard"> 8th Standard </option>
+                                <option value="9th Standard"> 9th Standard </option>
+                                <option value="10th Standard"> 10th Standard </option>
+                                <option value="11th Standard"> 11th Standard </option>
+                                <option value="12th Standard"> 12th Standard </option>
+                            </select></div>
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Enter section</label></div>
+                        <div class="col-sm-4"><input type="text" class="form-control" id="section" placeholder="Enter Section"></div></div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Select Subject</label>
+                        </div>
+                        <div class="col-sm-4"> <select id="subname" class="form-control">
+                                <option> -- Select Subject -- </option>
+                                <option value="tamil"> Tamil </option>
+                                <option value="english"> English </option>
+                                <option value="mathematics"> Mathematics </option>
+                                <option value="science"> Science </option>
+                                <option value="social science"> Social Science </option>
+                            </select></div>
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Select the type</label>
+                        </div>
+                        <div class="col-sm-4"> <select id="lesson-type" class="form-control">
+                                <option> -- Select type -- </option>
+                                <option value="prose"> PROSE </option>
+                                <option value="grammar"> GRAMMAR </option>
+                                <option value="poem"> POEM </option>
+                                <option value="supplementary"> SUPPLEMENTARY</option>
+                            </select></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Chapter Number</label>
+                        </div>
+                        <div class="col-sm-4"><input type="text" class="form-control" id="ch_no"
+                                placeholder="Chapter No."/></div>
+                        <div class="col-sm-2"><label style="font-weight: bold;" class="pr-3">Chapter Heading</label>
+                        </div>
+                        <div class="col-sm-4"><input type="text" class="form-control" id="ch_heading"
+                                placeholder="Type the heading here..."></div>
+                    </div>
+                </div>
+
+                <div id="a"></div>
+                <input style="align-items: center;" type='button' value='Proceed' class="btn btn-primary"
+                    onclick="proceed()" id='addButton'>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

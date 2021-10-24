@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title id="paper_title"></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        /* background-color: #FAFAFA; */
+        background-color: white;
+        font: 12pt "Verdana";
+    }
+
+    * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    /* .page {
+        width: 210mm;
+        height: 297mm;
+        margin: 10mm auto;
+        border: 1px #000000 solid;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    } */
+
+    table {
+        margin-top: 10mm;
+        table-layout: fixed;
+        /* background-color: aqua; */
+        width: 100%;
+        line-height: 1.3;
+        font-size: medium;
+    }
+
+    td {
+        padding-left: 5mm;
+        padding-right: 5mm;
+        padding-top: 2mm;
+        padding-bottom: 2mm;
+        /* background-color: aquamarine; */
+    }
+
+    .td-header {
+        padding-left: 0mm;
+        padding-right: 0mm;
+        padding-top: 0mm;
+        padding-bottom: 0mm;
+    }
+
+    .box {
+        width: 25px;
+        height: 40px;
+        border: 1px solid black;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .marks {
+        width: 15%;
+        font-weight: bold;
+    }
+
+    .justify {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    .pto {
+        text-align: end;
+        padding-top: 5mm;
+        padding-right: 5mm;
+    }
+
+    .no-padding {
+        padding: 0mm;
+    }
+
+    .no-margin {
+        margin: 0mm;
+    }
+
+    .w-5 {
+        width: 5%;
+    }
+
+    .mt-5 {
+        margin-top: 5mm;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .color {
+        background-color: aqua;
+    }
+
+    .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .ml-auto {
+        margin-left: auto;
+    }
+
+    .align-right {
+        text-align: right;
+    }
+
+    .part-heading {
+        font-family: Arial;
+        font-size: large;
+        font-weight: bold;
+    }
+
+    .test-color {
+        background-color: blueviolet;
+    }
+
+
+
+    /* .subpage {
+        padding: 1cm;
+        border: 5px red solid;
+        height: 257mm;
+        outline: 2cm #FFEAEA solid;
+    } */
+
+    /* @page {
+        size: A4;
+        margin: 0;
+    }
+
+    @media print {
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+        }
+
+        .page {
+            margin: 10mm;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
+        }
+    } */
+    /* Styles go here */
+
+.page-header, .page-header-space {
+  height: 50px;     
+}
+
+.page-footer, .page-footer-space {
+  height: 50px;
+
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid black; /* for demo */
+  background: yellow; /* for demo */
+}
+
+
+
+.page-header {
+  position: fixed;
+  top: 0mm;
+  width: 100%;
+  border-bottom: 1px solid black; /* for demo */
+  background: yellow; /* for demo */
+}
+
+
+
+@page {
+  margin: 20mm
+}
+
+@media print {
+   thead {display: table-header-group;} 
+   tfoot {display: table-footer-group;}
+  
+}
+
+
+</style>
+
+<body>
+    
+    <div class="book" id="book" style="padding: 20px">
+
+        <div class="page" style=" padding: 20px">
+
+            <div style="padding: 20px">
+                <p style="float: left;">No. of Printed Pages: <b>9</b></p>
+                <h2 style="float: right;">6871</h2>
+            </div> <br><br><br><br>
+            <div style="padding: 20px">
+                <svg id="barcode" style="float: left;"></svg>
+                <div style="float: right; display: flex; ">
+                    <p style="margin-right: 10px; align-self: center;">Register Number</p>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+            </div>
+
+
+            <div border="1" id="main-table" style="width: 100%;">
+            </div>
+
+            <div border="1" id="main-table-2" style="width: 100%;">
+            </div>
+            <!-- <div class="page-footer-space">
+            </div> -->
+
+        </div>
+        
+    
+    </div><br><br>
+    
+    <div class="container">
+        <center>
+            <input type="button" style="padding-left: 10px;" class="btn btn-primary" value="DOWNLOAD" id="print_qp"
+                onclick="printtopdf()" name="print" /></center><br><br>
+    </div>
+    
+    
+</body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.4/dist/JsBarcode.all.min.js"></script>
+
+<!-- <script type="text/javascript" src="print-preview.js"> </script>
+<script type="text/javascript" src="parser.js"> </script> -->
+<script type="text/javascript" src="/preview-js"> </script>
+<script type="text/javascript" src="/parser-js"> </script>
+<script type="text/javascript">
+
+    function printtopdf() {
+
+        var printContents = document.getElementById("book").innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+
+</script>
+
+
+</html>

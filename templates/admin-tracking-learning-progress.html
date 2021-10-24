@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><script defer src="\static\index.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16"></head>
+
+<script>
+    var dataObject;
+    
+    // alert(learning_date)
+    async function getAll() {
+        
+        let response = await fetch("/student/getLearningProgress",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xxx-form"
+                },
+            }
+        );
+
+        let data = await response.json();
+
+        return data;
+    }
+
+    const data = getAll()
+        .then((data) => {
+
+            var dataObject = ObjectToArray(data);
+            main(dataObject);
+        })
+        .then(() => {
+
+        })
+        .catch((err) => {
+            alert("error")
+        });
+
+    function main(dataArray) {
+        let table = document.getElementById('data-table');
+        let table1 = document.getElementById('data-table1');
+        console.log(dataArray);
+        var reportArr = [];
+
+        let tabledata1 = "";
+        let tabledata2 = "";
+        
+
+        dataArray.forEach(element => {
+            var std = localStorage.getItem('std')
+            var sec = localStorage.getItem('section')
+            var regno = localStorage.getItem("regno");
+            var schoolname = localStorage.getItem("schoolname");
+            var learning_date = localStorage.getItem("mydate");
+            if (element["regno"] == regno && element["schoolname"] == schoolname && element['class'] == std && element['section'] == sec) {
+                document.getElementById('student_report_close_btn').style.display="block";
+
+                tabledata1 += '<thead class="thead-light">'+
+                                            '<tr>'+
+                                            '<th>Register Number : '+ element["regno"]+'</th>'+
+                                            '<th>Date : '+  learning_date +'</th>'+
+                                            '<th>Total Duration : '+  element["learning-progress"][learning_date]["total-duration"] +'</th>'+
+                                            
+                                            '</tr></thead>';
+
+                table1.innerHTML = tabledata1;
+
+                tabledata2 += '<thead class="thead-light">'+
+                                            '<tr>'+
+                                            '<th>R No.</th>'+
+                                            '<th>Chapter No.</th>'+
+                                            '<th>Chapter Name</th>'+
+                                            '<th>Unit type</th>'+
+                                            '<th>Content type</th>'+
+                                            '<th>Duration</th></tr></thead>';
+                                          
+                tabledata2 += '<tbody>';
+                for (key in element["learning-progress"][learning_date]["progress"]){
+                    tabledata2 += '<tr>';
+                    tabledata2 += '<th scope="row">' + key + '</td>';
+                    tabledata2 += '<td>' + element["learning-progress"][learning_date]["progress"][key]["chapter-no"] +'</td>';
+                    tabledata2 += '<td>' + element["learning-progress"][learning_date]["progress"][key]["chapter-name"] +'</td>';
+                    tabledata2 += '<td>' + element["learning-progress"][learning_date]["progress"][key]["unit-type"] +'</td>';
+                    tabledata2 += '<td>' + element["learning-progress"][learning_date]["progress"][key]["content-type"] +'</td>';
+                    tabledata2 += '<td>' + element["learning-progress"][learning_date]["progress"][key]["duration"] +'</td>';
+                    tabledata2 += '</tr>';
+                }
+                tabledata2 += '</tbody>'
+                table.innerHTML = tabledata2;
+            }
+        });
+        return;
+    }
+
+    function student_report_close(){
+        var std1 = localStorage.getItem("std");
+        alert(std1);
+        window.location.replace("/admin/"+std1+"th-student-details"); 
+    }
+</script>
+
+<body>
+    <div id="includedContent"></div>
+    <div class="container-fluid">
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    
+                    <!-- Container-->
+                    <div id='report_TextBoxesGroup' class='container bg-light p-3'>
+                        <h5 style="font-size:25px;font-weight:bold;" class="text-center pb-3 display-5">Tracking Learning Progress</h5>
+                        
+
+                        <div >
+                            <div class="container">
+                                <table class="table" id="data-table1"></table>
+                                <table class="table" id="data-table"></table>
+                            </div>
+                            <div class="row">
+                                <div class=col-sm-10></div>
+                                <div class=col-sm-1><input style="height:40px;display: none;" type='button'
+                                    value='Close' class="btn btn-danger mr-3" id='student_report_close_btn'
+                                    onclick='student_report_close();'>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

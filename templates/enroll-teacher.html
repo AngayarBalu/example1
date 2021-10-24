@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+    <link rel="icon" href="/static/filename.jpg" type="image/gif" sizes="16x16">
+    <style>
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <h3 style="text-align: center;">Teacher Enrollment</h3>
+        <table class="table" id='live-table'>
+            <tr>
+                <th>ID</th>
+                <th><input type='text' class="form-control" id="regId" placeholder="Teacher ID"></th>
+            </tr>
+            <th>Selected standard and subjects</th>
+            </tr>
+        </table>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">10th standard</label></div>
+
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="10th-subject" value="tamil">
+                <label for="tamil">Tamil</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="10th-subject" value="english">
+                <label for="english">English</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="10th-subject" value="mathematics">
+                <label for="mathematics">Mathematics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="10th-subject" value="science">
+                <label for="science">Science</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="10th-subject" value="social science">
+                <label for="social science">Social science</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">11th standard</label></div>
+
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="tamil">
+                <label for="tamil">Tamil</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="english">
+                <label for="english">English</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="mathematics">
+                <label for="mathematics">Mathematics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="physics">
+                <label for="physics">Physics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="chemistry">
+                <label for="chemistry">Chemistry</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="zoology">
+                <label for="zoology">Zoology</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="botany">
+                <label for="botany">Botany</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="computer-science">
+                <label for="computer-science">Computer Science</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="accounts">
+                <label for="accounts">Accounts</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="commerce">
+                <label for="commerce">Commerce</label>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="economics">
+                <label for="economics">Economics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="agriculture">
+                <label for="agriculture">Agriculture</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="11th-subject" value="pure-science">
+                <label for="pure-science">Pure Science</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">12th standard</label></div>
+
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="tamil">
+                <label for="tamil">Tamil</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="english">
+                <label for="english">English</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="mathematics">
+                <label for="mathematics">Mathematics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="physics">
+                <label for="physics">Physics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="chemistry">
+                <label for="chemistry">Chemistry</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="zoology">
+                <label for="zoology">Zoology</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="botany">
+                <label for="botany">Botany</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="computer-science">
+                <label for="computer-science">Computer Science</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="accounts">
+                <label for="accounts">Accounts</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="commerce">
+                <label for="commerce">Commerce</label>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="economics">
+                <label for="economics">Economics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="agriculture">
+                <label for="agriculture">Agriculture</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="pure-science">
+                <label for="pure-science">Pure Science</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10"></div>
+            <div class="col-sm-2"><input style="height:40px;" type='button' value='Enroll' class="btn btn-primary mr-3"
+                    id="update-details" onclick='updateDetails();'></div>
+        </div><br>
+    </div>
+
+</body>
+<script>
+    function updateDetails() {
+        var subArr1 = [];
+        var subArr2 = [];
+        var subArr3 = [];
+        var subjects = {};
+        var course = {};
+
+
+        $("input:checkbox[name='10th-subject']:checked").each(function () {
+            subArr1.push($(this).val());
+        });
+        console.log(subArr1);
+        $("input:checkbox[name='11th-subject']:checked").each(function () {
+            subArr2.push($(this).val());
+        });
+        console.log(subArr2);
+
+        $("input:checkbox[name='12th-subject']:checked").each(function () {
+            subArr3.push($(this).val());
+        });
+        console.log(subArr3);
+
+        subjects["10"] = subArr1;
+        subjects["11"] = subArr2;
+        subjects["12"] = subArr3;
+        var regno = document.getElementById('regId').value;
+        course["regId"] = regno;
+        course["subjects"] = subjects
+        console.log(JSON.stringify(course, null, '\t'))
+
+
+        fetch('/admin-portal/teacher-course-enrollment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(course),
+        }).then(function (response) {
+            //console.log(response);
+            return response.json();
+        }).then(function (data) {
+            console.log(data);
+            
+            if (data.status == "success") {
+                alert("Course enrolled successfully!");
+                window.location.replace("/admin/admin-home-page");
+            }
+            else if (data.status == "user not found") {
+                alert("Could not enroll the course please try again.");
+            }
+        });
+    }
+
+    // function updateDetails() {
+    //     var adminid = localStorage.getItem("admin-id");
+    //     var adname = document.getElementById('name').value;
+    //     var adpassword = document.getElementById('password').value;
+    //     var addob = document.getElementById('dob').value;
+    //     var adsex = document.getElementById('ad-gender').checked;
+    //     var admobile = document.getElementById('mobile').value;
+    //     var adaadhar = document.getElementById('aadhar').value;
+    //     var adschoolname = document.getElementById('schoolname').value;
+    //     var adaddress = document.getElementById('address').value;
+    //     var adpincode = document.getElementById('pincode').value;
+
+    //     var fd = new FormData();
+    //     fd.append('admin_id', adminid);
+    //     fd.append('name', adname);
+    //     fd.append('password', adpassword);
+    //     fd.append('dob', addob);
+    //     fd.append('gender', adsex);
+    //     fd.append('mobile', admobile);
+    //     fd.append('aadhar', adaadhar);
+    //     fd.append('schoolname', adschoolname);
+    //     fd.append('address', adaddress);
+    //     fd.append('pincode', adpincode);
+
+    //     fetch('/admin-portal/admin-update-profile', {
+    //         method: 'POST',
+    //         body: fd
+    //     }).then(function (response) {
+
+    //         //console.log(response);
+
+    //         return response.json();
+
+    //     }).then(function (data) {
+    //         console.log(data)
+    //         if (data.status == "success") {
+    //             alert("Your profile updated successfully!");
+    //             window.location.replace("admin-profile.html");
+    //         }
+    //         else if(data.status == "user not found"){
+    //             alert("Could not update your profile please try again.");
+    //         }
+    //     });
+    // }
+
+    // function saveDetails() {
+    //     window.location.replace("admin-profile.html");
+    // }
+</script>
+
+</html>

@@ -1,0 +1,100 @@
+<html>
+
+<head>
+    <title>Teacher Portal</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+    
+    <script>
+        function supplementary_proceed() {
+            var choice = document.getElementById('grammar-question-type').value;
+            if (choice != "") {
+                window.location.replace("/teacher/teacher-notes/grammar/"+choice)
+            }
+            else {
+                alert("Please select the type")
+            }
+        }
+
+        function supplementary_back() {
+           window.location.replace('/teacher/teacher-notes');
+        }
+    </script>
+    </script>
+    <style type="text/css">
+        label {
+            font-weight: bold;
+            font-size: medium;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jumbotron" style="padding-bottom: 10px;padding-top: 10px;">
+        <div class='row'>
+            <div class='col-sm-1'></div>
+            <div class='col-sm-1'><img src="/static/filename.jpg" alt="Eduscribe" style="width:100px;height:100px;"></div>
+            <br>
+            <div class='col-sm-8'>
+                <h2 style='padding-bottom: 10px;padding-top: 10px;margin-left: 250px;font-size: 50px;'> Grammar </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container p-5">
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <div class="form-group">
+                    <div class="form-inline mb-3">
+                        <div class="form-group mb-2 ml-md-2 px-md-2">
+                            <label style="font-weight: bold;" class="pr-3">Select the type</label>
+                            <select id="grammar-question-type" class="form-control">
+                                <option value="combine-sentences-into-single-sentences">Combine the sentences into single sentence</option>
+                                <option value="active-passive-voice"> Active voice and passive voice</option>
+                                <option value="direct-indirect-speech"> Direct speech and indirect speech </option>
+                                <option value="if-clauses">Frame a single sentence using the ‘If’ clause </option>
+                                <option value="degrees-of-comparison">Degrees of comparison </option>
+                                <option value="punctuation-questions">Punctuation</option>
+                                <option value="rewrite-the-passage-into-passive-voice"> Rewrite the passage into passive
+                                    voice</option>
+                                <option value="correct-the-tense-of-the-verb"> Correct the tense of the verb</option>
+                                <option value="part-of-speech"> Parts of speech</option>
+                                <option value="identify-tense-form"> Underline the verbs and identify the tense forms
+                                </option>
+                                <option value="error-spotting">Spot the errors</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <input style="align-items: center;" type='button' value='Back' class="btn btn-primary"
+                                onclick="supplementary_back();" id='prose_back'>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input style="align-items: center;" type='button' value='Proceed' class="btn btn-primary"
+                                onclick="supplementary_proceed()" id='prose_addButton'>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+</body>
+
+</html>

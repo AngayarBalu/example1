@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<body>
+    <div class="bs-example">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a href="#" class="navbar-brand"><b>Eduscribe</b></a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="\admin\home-page" class="nav-item nav-link">Home</a>
+                    <a href="\admin\file-metadata" class="nav-item nav-link">Content details</a>
+                    <a href="\admin\live-panel" class="nav-item nav-link">Examination Review Panel</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Users</a>
+                        <div class="dropdown-menu">
+                            <a href="\admin\teacher-details" class="dropdown-item">Teachers</a>
+                            <a href="\admin\examiner-details" class="dropdown-item">Examiners</a>
+                            <a href="#" class="nav-link dropdown-toggle" style="margin-left: 20px;"
+                                data-toggle="dropdown" class="dropdown-item">Students</a>
+                            <div class="nav-item dropdown">
+                                <div class="dropdown-menu">
+                                    <a href="\admin\9th-student-details" class="dropdown-item">9th standard</a>
+                                    <a href="\admin\10th-student-details" class="dropdown-item">10th standard</a>
+                                    <a href="\admin\11th-student-details" class="dropdown-item">11th standard</a>
+                                    <a href="\admin\12th-student-details" class="dropdown-item">12th standard</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Enrollments</a>
+                        <div class="dropdown-menu">
+                            <a href="\admin\student-hsc-enrollment" class="dropdown-item">HSC Student</a>
+                            <a href="#" class="nav-link dropdown-toggle" style="margin-left: 20px;"
+                                data-toggle="dropdown" class="dropdown-item">Teacher enrollment</a>
+                            <div class="nav-item dropdown">
+                                <div class="dropdown-menu">
+                                    <a href="\admin\teacher-sslc-enrollment" class="dropdown-item">Upto SSLC</a>
+                                    <a href="\admin\teacher-hsc-enrollment" class="dropdown-item">HSC</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Approve users</a>
+                        <div class="dropdown-menu">
+                            <a href="\admin\student-approval" class="dropdown-item">Approve students</a>
+                            <a href="\admin\teacher-approval" class="dropdown-item">Approve teachers</a>
+                            <a href="\admin\examiner-approval" class="dropdown-item">Approve Examiners</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                        data-toggle="dropdown">Time tables</a>
+                    <div class="dropdown-menu">
+                        <a href="\admin\view-time-table" class="dropdown-item">Exam time table</a>
+                        <a href="\admin\teacher-time-table" class="dropdown-item">Teacher time table</a>
+                        <a href="\admin\view-class-time-table" class="dropdown-item">Class time table</a>
+                    </div>
+                </div>
+            </div>
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="margin-right: 20px;"
+                            data-toggle="dropdown">Settings</a>
+                        <div class="dropdown-menu">
+                            <a href="\admin\profile" class="dropdown-item">My Profile</a>
+                            <a href="" class="dropdown-item">Time Table</a>
+                            <a class="dropdown-item" onclick="logout()">Log Out</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <br><br><br>
+        <h3 style="text-align: center;">Subject Enrollment</h3>
+        <br><br><br>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">Teacher ID</label></div>
+            <div class="col-sm-4">
+                <input type='text' class="form-control" id="teacher-id" placeholder="Teacher ID">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">Class</label></div>
+            <div class="col-sm-4">
+                <select class="form-control" id="std">
+                    <option>-- Select standard --</option>
+                    <option value="11">11th Standard</option>
+                    <option value="12">12th Standard</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">Section</label></div>
+            <div class="col-sm-4">
+                <input type='text' class="form-control" id="sec" placeholder="Enter section">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"><label style="font-weight: bold;">Subjects</label></div>
+
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="tamil">
+                <label for="tamil">Tamil</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="english">
+                <label for="english">English</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="mathematics">
+                <label for="mathematics">Mathematics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="physics">
+                <label for="physics">Physics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="chemistry">
+                <label for="chemistry">Chemistry</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="zoology">
+                <label for="zoology">Zoology</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="botany">
+                <label for="botany">Botany</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="computer-science">
+                <label for="computer-science">Computer Science</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="accounts">
+                <label for="accounts">Accounts</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="commerce">
+                <label for="commerce">Commerce</label>
+            </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="economics">
+                <label for="economics">Economics</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="agriculture">
+                <label for="agriculture">Agriculture</label>
+            </div>
+            <div class="col-sm-2"><input type="checkbox" id="subject" name="12th-subject" value="pure-science">
+                <label for="pure-science">Pure Science</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-10"></div>
+            <div class="col-sm-2"><input style="height:40px;" type='button' value='Enroll' class="btn btn-dark mr-3"
+                    id="update-details" onclick='updateDetails();'></div>
+        </div><br>
+
+</body>
+<script>
+    function updateDetails() {
+        var subArr1 = [];
+        var course = {};
+        var sub = {};
+        var regno = document.getElementById('teacher-id').value;
+        var std = document.getElementById('std').value;
+        var sec = (document.getElementById('sec').value).toUpperCase();
+        if(std == "11" || std=="12"){
+            if(sec != "" ){
+                $("input:checkbox[name='12th-subject']:checked").each(function () {
+                    subArr1.push($(this).val());
+                });
+                
+                if(subArr1.length>0){
+                    console.log(subArr1);
+                    var course = {};
+                    if(toObject(subArr1) != {}){
+                        course = {
+                            "subjects":toObject(subArr1),
+                            "regId":regno,
+                            "std":std,
+                            "sec":sec
+                        }
+                    }
+                    console.log(JSON.stringify(course, null, '\t'))
+                    sslc_course_enroll(JSON.stringify(course, null, '\t'));
+                }
+                else{
+                    alert("Please select atleast one subject")
+                }
+            }
+            else{
+                alert("Please enter the section");
+            }
+        }else{
+            alert("Please select the standard");
+        }
+    }
+
+
+</script>
+
+</html>

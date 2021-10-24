@@ -1,0 +1,122 @@
+<html>
+
+<head>
+    <title>Prose</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+
+    <script>
+        
+        var final_obj = {};
+        function prose_proceed() {
+            var choice = document.getElementById('prose-question-type').value;
+            if (choice != "") {
+                localStorage.setItem("user_id", user_id);
+                localStorage.setItem("ch_no", ch_no);
+                localStorage.setItem("ch_type", ch_type);
+                localStorage.setItem("ch_heading", ch_heading);
+                localStorage.setItem("subname", subname);
+                localStorage.setItem("std", std);
+                window.location.replace("/teacher/teacher-notes/prose/"+choice)
+            }
+            else {
+                alert("Please select the type")
+            }
+        }
+
+        function prose_back() {
+            window.location.replace('/teacher/teacher-notes');
+        }
+
+    </script>
+    </script>
+</head>
+
+<body>
+    <div class="jumbotron" style="padding-bottom: 10px;padding-top: 10px;">
+        <div class='row'>
+            <div class='col-sm-1'></div>
+            <div class='col-sm-1'><img src="/static/filename.jpg"
+                    alt="Eduscribe" style="width:100px;height:100px;"></div>
+            <br>
+            <div class='col-sm-8'>
+                <h2 style='padding-bottom: 10px;padding-top: 10px;margin-left: 250px;font-size: 50px;'> Prose </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container p-5">
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <div class="form-group">
+                    <div class="form-inline mb-3">
+                        <div class="form-group mb-2 ml-md-2 px-md-2">
+                            <label style="font-weight: bold;" class="pr-3">Select the type</label>
+                            <select id="prose-question-type" class="form-control">
+                                <option value="short-questions"> Short Questions </option>
+                                <option value="paragraph-questions"> Paragraph Questions </option>
+                                <option value="synonyms"> Synonyms </option>
+                                <option value="antonyms"> Antonyms </option>
+                                <option value="singular-plural"> Singular plural</option>
+                                <option value="sentence-making"> Sentence Making</option>
+                                <option value="rewrite-standard-english"> Rewrite the sentence in standard English
+                                </option>
+                                <option value="advertisements"> Advertisements Questions</option>
+                                <option value="report-writing"> Report Writing</option>
+                                <option value="american-english-british-english"> American English and British English
+                                </option>
+                                <option value="prefix-suffix"> Prefix and suffix</option>
+                                <option value="formal-letter-writing"> Formal Letter Writing</option>
+                                <option value="informal-letter-writing"> Informal Letter Writing</option>
+                                <option value="read-and-develop-story"> Read the clus and develop your story</option>
+                                <option value="preposition-and-meaning"> Preposition and its meaning</option>
+                                <option value="develop-story-with-pictures"> Develop the story using given pictures
+                                </option>
+                                <!-- <option value="active-and-passive"> Active voice and passive voice</option> -->
+                                <option value="mcq"> MCQ </option>
+                                <option value="abbreviation"> Abbreviations </option>
+                                <option value="comprehension_questions"> Comprehension Questions </option>
+                                <option value="road-map">Road map</option>
+                                <option value="poem-fill">Read the poem and fill the paraphrase</option>
+                                <option value="picture-comprehension">Picture comprehension</option>
+                                <option value="translation-questions">Translation</option>
+                                <option value="match-the-following">Match the following products and slogans</option>
+                                <option value="fill-in-with-appropriate-with-help-box">Fill in the blanks with help box
+                                </option>
+                                <option value="fill-in-with-appropriate-phrasal-verbs-with-passage-and-help-box">Fill in
+                                    the blanks in passage with help box</option>
+                                    <option value="active-passive">Active Voice and Passive Voice</option>
+                                    <option value="expand-head">Expand Headlines</option>
+                                   
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <input style="align-items: center;" type='button' value='Back' class="btn btn-primary"
+                                onclick="prose_back();" id='prose_back'>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input style="align-items: center;" type='button' value='Proceed' class="btn btn-primary"
+                                onclick="prose_proceed()" id='prose_addButton'>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

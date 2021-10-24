@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <title>Teacher Portal</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+    <script>
+        function supplementary_proceed() {
+            var choice = document.getElementById('supplementary-question-type').value;
+            if (choice != "") {
+                window.location.replace("/teacher/teacher-notes/supplementary/"+choice)
+            }
+            else {
+                alert("Please select the type")
+            }
+        }
+
+        function supplementary_back() {
+           window.location.replace('/teacher/teacher-notes');
+        }
+    </script>
+    </script>
+    <style type="text/css">
+        label {
+            font-weight: bold;
+            font-size: medium;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jumbotron" style="padding-bottom: 10px;padding-top: 10px;">
+        <div class='row'>
+            <div class='col-sm-1'></div>
+            <div class='col-sm-1'><img src="/static/filename.jpg" alt="Eduscribe" style="width:100px;height:100px;"></div>
+            <br>
+            <div class='col-sm-8'>
+                <h2 style='padding-bottom: 10px;padding-top: 10px;margin-left: 250px;font-size: 50px;'> SUPPLEMENTARY </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container p-5">
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <div class="form-group">
+                    <div class="form-inline mb-3">
+                        <div class="form-group mb-2 ml-md-2 px-md-2">
+                            <label style="font-weight: bold;" class="pr-3">Select the type</label>
+                            <select id="supplementary-question-type" class="form-control">
+                                <option value="supplementary-identify-character-speaker"> Identify character/Speaker</option>
+                                <option value="supplementary-situation-reaction"> Read the situation and explain the characters reactions </option>
+                                <option value="supplementary-mind-map"> Mind Map </option>
+                                <option value="supplementary-para-fill-in-the-blanks"> Fill in the blanks with appropriate phrases </option>
+                                <option value="supplementary-matching"> Match the following </option>
+                                <option value="supplementary-choose-the-best-answer"> Choose the correct answer </option>
+                                <option value="supplementary-comprehension"> Comprehension questions </option>
+                                <option value="supplementary-rearrange-the-sentences"> Rearrange the following sentences in coherent order </option>
+                                <option value="supplementary-shortquestions"> Short Questions </option>
+                                <option value="supplementary-paragraph-questions"> Paragraph Questions </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <input style="align-items: center;" type='button' value='Back' class="btn btn-primary"
+                                onclick="supplementary_back();" id='supplementary_back'>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input style="align-items: center;" type='button' value='Proceed' class="btn btn-primary"
+                                onclick="supplementary_proceed()" id='supplementary_addButton'>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+</body>
+
+</html>

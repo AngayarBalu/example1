@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+<script>
+    var prep_mean_container = "";
+    var prep_mean_count = 0;
+    function prep_mean_add_field() {
+        var prep_mean_heading = document.getElementById("prep_mean_heading").value;
+        prep_mean_container = document.getElementById("prep_mean_a");
+        if (prep_mean_heading != "") {
+            if (prep_mean_count == 0) {
+                prep_mean_container.innerHTML = prep_mean_container.innerHTML +
+                    "<div id='prep_mean_" + prep_mean_count + "'><div class='row'><div class='col-sm-3'><label style='font-weight: bold; ' >Preposition</label></div><div class='col-sm-9'><label style='font-weight: bold;'>Meaning</label></div></div><div class='row'><div class = 'col-sm-3'><div style='height:40px;overflow:auto;' class='form-control input_text' id='prep_mean_question" + prep_mean_count + "'contenteditable='true' data-placeholder='Type preposition here...' ></div></div><div class='col-sm-9'><div style='height:40px;overflow:auto;' class='form-control input_text' id='prep_mean_answer" + prep_mean_count + "'contenteditable='true' data-placeholder='Type meaning here...' ></div></div></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' id='prep_mean_addButton" + prep_mean_count + "' onclick='prep_mean_add_field();' id='prep_mean_addButton'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='prep_mean_removeButton" + prep_mean_count + "' onclick=prep_mean_remove_field('prep_mean_" + prep_mean_count + "');></div></div></div></div>";
+                prep_mean_count++;
+            }
+            else if (prep_mean_count > 0) {
+                var ques = document.getElementById("prep_mean_question" + (prep_mean_count - 1)).textContent;
+                var ans = document.getElementById("prep_mean_answer" + (prep_mean_count - 1)).textContent;
+                if (ques != "" && ans != "") {
+                    document.getElementById("prep_mean_addButton" + (prep_mean_count - 1)).style.display = "none";
+                    document.getElementById("prep_mean_removeButton" + (prep_mean_count - 1)).style.display = "none";
+                    prep_mean_container.innerHTML = prep_mean_container.innerHTML +
+                        "&nbsp;<div id='prep_mean_" + prep_mean_count + "'><div class='row'><div class = 'col-sm-3'><div style='height:40px;overflow:auto;' class='form-control input_text' id='prep_mean_question" + prep_mean_count + "'contenteditable='true' data-placeholder='Type preposition here...' ></div></div><div class='col-sm-9'><div style='height:40px;overflow:auto;' class='form-control input_text' id='prep_mean_answer" + prep_mean_count + "'contenteditable='true' data-placeholder='Type meaning here...' ></div></div></div>&nbsp;<div class='row'><div class='col-sm-10'><label></label></div><div class='col-sm-1'><input type='button' value='+' class='form-control btn btn-primary' onclick='prep_mean_add_field();' id='prep_mean_addButton" + prep_mean_count + "'></div><div class ='col-sm-1'><input type='button' class='form-control btn btn-danger' value='-' id='prep_mean_removeButton" + prep_mean_count + "' onclick=prep_mean_remove_field('prep_mean_" + prep_mean_count + "');></div></div></div></div>";
+                    prep_mean_count++;
+                } else {
+                    alert("Please enter the above question and answer")
+                }
+            }
+
+            if (prep_mean_count != 0) {
+                document.getElementById("prep_mean_addButton").style.display = "none";
+                document.getElementById("prep_mean_getvalue").style.display = "block";
+                document.getElementById("prep_mean_back").style.display = "block";
+            }
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+    function prep_mean_remove_field(prep_mean_id) {
+        if (prep_mean_count > 1) {
+            var prep_mean_myobj = document.getElementById(prep_mean_id);
+            prep_mean_myobj.remove();
+            prep_mean_count--;
+            document.getElementById("prep_mean_addButton" + (prep_mean_count - 1)).style.display = "block";
+            document.getElementById("prep_mean_removeButton" + (prep_mean_count - 1)).style.display = "block";
+        }
+
+        if (prep_mean_count == 0) {
+            document.getElementById("prep_mean_addButton").style.display = "block";
+            document.getElementById("prep_mean_getvalue").style.display = "none";
+            document.getElementById("prep_mean_back").style.display = "none";
+        }
+    }
+    function PrepositionBack() {
+        window.location.replace("/teacher/teacher-notes/prose")
+    }
+    function prep_mean_getvalues() {
+        var prep_mean_ques = [];
+        var prep_mean_ans = [];
+        for (i = 0; i < prep_mean_count; i++) {
+            prep_mean_ques[i] = document.getElementById("prep_mean_question" + i).textContent;
+            prep_mean_ans[i] = document.getElementById("prep_mean_answer" + i).textContent;
+        }
+        if (prep_mean_ques.length == prep_mean_count) {
+            var arraySet = new Set(prep_mean_ques)
+            if (arraySet.has("")) {
+                alert("Please enter the question")
+            }
+            else {
+                if (prep_mean_ans.length == prep_mean_count) {
+                    var arraySet2 = new Set(prep_mean_ans)
+                    if (arraySet2.has("")) {
+                        alert("Please enter the answer")
+                    }
+                    else {
+                        var prep_mean_heading = document.getElementById("prep_mean_heading").value;
+                        var prep_mean_ques_obj = {};
+                        var prep_mean_ques_item = {};
+                        prep_mean_ques_obj = {
+                            "user": user_id,
+                            "standard": std,
+                            "section": sec,
+                            "schoolname": schoolname,
+                            "subject": subname,
+                            "lesson-type": ch_type,
+                            "chapter-no": ch_no,
+                            "chapter-heading": ch_heading,
+                            "heading": prep_mean_heading,
+                            "questions": toObject(prep_mean_ques),
+                            "answers": toObject(prep_mean_ans)
+                        }
+
+                        prep_mean_ques_item = {
+                            "heading": prep_mean_heading,
+                            "type":"NORMAL",
+                            "questions": toObject(prep_mean_ques),
+                            "answers": toObject(prep_mean_ans)
+                        }
+
+                        alert("Prepositions and its meaning is saved successfully!");
+                        document.getElementById('prep_mean_getvalue').value="Saved!";
+                        create_preposition_and_meaning(JSON.stringify(prep_mean_ques_obj));
+                        console.log(JSON.stringify(prep_mean_ques_obj, null, '\t'))
+                        document.getElementById("final_submit").style.display = "block";
+                        localStorage.setItem("prep_mean_final_object", JSON.stringify(prep_mean_ques_item));
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='prep_mean_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 class="text-center pb-3 display-5">Preposition and its meaning</h5>
+
+                            <!-- Heading -->
+                            <div class="form-group">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="prep_mean_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+
+
+                            <div id="prep_mean_b" class="row">
+                                <div class="col-sm-10"><label></label></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Question'
+                                        class="btn btn-primary mr-3" onclick="prep_mean_add_field();"
+                                        id='prep_mean_addButton'></div>
+                            </div>
+
+                            <div id="prep_mean_a"></div>
+                            <div id="prep_mean_sub" class="row">
+                                <div class='col-sm-1'><input style="display:none;height:40px;" type='button'
+                                        value='Back' class="btn btn-primary mr-3" onclick="PrepositionBack()" id='prep_mean_back'>
+                                </div>
+                                <div class=col-sm-1><input style="display:none;height:40px;" type='button' value='Save'
+                                        class="btn btn-primary mr-3" onclick="prep_mean_getvalues();"
+                                        id='prep_mean_getvalue'></div>
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

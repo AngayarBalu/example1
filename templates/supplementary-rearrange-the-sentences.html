@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="\static\admin.js"></script>
+    <script defer src="\static\index.js"></script>
+    <script defer src="\static\final-submit.js"></script>
+    <script defer src="\static\teacher-notes.js"></script>
+    <link rel="stylesheet" href="\static\login-page.css">
+    <link rel="icon" href="\static\filename.jpg" type="image/gif" sizes="16x16">
+</head>
+
+
+<script>
+    var dialog_fill_container = "";
+    var dialog_fill_count = 0;
+    var dialog_fill_count1 = 0;
+    var dialog_fill_heading = "";
+    var dialog_fill_numb = 0;
+    var text = "";
+    function dialog_fill_add_field() {
+        dialog_fill_numb = document.getElementById("dialog_fill_answers").value;
+        var dialog_fill_heading = document.getElementById("dialog_fill_heading").value;
+        dialog_fill_container = document.getElementById("dialog_fill_a");
+        if (dialog_fill_heading != "") {
+            if (dialog_fill_numb != 0) {
+                document.getElementById("dialog_fill_addButton").style.display = "none";
+                document.getElementById("dialog_fill_answers").style.display = "none";
+                for (i = 1; i <= dialog_fill_numb; i++) {
+                    if (i == 1) {
+                        dialog_fill_container.innerHTML = dialog_fill_container.innerHTML +
+                            "<div id='dialog_fill_" + dialog_fill_count + "'>&nbsp;<div class='row'><div class='col-sm-1'><label></label></div><div class='col-sm-1'><label style='font-weight:bold;'>Sentences</label></div><div class='col-sm-8'><label></label></div><div class='col-sm-1'><label style='font-weight:bold;'>Order</label></div></div><div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>" + i + ".</label></div><div class='col-sm-9'><div style='height:40px;overflow:auto;' class='form-control input_text' id='dialog_fill_question" + dialog_fill_count + "'contenteditable='true' data-placeholder='Type your sentence here...' cols='200' rows='100'></div>&nbsp;</div><div class='col-sm-2'><div style='height:40px;overflow:auto;' class='form-control input_text' id='dialog_fill_answer" + dialog_fill_count + "'contenteditable='true' data-placeholder='Answer' cols='200' rows='100'></div>&nbsp;</div></div>";
+                        dialog_fill_count++;
+                    }
+                    else {
+                        dialog_fill_container.innerHTML = dialog_fill_container.innerHTML +
+                            "<div id='dialog_fill_" + dialog_fill_count + "'>&nbsp;<div class='row'><div class='col-sm-1'><label style='font-weight:bold;'>" + i + ".</label></div><div class='col-sm-9'><div style='height:40px;overflow:auto;' class='form-control input_text' id='dialog_fill_question" + dialog_fill_count + "'contenteditable='true' data-placeholder='Type your sentence here...' cols='200' rows='100'></div>&nbsp;</div><div class='col-sm-2'><div style='height:40px;overflow:auto;' class='form-control input_text' id='dialog_fill_answer" + dialog_fill_count + "'contenteditable='true' data-placeholder='Answer' cols='200' rows='100'></div>&nbsp;</div></div>";
+                        dialog_fill_count++;
+                    }
+
+                    if (dialog_fill_count != 0) {
+                        document.getElementById("dialog_fill_getvalue").style.display = "block";
+                        document.getElementById("dialog_fill_back").style.display = "block";
+                    }
+                }
+            }
+            else {
+                alert("Please enter the no. of answers");
+            }
+
+        }
+        else {
+            alert("Please enter the heading");
+        }
+    }
+
+    function rearrangeBack() {
+        window.location.replace("/teacher/teacher-notes/supplementary")
+    }
+
+    function addAnother() {
+        window.location.replace("/teacher/teacher-notes/supplementary/supplementary-rearrange-the-sentences")
+    }
+
+    function dialog_fill_getvalues() {
+        var dialog_fill_ques = [];
+        var dialog_fill_ans = [];
+        var dialog_fill_option = [];
+        var paraOptNum = [];
+        for (i = 0; i < dialog_fill_count; i++) {
+            dialog_fill_ques[i] = document.getElementById("dialog_fill_question" + i).textContent;
+            paraOptNum.push(i + 1);
+        }
+        for (i = 0; i < dialog_fill_count; i++) {
+            var ans = document.getElementById("dialog_fill_answer" + i).textContent;
+            if (ans != "") {
+                dialog_fill_ans[i] = dialog_fill_ques[ans - 1];
+            }
+        }
+        if (dialog_fill_count1 != 0) {
+            for (i = 0; i < dialog_fill_count1; i++) {
+                dialog_fill_option[i] = document.getElementById("dialog_fill_option" + i).textContent;
+            }
+        }
+        // alert(phrase_count);
+        if (Array.isArray(dialog_fill_option) && !dialog_fill_option.length) {
+            if (count(dialog_fill_ans) == dialog_fill_count) {
+                for (i = 0; i < dialog_fill_count; i++) {
+                    if (paraOptNum.includes(parseInt(document.getElementById("dialog_fill_answer" + i).textContent)) == true) {
+                        if (i == dialog_fill_count - 1) {
+                            var dialog_fill_heading = document.getElementById("dialog_fill_heading").value;
+                            var dialog_fill_ques_obj = {};
+                            var dialog_fill_ques_item = {};
+                            dialog_fill_ques_obj = {
+                                "user": user_id,
+                                "standard": std,
+                                "section": sec,
+                                "schoolname": schoolname,
+                                "subject": subname,
+                                "lesson-type": ch_type,
+                                "chapter-no": ch_no,
+                                "chapter-heading": ch_heading,
+                                "heading": dialog_fill_heading,
+                                "questions": toObject(dialog_fill_ques),
+                                "answers": toObject(dialog_fill_ans)
+                            }
+
+                            dialog_fill_ques_item = {
+                                "heading": dialog_fill_heading,
+                                "type":"NORMAL",
+                                "questions": toObject(dialog_fill_ques),
+                                "answers": toObject(dialog_fill_ans)
+                            }
+
+                            alert("Rearrange the sentences is saved successfully!");
+                            create_supplementary_rearrange_sentences(JSON.stringify(dialog_fill_ques_obj));
+                            console.log(JSON.stringify(dialog_fill_ques_obj, null, '\t'));
+                            // document.getElementById("dialog_fill_getvalue").style.display = "none";
+                            // document.getElementById("dialog_fill_another").style.display = "block";
+                            // dialog_fill_myobj = document.getElementById("dialog_fill_h");
+                            // dialog_fill_myobj.remove();
+                            // dialog_fill_myobj = document.getElementById("dialog_fill_a");
+                            // dialog_fill_myobj.remove();
+                            document.getElementById("final_submit").style.display = "block";
+                            localStorage.setItem("supple_rearrange_final_object", JSON.stringify(dialog_fill_ques_item));
+                        }
+                    } else {
+                        alert("Please enter the valid order");
+                    }
+                }
+            } else {
+                alert("Please enter all the questions and order")
+            }
+        }
+
+    }
+
+</script>
+
+
+<body>
+    <div class="container-fluid">
+        <!-- Section Content -->
+        <div class="p-3 m-3">
+            <div class="p-3 m-3">
+                <div class="container">
+                    <form>
+                        <!-- Container-->
+                        <div id='dialog_fill_TextBoxesGroup' class='container bg-light p-3'>
+                            <h5 style="font-size:25px;font-weight: bold;" class="text-center pb-3 display-5">Rearrange
+                                the following sentences in coherent order
+                            </h5>
+
+                            <!-- Heading -->
+                            <div class="form-group" id="dialog_fill_h">
+                                <label style="font-weight: bold;">Heading</label>
+                                <input type='text' id="dialog_fill_heading" class="form-control"
+                                    placeholder="Type your heading...">
+                            </div>
+                            <div id="dialog_fill_b" class="row">
+                                <div class=col-sm-2><input type='text' id="dialog_fill_answers" class="form-control"
+                                        placeholder="No. of answers"></div>
+                                <div class=col-sm-2><input style="height:40px;" type='button' value='Add Answers'
+                                        class="btn btn-primary mr-3" onclick="dialog_fill_add_field();"
+                                        id='dialog_fill_addButton'></div>
+                                <div class="col-sm-6"><label></label></div>
+                            </div>
+
+                            <div id="dialog_fill_a"></div>
+                            <div id="dialog_fill_b" class="row">
+                                <div id="dialog_fill_sub" class="col-sm-1"><input style="height:40px;display: none;"
+                                        type='button' value='Back' class="form-control btn btn-primary"
+                                        onclick="rearrangeBack();" id='dialog_fill_back'></div>
+                                <div id="dialog_fill_sub" class="col-sm-1"><input style="height:40px;display: none;"
+                                        type='button' value='Save' class="form-control btn btn-primary"
+                                        onclick="dialog_fill_getvalues();" id='dialog_fill_getvalue'></div>
+                                <div class="col-sm-8"><label></label></div>
+                                <div id="dialog_fill_sub" class="col-sm-2"><input style="height:40px;display: none;"
+                                        type='button' value='Add another' class="form-control btn btn-primary"
+                                        onclick="addAnother();" id='dialog_fill_another'></div>
+
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class=col-sm-5></div>
+                                <div class=col-sm-2><input style="display:none;height:40px;" type='button'
+                                        value='Final submit' class="btn btn-primary mr-3" id='final_submit'
+                                        onclick='final_submission()'></div>
+                                <div class=col-sm-5></div>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
